@@ -12,6 +12,14 @@
 		B553264A225055F4003CD775 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5532648225055F4003CD775 /* Main.storyboard */; };
 		B553264C225055FA003CD775 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B553264B225055FA003CD775 /* Assets.xcassets */; };
 		B553264F225055FA003CD775 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B553264D225055FA003CD775 /* LaunchScreen.storyboard */; };
+		B556C3E122582B6900521335 /* Groups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B556C3E022582B6900521335 /* Groups.storyboard */; };
+		B556C3E322582B7D00521335 /* Friends.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B556C3E222582B7D00521335 /* Friends.storyboard */; };
+		B5F1BBFC2258221900F2DA69 /* MyFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BBFB2258221900F2DA69 /* MyFriendsController.swift */; };
+		B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC002258229C00F2DA69 /* MyFriendsCell.swift */; };
+		B5F1BC052258258E00F2DA69 /* AllGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC042258258E00F2DA69 /* AllGroupsController.swift */; };
+		B5F1BC07225825AD00F2DA69 /* MyGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC06225825AD00F2DA69 /* MyGroupsController.swift */; };
+		B5F1BC09225825BF00F2DA69 /* AllGroupsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC08225825BF00F2DA69 /* AllGroupsCell.swift */; };
+		B5F1BC0B225825D000F2DA69 /* MyGroupsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC0A225825D000F2DA69 /* MyGroupsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +30,14 @@
 		B553264B225055FA003CD775 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B553264E225055FA003CD775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5532650225055FA003CD775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B556C3E022582B6900521335 /* Groups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Groups.storyboard; sourceTree = "<group>"; };
+		B556C3E222582B7D00521335 /* Friends.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Friends.storyboard; sourceTree = "<group>"; };
+		B5F1BBFB2258221900F2DA69 /* MyFriendsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFriendsController.swift; sourceTree = "<group>"; };
+		B5F1BC002258229C00F2DA69 /* MyFriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFriendsCell.swift; sourceTree = "<group>"; };
+		B5F1BC042258258E00F2DA69 /* AllGroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsController.swift; sourceTree = "<group>"; };
+		B5F1BC06225825AD00F2DA69 /* MyGroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsController.swift; sourceTree = "<group>"; };
+		B5F1BC08225825BF00F2DA69 /* AllGroupsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsCell.swift; sourceTree = "<group>"; };
+		B5F1BC0A225825D000F2DA69 /* MyGroupsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +84,8 @@
 		B553265622505740003CD775 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B5F1BBFA225821E500F2DA69 /* Groups */,
+				B5F1BBF9225821D600F2DA69 /* Friends */,
 				B5532646225055F4003CD775 /* LoginFormController.swift */,
 			);
 			path = Controller;
@@ -77,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				B5532648225055F4003CD775 /* Main.storyboard */,
+				B556C3E022582B6900521335 /* Groups.storyboard */,
+				B556C3E222582B7D00521335 /* Friends.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -86,6 +106,26 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B5F1BBF9225821D600F2DA69 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				B5F1BBFB2258221900F2DA69 /* MyFriendsController.swift */,
+				B5F1BC002258229C00F2DA69 /* MyFriendsCell.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		B5F1BBFA225821E500F2DA69 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				B5F1BC042258258E00F2DA69 /* AllGroupsController.swift */,
+				B5F1BC06225825AD00F2DA69 /* MyGroupsController.swift */,
+				B5F1BC08225825BF00F2DA69 /* AllGroupsCell.swift */,
+				B5F1BC0A225825D000F2DA69 /* MyGroupsCell.swift */,
+			);
+			path = Groups;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +186,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B556C3E122582B6900521335 /* Groups.storyboard in Resources */,
+				B556C3E322582B7D00521335 /* Friends.storyboard in Resources */,
 				B553264F225055FA003CD775 /* LaunchScreen.storyboard in Resources */,
 				B553264C225055FA003CD775 /* Assets.xcassets in Resources */,
 				B553264A225055F4003CD775 /* Main.storyboard in Resources */,
@@ -159,8 +201,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */,
+				B5F1BC07225825AD00F2DA69 /* MyGroupsController.swift in Sources */,
 				B5532647225055F4003CD775 /* LoginFormController.swift in Sources */,
+				B5F1BC0B225825D000F2DA69 /* MyGroupsCell.swift in Sources */,
+				B5F1BC052258258E00F2DA69 /* AllGroupsController.swift in Sources */,
+				B5F1BBFC2258221900F2DA69 /* MyFriendsController.swift in Sources */,
 				B5532645225055F4003CD775 /* AppDelegate.swift in Sources */,
+				B5F1BC09225825BF00F2DA69 /* AllGroupsCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
