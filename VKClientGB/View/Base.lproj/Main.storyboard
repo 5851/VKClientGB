@@ -80,6 +80,7 @@
                                         </state>
                                         <connections>
                                             <action selector="loginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kvx-YF-SN9"/>
+                                            <segue destination="5hO-8T-ms1" kind="show" identifier="showMainScreen" id="dwN-ZD-GSo"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -121,6 +122,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="130.98591549295776" y="129.375"/>
+        </scene>
+        <!--Friends-->
+        <scene sceneID="ttR-Ur-28V">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Friends" id="1uG-Cj-ZcA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Друзья" id="Zds-ki-jzg"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="djd-Ye-jp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1641" y="-50"/>
+        </scene>
+        <!--Main Tab Bar Controller-->
+        <scene sceneID="bam-vY-28C">
+            <objects>
+                <tabBarController id="5hO-8T-ms1" customClass="MainTabBarController" customModule="VKClientGB" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="R4H-TV-Vtv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.51377172270000004" green="0.69354231879999995" blue="0.86903819670000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="JFc-dL-SDI" kind="relationship" relationship="viewControllers" id="NgH-1Y-mIZ"/>
+                        <segue destination="1uG-Cj-ZcA" kind="relationship" relationship="viewControllers" id="Uc5-Ze-nW5"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VU1-pJ-fmw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="949" y="129"/>
+        </scene>
+        <!--Groups-->
+        <scene sceneID="Whn-H7-6a1">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Groups" id="JFc-dL-SDI" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Группы" id="5nn-Yf-1AZ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wh2-Jh-YMs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1644" y="298"/>
         </scene>
     </scenes>
     <resources>
