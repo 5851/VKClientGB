@@ -127,18 +127,16 @@
         <scene sceneID="ttR-Ur-28V">
             <objects>
                 <viewControllerPlaceholder storyboardName="Friends" id="1uG-Cj-ZcA" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Друзья" id="Zds-ki-jzg">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Друзья" id="Zds-ki-jzg"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="djd-Ye-jp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1641" y="-50"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="bam-vY-28C">
             <objects>
-                <tabBarController id="5hO-8T-ms1" sceneMemberID="viewController">
+                <tabBarController id="5hO-8T-ms1" customClass="MainTabBarController" customModule="VKClientGB" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="R4H-TV-Vtv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
