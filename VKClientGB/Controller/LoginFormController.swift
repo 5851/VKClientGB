@@ -9,7 +9,6 @@ class LoginFormController: UIViewController {
     @IBOutlet weak var button: UIButton!
     
     // MARK: - Controller lyfecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,7 +32,6 @@ class LoginFormController: UIViewController {
     }
     
     // MARK: - Private functions
-    
     @objc private func keyboardWasShown(notification: Notification) {
         
         let info = notification.userInfo! as NSDictionary
@@ -61,8 +59,7 @@ class LoginFormController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    // MARK: - IBActions
-    
+    // MARK: - IBActions    
     @IBAction func loginButtonPressed(_ sender: Any) {
         guard let login = loginInput.text else { return }
         guard let password = passwordInput.text else { return }

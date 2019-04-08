@@ -36,7 +36,7 @@ class MyFriendsController: UITableViewController {
                 ]),
     ]
     
-    // MARK: - Table view data source
+    // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         

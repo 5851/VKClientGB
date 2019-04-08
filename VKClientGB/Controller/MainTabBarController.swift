@@ -2,12 +2,14 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
+    // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTabBar()
     }
     
+    // MARK: - Private functions
     private func setupTabBar() {
         
         viewControllers?[0].title = "Группы"
