@@ -2,8 +2,10 @@ import UIKit
 
 class PhotosFriendController: UICollectionViewController {
 
+    // MARK: - Variables
     var photos = [UIImage?]()
     
+    // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
