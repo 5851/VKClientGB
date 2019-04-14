@@ -31,6 +31,10 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LJD-dJ-vO4">
+                                            <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dMw-el-yIG">
                                             <rect key="frame" x="16" y="7" width="30" height="30"/>
                                             <constraints>
@@ -44,12 +48,17 @@
                                         <constraint firstItem="agH-El-l3c" firstAttribute="centerY" secondItem="0CP-HU-bv3" secondAttribute="centerY" id="FNd-pd-dwX"/>
                                         <constraint firstItem="agH-El-l3c" firstAttribute="leading" secondItem="dMw-el-yIG" secondAttribute="trailing" constant="10" id="K3W-PA-74a"/>
                                         <constraint firstAttribute="trailing" secondItem="agH-El-l3c" secondAttribute="trailing" constant="16" id="Rdb-uy-fKI"/>
+                                        <constraint firstItem="LJD-dJ-vO4" firstAttribute="leading" secondItem="dMw-el-yIG" secondAttribute="leading" id="YTE-Jm-CF4"/>
+                                        <constraint firstItem="LJD-dJ-vO4" firstAttribute="trailing" secondItem="dMw-el-yIG" secondAttribute="trailing" id="eA4-bg-0fK"/>
+                                        <constraint firstItem="LJD-dJ-vO4" firstAttribute="bottom" secondItem="dMw-el-yIG" secondAttribute="bottom" id="qaF-Ej-4F3"/>
+                                        <constraint firstItem="LJD-dJ-vO4" firstAttribute="top" secondItem="dMw-el-yIG" secondAttribute="top" id="s8Q-mI-Byr"/>
                                         <constraint firstItem="dMw-el-yIG" firstAttribute="centerY" secondItem="0CP-HU-bv3" secondAttribute="centerY" id="sgt-G6-L2y"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="iconGroup" destination="dMw-el-yIG" id="xtR-4R-GvT"/>
                                     <outlet property="nameGroup" destination="agH-El-l3c" id="e14-vI-mwe"/>
+                                    <outlet property="shadowView" destination="LJD-dJ-vO4" id="jLS-61-ZeX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -68,7 +77,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HhA-sF-EEK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2484" y="535"/>
+            <point key="canvasLocation" x="2484" y="534.78260869565224"/>
         </scene>
         <!--All Groups Controller-->
         <scene sceneID="aZ4-Rn-MIb">
@@ -92,6 +101,10 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xtc-oz-Hbl">
+                                            <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5yR-eo-aVo">
                                             <rect key="frame" x="16" y="7" width="30" height="30"/>
                                             <constraints>
@@ -101,16 +114,21 @@
                                         </imageView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Xtc-oz-Hbl" firstAttribute="bottom" secondItem="5yR-eo-aVo" secondAttribute="bottom" id="94K-9c-jrN"/>
                                         <constraint firstItem="5yR-eo-aVo" firstAttribute="centerY" secondItem="lTr-er-2Hj" secondAttribute="centerY" id="A3Y-3W-tKo"/>
                                         <constraint firstItem="EJv-Dc-gXn" firstAttribute="leading" secondItem="5yR-eo-aVo" secondAttribute="trailing" constant="10" id="DtR-Ov-Glb"/>
+                                        <constraint firstItem="Xtc-oz-Hbl" firstAttribute="leading" secondItem="5yR-eo-aVo" secondAttribute="leading" id="Evn-wI-g7x"/>
+                                        <constraint firstItem="Xtc-oz-Hbl" firstAttribute="top" secondItem="5yR-eo-aVo" secondAttribute="top" id="GLr-hh-Wd5"/>
                                         <constraint firstItem="EJv-Dc-gXn" firstAttribute="centerY" secondItem="lTr-er-2Hj" secondAttribute="centerY" id="Gu3-Ue-2ny"/>
                                         <constraint firstItem="5yR-eo-aVo" firstAttribute="leading" secondItem="lTr-er-2Hj" secondAttribute="leading" constant="16" id="WSA-AY-B08"/>
                                         <constraint firstAttribute="trailing" secondItem="EJv-Dc-gXn" secondAttribute="trailing" constant="16" id="dv3-iO-fZS"/>
+                                        <constraint firstItem="Xtc-oz-Hbl" firstAttribute="trailing" secondItem="5yR-eo-aVo" secondAttribute="trailing" id="p4z-cF-r1i"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="iconGroup" destination="5yR-eo-aVo" id="SzE-oG-rVV"/>
                                     <outlet property="nameGroup" destination="EJv-Dc-gXn" id="7gB-no-OX3"/>
+                                    <outlet property="shadowView" destination="Xtc-oz-Hbl" id="E9U-AA-tdt"/>
                                     <segue destination="VVy-b3-wnq" kind="unwind" identifier="addGroup" unwindAction="addGroupWithSegue:" id="7aq-q2-Qbu"/>
                                 </connections>
                             </tableViewCell>

@@ -19,4 +19,13 @@ class GroupsCell: UITableViewCell {
         }
     }
     @IBOutlet weak var nameGroup: UILabel!
+    @IBOutlet weak var shadowView: UIView! {
+        didSet {
+            shadowView.layer.shadowOffset = .zero
+            shadowView.layer.shadowOpacity = 0.75
+            shadowView.layer.shadowRadius = 5
+            shadowView.backgroundColor = UIColor.black
+            shadowView.layer.cornerRadius = shadowView.frame.width / 2
+        }
+    }
 }

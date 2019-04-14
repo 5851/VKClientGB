@@ -1,8 +1,10 @@
 import UIKit
 
-class MyFriendsController: UITableViewController {
+class MyFriendsController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // MARK: - Variables
+    @IBOutlet weak var tableView: UITableView!
+    
     private var friends = [
         Friend(name: "Иванов Иван Иванович", iconImage: UIImage(named: "friend"),photos: [
                 UIImage(named: "friend"),
@@ -16,13 +18,13 @@ class MyFriendsController: UITableViewController {
                 UIImage(named: "friend2"),
                 UIImage(named: "friend2"),
                 ]),
-        Friend(name: "Сидоров Сидор Сидорович", iconImage: UIImage(named: "friend"), photos: [
+        Friend(name: "Александров Сидор Сидорович", iconImage: UIImage(named: "friend"), photos: [
                 UIImage(named: "friend3"),
                 UIImage(named: "friend3"),
                 UIImage(named: "friend3"),
                 UIImage(named: "friend3"),
                 ]),
-        Friend(name: "Семенов Семен Семенович", iconImage: UIImage(named: "friend"), photos: [
+        Friend(name: "Борисов Семен Семенович", iconImage: UIImage(named: "friend"), photos: [
                 UIImage(named: "friend4"),
                 UIImage(named: "friend4"),
                 UIImage(named: "friend4"),
@@ -36,21 +38,34 @@ class MyFriendsController: UITableViewController {
                 ]),
     ]
     
+    @IBOutlet weak var alphabetView: UIView!
+    @IBOutlet weak var alphabetLabel: UILabel!
+    
+    var sectionsName = [String]()
+    var friendsMassive = [[Friend]]()
+    
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Мои друзья"
-        tableView.tableFooterView = UIView()
-    }
+        setupTableView()
+        setupAlphabetControl()
+     }
 
     // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return friends.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionsName.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionsName[section]
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyFriendsCell.cellId, for: indexPath) as? MyFriendsCell else {
             fatalError("Can not load group cell")
         }
@@ -61,7 +76,11 @@ class MyFriendsController: UITableViewController {
         return cell
     }
     
-    // MARK: - Navigation    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+    
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showPhotos",
             let photosController = segue.destination as? PhotosFriendController,
@@ -69,5 +88,27 @@ class MyFriendsController: UITableViewController {
 
             photosController.photos = friends[indexPath.row].photos
         }
+    }
+    
+    // MARK: - Private functions
+    
+    private func setupTableView() {
+        tableView.delegate = self
+        navigationItem.title = "Мои друзья"
+        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
+    }
+    
+    private func setupAlphabetControl() {
+        friends.forEach { (friend) in
+            let word = friend.name
+            if let letter = word.first {
+                if !sectionsName.contains(String(letter)) {
+                    sectionsName.append(String(letter))
+                }
+            }
+        }
+        let alphabetSorted = sectionsName.sorted { $0 < $01 }
+        alphabetLabel.text = "\(alphabetSorted.joined(separator: "\n"))"
     }
 }
