@@ -88,22 +88,9 @@
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jyY-AW-NOG">
                                 <rect key="frame" x="355" y="64" width="20" height="603"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg8-ac-FuS">
-                                        <rect key="frame" x="0.0" y="285" width="20" height="33.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" red="0.12082211494987816" green="0.31097570630075433" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="gg8-ac-FuS" secondAttribute="trailing" id="60K-Xg-2NX"/>
-                                    <constraint firstItem="gg8-ac-FuS" firstAttribute="centerX" secondItem="jyY-AW-NOG" secondAttribute="centerX" id="A8R-8z-hQb"/>
-                                    <constraint firstItem="gg8-ac-FuS" firstAttribute="leading" secondItem="jyY-AW-NOG" secondAttribute="leading" id="EHV-R8-DZu"/>
                                     <constraint firstAttribute="width" constant="20" id="UoG-8j-D0P"/>
-                                    <constraint firstItem="gg8-ac-FuS" firstAttribute="centerX" secondItem="jyY-AW-NOG" secondAttribute="centerX" id="Vle-Q9-4ag"/>
-                                    <constraint firstItem="gg8-ac-FuS" firstAttribute="centerY" secondItem="jyY-AW-NOG" secondAttribute="centerY" id="udq-Fl-bM2"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -121,7 +108,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="x4n-Kf-yhj"/>
                     <connections>
-                        <outlet property="alphabetLabel" destination="gg8-ac-FuS" id="Mvx-s5-t4Y"/>
                         <outlet property="alphabetView" destination="jyY-AW-NOG" id="Dck-mg-Mav"/>
                         <outlet property="tableView" destination="FJL-NC-ecd" id="ush-ld-2Ni"/>
                     </connections>
@@ -156,28 +142,16 @@
                                             <rect key="frame" x="16" y="10" width="174" height="194"/>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="5ge-wP-EmQ">
-                                            <rect key="frame" x="129" y="20" width="57" height="30"/>
+                                            <rect key="frame" x="126" y="20" width="60" height="30"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hnh-eq-lHQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4gT-9G-lEO" customClass="LikeControl" customModule="VKClientGB" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="30"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="Kc8-Uq-yGs"/>
-                                                        <constraint firstAttribute="width" constant="30" id="ogK-S7-Dzw"/>
+                                                        <constraint firstAttribute="width" constant="60" id="rOC-QR-t3g"/>
+                                                        <constraint firstAttribute="height" constant="30" id="riO-C4-WDf"/>
                                                     </constraints>
-                                                    <state key="normal" image="heart"/>
-                                                    <connections>
-                                                        <action selector="touch:" destination="nVn-Fs-MXB" eventType="touchUpInside" id="rWO-KA-ilD"/>
-                                                    </connections>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y08-U5-aHI">
-                                                    <rect key="frame" x="37" y="0.0" width="20" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="20" id="6zI-g6-C2Y"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </view>
                                             </subviews>
                                         </stackView>
                                     </subviews>
@@ -191,9 +165,8 @@
                                     <constraint firstItem="5ge-wP-EmQ" firstAttribute="top" secondItem="nVn-Fs-MXB" secondAttribute="top" constant="20" id="ytC-a1-Q7g"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="likeIconButton" destination="Hnh-eq-lHQ" id="EjU-Rd-GfF"/>
-                                    <outlet property="likeNumber" destination="y08-U5-aHI" id="lZB-9d-iIE"/>
-                                    <outlet property="photo" destination="Dkv-dK-enF" id="qZp-IG-1yQ"/>
+                                    <outlet property="likeControl" destination="4gT-9G-lEO" id="R2E-Dj-lRI"/>
+                                    <outlet property="photo" destination="Dkv-dK-enF" id="2Yw-ds-jX4"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -210,7 +183,7 @@
         <!--Item-->
         <scene sceneID="pmE-BC-0Ir">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="70c-iV-mcz" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="70c-iV-mcz" customClass="BackEnabledNavigationController" customModule="VKClientGB" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="mOH-wB-evd"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QNJ-Rt-95B">
@@ -228,7 +201,4 @@
             <point key="canvasLocation" x="1757" y="-186"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="heart" width="50" height="50"/>
-    </resources>
 </document>
