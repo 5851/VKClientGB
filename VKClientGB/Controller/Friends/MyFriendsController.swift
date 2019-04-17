@@ -1,73 +1,134 @@
 import UIKit
 
-class MyFriendsController: UITableViewController {
+class MyFriendsController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    // MARK: - Outlets
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var alphabetView: UIView!
+    
     // MARK: - Variables
-    private var friends = [
-        Friend(name: "Иванов Иван Иванович", iconImage: UIImage(named: "friend"),photos: [
-                UIImage(named: "friend"),
-                UIImage(named: "friend"),
-                UIImage(named: "friend"),
-                UIImage(named: "friend"),
-            ]),
-        Friend(name: "Петров Петр Петрович", iconImage: UIImage(named: "friend"), photos: [
-                UIImage(named: "friend2"),
-                UIImage(named: "friend2"),
-                UIImage(named: "friend2"),
-                UIImage(named: "friend2"),
-                ]),
-        Friend(name: "Сидоров Сидор Сидорович", iconImage: UIImage(named: "friend"), photos: [
-                UIImage(named: "friend3"),
-                UIImage(named: "friend3"),
-                UIImage(named: "friend3"),
-                UIImage(named: "friend3"),
-                ]),
-        Friend(name: "Семенов Семен Семенович", iconImage: UIImage(named: "friend"), photos: [
-                UIImage(named: "friend4"),
-                UIImage(named: "friend4"),
-                UIImage(named: "friend4"),
-                UIImage(named: "friend4"),
-                ]),
-        Friend(name: "Сергеев Сергей Сергеевич", iconImage: UIImage(named: "friend"), photos: [
-                UIImage(named: "friend5"),
-                UIImage(named: "friend5"),
-                UIImage(named: "friend5"),
-                UIImage(named: "friend5"),
-                ]),
-    ]
+    private var friends = [Friend]()
+    
+    var sectionsName = [String]()
+    var friendDictionary = [String: [Friend]]()
+    var buttons: [UIButton] = []
     
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Мои друзья"
-        tableView.tableFooterView = UIView()
-    }
-
-    // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return friends.count
+        friends = FriendsDataBase.shared.friends
+        
+        setupTableView()
+        setupAlphabetControl()
+        setupStackViewButtons()
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    // MARK: - Table view data source
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let friendKey = sectionsName[section]
+        if let friendValues = friendDictionary[friendKey] {
+            return friendValues.count
+        }
+        return 0
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionsName.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionsName[section]
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyFriendsCell.cellId, for: indexPath) as? MyFriendsCell else {
             fatalError("Can not load group cell")
         }
         
-        let friend = friends[indexPath.row]
-        cell.friend = friend
-        
+        let friendKey = sectionsName[indexPath.section]
+        if let friendValues = friendDictionary[friendKey] {
+            cell.nameFriend.text = friendValues[indexPath.row].name
+            cell.iconFriend.image = friendValues[indexPath.row].iconImage
+        }
         return cell
     }
     
-    // MARK: - Navigation    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+    
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showPhotos",
             let photosController = segue.destination as? PhotosFriendController,
             let indexPath = tableView.indexPathForSelectedRow {
-
-            photosController.photos = friends[indexPath.row].photos
+                let friendKey = sectionsName[indexPath.section]
+                if let friendValues = friendDictionary[friendKey] {
+                    photosController.photos = friendValues[indexPath.row].photos
+                }
+        }
+    }
+    
+    // MARK: - Private functions
+    private func setupTableView() {
+        tableView.delegate = self
+        navigationItem.title = "Мои друзья"
+        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
+    }
+    
+    private func setupAlphabetControl() {
+        friends.forEach { (friend) in
+            let word = friend.name
+            if let letter = word.first {
+                if !sectionsName.contains(String(letter)) {
+                    sectionsName.append(String(letter))
+                }
+            }
+        }
+        sectionsName = sectionsName.sorted { $0 < $01 }
+        
+        for friend in friends {
+            let friendKey = String(friend.name.prefix(1))
+            if var friendValues = friendDictionary[friendKey] {
+                friendValues.append(friend)
+                friendDictionary[friendKey] = friendValues
+            } else {
+                friendDictionary[friendKey] = [friend]
+             }
+        }
+    }
+    
+    private func setupStackViewButtons() {
+        for item in sectionsName {
+            buttons.append(createButton(for: item))
+        }
+        
+        let stackView = UIStackView(arrangedSubviews: buttons)
+        stackView.axis = .vertical
+        stackView.spacing = -5
+        
+        alphabetView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.centerYAnchor.constraint(equalTo: alphabetView.centerYAnchor).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: alphabetView.centerXAnchor).isActive = true
+    }
+    
+    private func createButton(for entry: String) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle(entry, for: .normal)
+        button.setTitleColor(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.addTarget(self, action: #selector(handleTapButton), for: .touchUpInside)
+        return button
+    }
+    
+    @objc private func handleTapButton(sender: UIButton) {
+        guard let tag = buttons.lastIndex(of: sender) else { return }
+        guard let index = sectionsName.lastIndex(of: (sender.titleLabel?.text)!) else { return }
+        if tag == index {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: tag), at: .top, animated: true)
         }
     }
 }

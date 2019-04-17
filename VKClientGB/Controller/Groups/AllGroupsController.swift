@@ -55,6 +55,7 @@ class AllGroupsController: UITableViewController {
     }
 }
 
+    // MARK: - UISearchBarDelegate
 extension AllGroupsController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

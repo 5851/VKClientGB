@@ -8,11 +8,11 @@ class PhotosFriendController: UICollectionViewController {
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        navigationItem.title = "Фотографии друга"
     }
 
-    // MARK: UICollectionViewDataSource
-
+    // MARK: - UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
@@ -23,13 +23,19 @@ class PhotosFriendController: UICollectionViewController {
         }
     
         cell.photo.image = photos[indexPath.item]
+        cell.likeControl.addTarget(self, action: #selector(cellLikePressed), for: .valueChanged)
     
         return cell
     }
+    
+    @objc private func cellLikePressed(_ sender: LikeControl) {
+
+    }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension PhotosFriendController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: view.frame.height - 100)
+        return .init(width: view.frame.width, height: 400)
     }
 }

@@ -4,11 +4,25 @@ class PhotosFriendCell: UICollectionViewCell {
     
     static let cellId = "photosFriendCell"
     
+    @IBOutlet weak var likeNumber: UILabel!
     @IBOutlet weak var photo: UIImageView! {
         didSet {
-            photo.layer.cornerRadius = 10
             photo.contentMode = .scaleAspectFill
+            photo.layer.cornerRadius = 10
             photo.clipsToBounds = true
+        }
+    }
+    @IBOutlet var likeControl: LikeControl!
+    
+    override var isHighlighted: Bool {
+        didSet {
+            var transform = CGAffineTransform.identity
+            if isHighlighted {
+                transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.transform = transform
+            })
         }
     }
 }
