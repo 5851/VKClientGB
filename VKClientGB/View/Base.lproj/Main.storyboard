@@ -131,7 +131,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="djd-Ye-jp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1641" y="-50"/>
+            <point key="canvasLocation" x="1644" y="-168"/>
         </scene>
         <!--Main Tab Bar Controller-->
         <scene sceneID="bam-vY-28C">
@@ -148,6 +148,7 @@
                     <connections>
                         <segue destination="JFc-dL-SDI" kind="relationship" relationship="viewControllers" id="NgH-1Y-mIZ"/>
                         <segue destination="1uG-Cj-ZcA" kind="relationship" relationship="viewControllers" id="Uc5-Ze-nW5"/>
+                        <segue destination="M2t-j6-EtH" kind="relationship" relationship="viewControllers" id="Dkr-i5-Mew"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VU1-pJ-fmw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -162,7 +163,17 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wh2-Jh-YMs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1644" y="298"/>
+            <point key="canvasLocation" x="1643" y="129"/>
+        </scene>
+        <!--Feed-->
+        <scene sceneID="mcM-36-Rvl">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Feed" id="M2t-j6-EtH" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Новости" id="FkH-ge-0P8"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Wc-4W-out" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1658" y="355"/>
         </scene>
     </scenes>
     <resources>

@@ -18,5 +18,9 @@ class MainTabBarController: UITabBarController {
         viewControllers?[1].title = "Друзья"
         viewControllers?[1].tabBarItem.image = UIImage(named: "friends")
         viewControllers?[1].tabBarItem.selectedImage = UIImage(named: "friendsSelected")
+        viewControllers?[2].title = "Новости"
+        viewControllers?[2].tabBarItem.image = UIImage(named: "feed")
+        viewControllers?[2].tabBarItem.selectedImage = UIImage(named: "feedSelected")
     }
 }
+

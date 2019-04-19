@@ -26,6 +26,11 @@
 		B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC002258229C00F2DA69 /* MyFriendsCell.swift */; };
 		B5F1BC052258258E00F2DA69 /* AllGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC042258258E00F2DA69 /* AllGroupsController.swift */; };
 		B5F1BC07225825AD00F2DA69 /* MyGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC06225825AD00F2DA69 /* MyGroupsController.swift */; };
+		B5FDD59922695C1100381B24 /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5FDD59822695C1100381B24 /* Feed.storyboard */; };
+		B5FDD59C2269611A00381B24 /* FeedsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FDD59B2269611A00381B24 /* FeedsController.swift */; };
+		B5FDD59E2269620400381B24 /* FeedsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FDD59D2269620400381B24 /* FeedsCell.xib */; };
+		B5FDD5A02269664D00381B24 /* FeedsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FDD59F2269664D00381B24 /* FeedsCell.swift */; };
+		B5FDD5A222696EF900381B24 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FDD5A122696EF900381B24 /* Feed.swift */; };
 		B5FFC7052266C76300B9DD8F /* FriendsDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FFC7042266C76300B9DD8F /* FriendsDataBase.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +56,11 @@
 		B5F1BC002258229C00F2DA69 /* MyFriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFriendsCell.swift; sourceTree = "<group>"; };
 		B5F1BC042258258E00F2DA69 /* AllGroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsController.swift; sourceTree = "<group>"; };
 		B5F1BC06225825AD00F2DA69 /* MyGroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsController.swift; sourceTree = "<group>"; };
+		B5FDD59822695C1100381B24 /* Feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feed.storyboard; sourceTree = "<group>"; };
+		B5FDD59B2269611A00381B24 /* FeedsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsController.swift; sourceTree = "<group>"; };
+		B5FDD59D2269620400381B24 /* FeedsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedsCell.xib; sourceTree = "<group>"; };
+		B5FDD59F2269664D00381B24 /* FeedsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsCell.swift; sourceTree = "<group>"; };
+		B5FDD5A122696EF900381B24 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		B5FFC7042266C76300B9DD8F /* FriendsDataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsDataBase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +109,7 @@
 		B553265622505740003CD775 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B5FDD59A226960F900381B24 /* Feed */,
 				B5F1BBFA225821E500F2DA69 /* Groups */,
 				B5F1BBF9225821D600F2DA69 /* Friends */,
 				B5532646225055F4003CD775 /* LoginFormController.swift */,
@@ -113,6 +124,7 @@
 				B5532648225055F4003CD775 /* Main.storyboard */,
 				B556C3E022582B6900521335 /* Groups.storyboard */,
 				B556C3E222582B7D00521335 /* Friends.storyboard */,
+				B5FDD59822695C1100381B24 /* Feed.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -122,6 +134,7 @@
 			children = (
 				B556C42C225AC0F600521335 /* Group.swift */,
 				B556C432225AD60700521335 /* Friend.swift */,
+				B5FDD5A122696EF900381B24 /* Feed.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -155,6 +168,16 @@
 				B556C430225AC4CE00521335 /* GroupsCell.swift */,
 			);
 			path = Groups;
+			sourceTree = "<group>";
+		};
+		B5FDD59A226960F900381B24 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				B5FDD59B2269611A00381B24 /* FeedsController.swift */,
+				B5FDD59F2269664D00381B24 /* FeedsCell.swift */,
+				B5FDD59D2269620400381B24 /* FeedsCell.xib */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,11 +238,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5FDD59E2269620400381B24 /* FeedsCell.xib in Resources */,
 				B556C3E122582B6900521335 /* Groups.storyboard in Resources */,
 				B556C3E322582B7D00521335 /* Friends.storyboard in Resources */,
 				B553264F225055FA003CD775 /* LaunchScreen.storyboard in Resources */,
 				B553264C225055FA003CD775 /* Assets.xcassets in Resources */,
 				B553264A225055F4003CD775 /* Main.storyboard in Resources */,
+				B5FDD59922695C1100381B24 /* Feed.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,9 +256,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B556C437225AE67300521335 /* PhotosFriendController.swift in Sources */,
+				B5FDD5A222696EF900381B24 /* Feed.swift in Sources */,
 				B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */,
 				B50FBD672265CD8E00BD041B /* LikeControl.swift in Sources */,
 				B5F1BC07225825AD00F2DA69 /* MyGroupsController.swift in Sources */,
+				B5FDD5A02269664D00381B24 /* FeedsCell.swift in Sources */,
 				B556C435225ADB6600521335 /* MainTabBarController.swift in Sources */,
 				B5532647225055F4003CD775 /* LoginFormController.swift in Sources */,
 				B5F1BC052258258E00F2DA69 /* AllGroupsController.swift in Sources */,
@@ -241,6 +268,7 @@
 				B556C431225AC4CE00521335 /* GroupsCell.swift in Sources */,
 				B5F1BBFC2258221900F2DA69 /* MyFriendsController.swift in Sources */,
 				B59A290A22658B1800A4D83C /* BackEnabledNavigationController.swift in Sources */,
+				B5FDD59C2269611A00381B24 /* FeedsController.swift in Sources */,
 				B556C433225AD60700521335 /* Friend.swift in Sources */,
 				B5532645225055F4003CD775 /* AppDelegate.swift in Sources */,
 				B5FFC7052266C76300B9DD8F /* FriendsDataBase.swift in Sources */,
@@ -393,6 +421,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F9K6TF7ASC;
 				INFOPLIST_FILE = VKClientGB/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -411,6 +440,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F9K6TF7ASC;
 				INFOPLIST_FILE = VKClientGB/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
