@@ -7,6 +7,8 @@ class LoginFormController: UIViewController {
     @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var activityIndicator: CustomActivityIndicator!
+    
     
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
@@ -15,6 +17,8 @@ class LoginFormController: UIViewController {
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         scrollView?.addGestureRecognizer(hideKeyboardGesture)
         button.layer.cornerRadius = 5
+        
+        showActivityIndicator()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,12 +63,16 @@ class LoginFormController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    private func showActivityIndicator() {
+        activityIndicator.startAnimating()
+    }
+    
     // MARK: - IBActions    
     @IBAction func loginButtonPressed(_ sender: Any) {
         guard let login = loginInput.text else { return }
         guard let password = passwordInput.text else { return }
         if login == "" && password == "" {
-            performSegue(withIdentifier: "showMainScreen", sender: sender)
+            self.performSegue(withIdentifier: "showMainScreen", sender: nil)
         } else {
             showMessage(title: "Ошибка", message: "Введены неверные данные пользователя")
             passwordInput.text = ""

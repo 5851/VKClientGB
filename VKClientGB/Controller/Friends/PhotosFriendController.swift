@@ -24,10 +24,22 @@ class PhotosFriendController: UICollectionViewController {
     
         cell.photo.image = photos[indexPath.item]
         cell.likeControl.addTarget(self, action: #selector(cellLikePressed), for: .valueChanged)
-    
+        
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+        cell.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+        cell.alpha = 0
+        UIView.animate(withDuration: 1, delay: 0, animations: {
+            cell.transform = .identity
+            cell.alpha = 1
+        }, completion: nil)
+    }
+    
+    // MARK: - Private functions
+
     @objc private func cellLikePressed(_ sender: LikeControl) {
 
     }
@@ -36,6 +48,6 @@ class PhotosFriendController: UICollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension PhotosFriendController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 400)
+        return .init(width: view.frame.width/1.2, height: 400/1.2)
     }
 }

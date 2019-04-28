@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -83,6 +82,14 @@
                                             <segue destination="5hO-8T-ms1" kind="show" identifier="showMainScreen" id="dwN-ZD-GSo"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qsA-Ml-EPn" customClass="CustomActivityIndicator" customModule="VKClientGB" customModuleProvider="target">
+                                        <rect key="frame" x="129" y="220" width="62" height="20"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="Sr0-xj-VfC"/>
+                                            <constraint firstAttribute="width" constant="62" id="pjr-Pz-MlZ"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Y34-qU-5tA" firstAttribute="centerX" secondItem="WKe-rz-KIN" secondAttribute="centerX" id="3jg-m9-CDL"/>
@@ -92,7 +99,9 @@
                                     <constraint firstAttribute="trailing" secondItem="Y34-qU-5tA" secondAttribute="trailing" constant="20" id="ePc-ow-dZV"/>
                                     <constraint firstItem="iiX-DE-ReQ" firstAttribute="top" secondItem="Y34-qU-5tA" secondAttribute="bottom" constant="35" id="fJf-VU-gbP"/>
                                     <constraint firstItem="Y34-qU-5tA" firstAttribute="top" secondItem="WKe-rz-KIN" secondAttribute="top" constant="30" id="r2d-YI-4Ys"/>
+                                    <constraint firstItem="qsA-Ml-EPn" firstAttribute="centerX" secondItem="WKe-rz-KIN" secondAttribute="centerX" id="rfY-su-xNP"/>
                                     <constraint firstItem="Y34-qU-5tA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WKe-rz-KIN" secondAttribute="leading" constant="20" id="tGE-Vm-dob"/>
+                                    <constraint firstItem="qsA-Ml-EPn" firstAttribute="centerY" secondItem="WKe-rz-KIN" secondAttribute="centerY" id="tZV-Jh-RcM"/>
                                     <constraint firstItem="MRN-CD-trV" firstAttribute="centerX" secondItem="WKe-rz-KIN" secondAttribute="centerX" id="vsM-lw-TBF"/>
                                     <constraint firstItem="MRN-CD-trV" firstAttribute="top" secondItem="iiX-DE-ReQ" secondAttribute="bottom" constant="35" id="zTY-Jt-307"/>
                                 </constraints>
@@ -113,6 +122,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="qsA-Ml-EPn" id="Kcg-06-vWz"/>
                         <outlet property="button" destination="MRN-CD-trV" id="Mg1-gN-vuf"/>
                         <outlet property="loginInput" destination="fmJ-15-Z80" id="h4k-pA-EJ7"/>
                         <outlet property="passwordInput" destination="i8s-ac-uT6" id="aRK-Kn-ll4"/>
