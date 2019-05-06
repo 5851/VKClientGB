@@ -3,7 +3,7 @@ import UIKit
 class LikeControl: UIControl {
     
     public var isLiked: Bool = false
-    let heartImageView = UIImageView()
+    var heartImageView = UIImageView()
     let likeNumber = UILabel()
     
     override init(frame: CGRect) {
@@ -44,11 +44,20 @@ class LikeControl: UIControl {
     }
     
     //MARK: - Privates
-    @objc func likeTapped() {
+    @objc private func likeTapped() {
         isLiked.toggle()
         heartImageView.image = isLiked ? UIImage(named: "heartSelected") : UIImage(named: "heart")
         likeNumber.text = isLiked ? "1" : "0"
         likeNumber.textColor = isLiked ? .red : .black
         sendActions(for: .valueChanged)
+        rotateAnimation(imageView: heartImageView)
+    }
+    
+    private func rotateAnimation(imageView: UIImageView, duration: CFTimeInterval = 0.3) {
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(.pi * 2.0)
+        rotateAnimation.duration = duration
+        imageView.layer.add(rotateAnimation, forKey: nil)
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B50FBD672265CD8E00BD041B /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50FBD662265CD8E00BD041B /* LikeControl.swift */; };
+		B54E8D502274007F00128EBE /* CustomActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54E8D4F2274007F00128EBE /* CustomActivityIndicator.swift */; };
 		B5532645225055F4003CD775 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5532644225055F4003CD775 /* AppDelegate.swift */; };
 		B5532647225055F4003CD775 /* LoginFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5532646225055F4003CD775 /* LoginFormController.swift */; };
 		B553264A225055F4003CD775 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5532648225055F4003CD775 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		B50FBD662265CD8E00BD041B /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
+		B54E8D4F2274007F00128EBE /* CustomActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActivityIndicator.swift; sourceTree = "<group>"; };
 		B5532641225055F4003CD775 /* VKClientGB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClientGB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5532644225055F4003CD775 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5532646225055F4003CD775 /* LoginFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				B59A290922658B1800A4D83C /* BackEnabledNavigationController.swift */,
 				B50FBD662265CD8E00BD041B /* LikeControl.swift */,
 				B5FFC7042266C76300B9DD8F /* FriendsDataBase.swift */,
+				B54E8D4F2274007F00128EBE /* CustomActivityIndicator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				B556C433225AD60700521335 /* Friend.swift in Sources */,
 				B5532645225055F4003CD775 /* AppDelegate.swift in Sources */,
 				B5FFC7052266C76300B9DD8F /* FriendsDataBase.swift in Sources */,
+				B54E8D502274007F00128EBE /* CustomActivityIndicator.swift in Sources */,
 				B556C42D225AC0F600521335 /* Group.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,14 +13,14 @@ class PhotosFriendCell: UICollectionViewCell {
         }
     }
     @IBOutlet var likeControl: LikeControl!
-    
+
     override var isHighlighted: Bool {
         didSet {
             var transform = CGAffineTransform.identity
             if isHighlighted {
-                transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
             }
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
                 self.transform = transform
             })
         }
