@@ -12,6 +12,10 @@ class PhotosFriendController: UICollectionViewController {
         
         navigationItem.title = "Фотографии друга"
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = false
+    }
 
     // MARK: - UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -28,31 +32,7 @@ class PhotosFriendController: UICollectionViewController {
         
         return cell
     }
-    
-<<<<<<< Updated upstream
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
-        cell.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-        cell.alpha = 0
-        UIView.animate(withDuration: 1, delay: 0, animations: {
-            cell.transform = .identity
-            cell.alpha = 1
-        }, completion: nil)
-    }
-    
-    // MARK: - Private functions
-
-=======
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        currentImage = indexPath.row
-//        let imagesController = SwipeController()
-////        imagesController.photos = photos as! [UIImage]
-//        imagesController.currentImage = currentImage
-////        performSegue(withIdentifier: "showImages", sender: nil)
-    }
-    
-    // MARK: - Private functions
->>>>>>> Stashed changes
     @objc private func cellLikePressed(_ sender: LikeControl) {
 
     }
@@ -62,12 +42,13 @@ class PhotosFriendController: UICollectionViewController {
 
         if segue.identifier == "showImages" {
             let imagesController = segue.destination as? SwipeController
-            imagesController?.photos = photos as! [UIImage]
+            if let photos: [UIImage] = photos as? [UIImage] {
+                imagesController?.photos = photos
+            }
+            currentImage = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
             imagesController?.currentImage = currentImage
         }
     }
-    
-    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

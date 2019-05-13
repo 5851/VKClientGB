@@ -198,7 +198,7 @@
         <!--Item-->
         <scene sceneID="pmE-BC-0Ir">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="70c-iV-mcz" customClass="BackEnabledNavigationController" customModule="VKClientGB" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="70c-iV-mcz" customClass="CustomNavigationController" customModule="VKClientGB" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="mOH-wB-evd"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QNJ-Rt-95B">
