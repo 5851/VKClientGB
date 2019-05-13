@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="70c-iV-mcz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="70c-iV-mcz">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -167,6 +166,7 @@
                                 <connections>
                                     <outlet property="likeControl" destination="4gT-9G-lEO" id="R2E-Dj-lRI"/>
                                     <outlet property="photo" destination="Dkv-dK-enF" id="2Yw-ds-jX4"/>
+                                    <segue destination="py9-iC-iEc" kind="show" identifier="showImages" id="chd-SI-HIz"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -179,6 +179,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZQ-za-ESy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3256.8000000000002" y="-186.65667166416793"/>
+        </scene>
+        <!--Swipe Controller-->
+        <scene sceneID="Dvf-5u-Rsa">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="py9-iC-iEc" customClass="SwipeController" customModule="VKClientGB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZuM-qo-LQV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Hd2-sT-anF"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OSU-DY-rTS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4090" y="-187"/>
         </scene>
         <!--Item-->
         <scene sceneID="pmE-BC-0Ir">

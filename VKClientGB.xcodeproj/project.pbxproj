@@ -23,6 +23,7 @@
 		B556C437225AE67300521335 /* PhotosFriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B556C436225AE67300521335 /* PhotosFriendController.swift */; };
 		B556C439225AE68C00521335 /* PhotosFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B556C438225AE68C00521335 /* PhotosFriendCell.swift */; };
 		B59A290A22658B1800A4D83C /* BackEnabledNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59A290922658B1800A4D83C /* BackEnabledNavigationController.swift */; };
+		B5BD31252279565F009711FB /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD31242279565F009711FB /* SwipeController.swift */; };
 		B5F1BBFC2258221900F2DA69 /* MyFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BBFB2258221900F2DA69 /* MyFriendsController.swift */; };
 		B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC002258229C00F2DA69 /* MyFriendsCell.swift */; };
 		B5F1BC052258258E00F2DA69 /* AllGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1BC042258258E00F2DA69 /* AllGroupsController.swift */; };
@@ -54,6 +55,7 @@
 		B556C436225AE67300521335 /* PhotosFriendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFriendController.swift; sourceTree = "<group>"; };
 		B556C438225AE68C00521335 /* PhotosFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFriendCell.swift; sourceTree = "<group>"; };
 		B59A290922658B1800A4D83C /* BackEnabledNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEnabledNavigationController.swift; sourceTree = "<group>"; };
+		B5BD31242279565F009711FB /* SwipeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
 		B5F1BBFB2258221900F2DA69 /* MyFriendsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFriendsController.swift; sourceTree = "<group>"; };
 		B5F1BC002258229C00F2DA69 /* MyFriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFriendsCell.swift; sourceTree = "<group>"; };
 		B5F1BC042258258E00F2DA69 /* AllGroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsController.swift; sourceTree = "<group>"; };
@@ -152,9 +154,18 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		B5BD312122794BF1009711FB /* ImagesSwipe */ = {
+			isa = PBXGroup;
+			children = (
+				B5BD31242279565F009711FB /* SwipeController.swift */,
+			);
+			path = ImagesSwipe;
+			sourceTree = "<group>";
+		};
 		B5F1BBF9225821D600F2DA69 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
+				B5BD312122794BF1009711FB /* ImagesSwipe */,
 				B5F1BBFB2258221900F2DA69 /* MyFriendsController.swift */,
 				B5F1BC002258229C00F2DA69 /* MyFriendsCell.swift */,
 				B556C436225AE67300521335 /* PhotosFriendController.swift */,
@@ -258,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5BD31252279565F009711FB /* SwipeController.swift in Sources */,
 				B556C437225AE67300521335 /* PhotosFriendController.swift in Sources */,
 				B5FDD5A222696EF900381B24 /* Feed.swift in Sources */,
 				B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */,
@@ -432,7 +444,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = MN.VKClientGB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -451,7 +463,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = MN.VKClientGB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

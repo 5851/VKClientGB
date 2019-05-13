@@ -19,10 +19,10 @@ class FriendsDataBase {
             UIImage(named: "friend2"),
             ]),
         Friend(name: "Александров Сидор Сидорович", iconImage: UIImage(named: "friend"), photos: [
+            UIImage(named: "friend"),
+            UIImage(named: "friend2"),
             UIImage(named: "friend3"),
-            UIImage(named: "friend3"),
-            UIImage(named: "friend3"),
-            UIImage(named: "friend3"),
+            UIImage(named: "friend4"),
             ]),
         Friend(name: "Сергеев Семен Семенович", iconImage: UIImage(named: "friend"), photos: [
             UIImage(named: "friend4"),
