@@ -6,7 +6,7 @@ class FriendsDataBase {
     private init() { }
     
     var friends = [
-        Friend(name: "Иванов Иван Иванович", iconImage: UIImage(named: "friend"),photos: [
+        Friend(name: "Иванов Иван Иванович", iconImage: UIImage(named: "friend"), photos: [
             UIImage(named: "friend"),
             UIImage(named: "friend"),
             UIImage(named: "friend"),
