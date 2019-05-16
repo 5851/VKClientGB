@@ -21,7 +21,6 @@ class SwipeController: UIViewController {
         setupStartImage()
         setupGesture()
         view.backgroundColor = .black
-        navigationController?.navigationBar.isHidden = true
     }
     
     private func setupStartImage() {
@@ -73,7 +72,7 @@ class SwipeController: UIViewController {
                 setupCurrentImage()
             }
         case .down:
-            navigationController?.popViewController(animated: true)
+            dismiss(animated: true, completion: nil)
             imagesContainer.isHidden = true
         default:
             print("No swipe")
@@ -92,7 +91,7 @@ class SwipeController: UIViewController {
                 break
             }
         }
-        UIView.animateKeyframes(withDuration: 0.8, delay: 0, options: [], animations: {
+        UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
 
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.1, animations: {
                 previousView.frame = CGRect(x: previousFrame.origin.x + self.offsetValue, y: previousFrame.origin.y + self.offsetValue, width: previousFrame.width - self.offsetValue * 2, height: previousFrame.height - self.offsetValue * 2)

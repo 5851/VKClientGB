@@ -166,7 +166,7 @@
                                 <connections>
                                     <outlet property="likeControl" destination="4gT-9G-lEO" id="R2E-Dj-lRI"/>
                                     <outlet property="photo" destination="Dkv-dK-enF" id="2Yw-ds-jX4"/>
-                                    <segue destination="py9-iC-iEc" kind="show" identifier="showImages" id="chd-SI-HIz"/>
+                                    <segue destination="py9-iC-iEc" kind="presentation" identifier="showImages" id="chd-SI-HIz"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
