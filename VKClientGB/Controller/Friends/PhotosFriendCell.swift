@@ -4,8 +4,16 @@ class PhotosFriendCell: UICollectionViewCell {
     
     static let cellId = "photosFriendCell"
     
+    var photoFriend: Photo! {
+        didSet {
+            let url = URL(string: photoFriend.sizes[2].url)
+            guard let data = try? Data(contentsOf: url!) else { return }
+            self.photo.image = UIImage(data: data)
+        }
+    }
+    
     @IBOutlet weak var likeNumber: UILabel!
-    @IBOutlet weak var photo: UIImageView! {
+    @IBOutlet weak var photo: WebImageView! {
         didSet {
             photo.contentMode = .scaleAspectFill
             photo.layer.cornerRadius = 10

@@ -3,7 +3,7 @@ import UIKit
 class SwipeController: UIViewController {
     
     let imagesContainer = UIView()
-    var photos = [UIImage]()
+    var photos = [Photo]()
     var curImageView = UIView()
     var curImageFrame = CGRect()
     
@@ -33,11 +33,15 @@ class SwipeController: UIViewController {
         
         imagesContainer.frame = CGRect(x: 0, y: 0, width: width * CGFloat(photos.count), height: heigth)
         for (i, photo) in photos.enumerated() {
-            let imageView = UIImageView()
+            let imageView = WebImageView()
             imageView.frame = CGRect(x: width * CGFloat(i), y: 0, width: width, height: heigth)
             imageView.contentMode = .scaleAspectFit
             imageView.tag = i
-            imageView.image = photo
+            
+            let url = URL(string: photo.sizes[2].url)
+            guard let data = try? Data(contentsOf: url!) else { return }
+            imageView.image = UIImage(data: data)
+            
             imagesContainer.addSubview(imageView)
         }
         view.addSubview(imagesContainer)

@@ -22,9 +22,7 @@ class MyFriendsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        friends = FriendsDataBase.shared.friends
-        (sectionsName, friendDictionary) = sortFriends(friends: friends)
-        filteredButtons = buttons
+        fetchData()
         
         setupSearchBar()
         setupTableView()
@@ -42,16 +40,28 @@ class MyFriendsController: UIViewController {
             let indexPath = tableView.indexPathForSelectedRow {
                 let friendKey = sectionsName[indexPath.section]
                 if let friendValues = friendDictionary[friendKey] {
-                    photosController.photos = friendValues[indexPath.row].photos
-                }
+                    photosController.friendId = friendValues[indexPath.row].id
+            }
         }
     }
     
     // MARK: - Private functions
+    private func fetchData() {
+        
+        AlamofireService.shared.fetchFrieds { friends in
+            self.friends = friends
+            (self.sectionsName,self.friendDictionary) = (self.sortFriends(friends: friends))
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     private func setupSearchBar() {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.dimsBackgroundDuringPresentation = false
+        searchController.definesPresentationContext = true
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Enter friend name"
         searchController.searchBar.searchBarStyle = .minimal
@@ -70,7 +80,7 @@ class MyFriendsController: UIViewController {
         var friendDictionary = [Character: [Friend]]()
         
         for friend in friends {
-            guard let sectionName = friend.name.first else {
+            guard let sectionName = friend.last_name.first else {
                 continue
             }
             if friendDictionary[sectionName] != nil {
@@ -84,36 +94,6 @@ class MyFriendsController: UIViewController {
         
         return (sectionsName, friendDictionary)
     }
-    
-//    private func setupStackViewButtons(sectionsName: [Character]) {
-//        for item in sectionsName {
-//            buttons.append(createButton(for: String(item)))
-//        }
-//        let stackView = UIStackView(arrangedSubviews: buttons)
-//        stackView.axis = .vertical
-//        stackView.spacing = -5
-//        alphabetView.addSubview(stackView)
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        stackView.centerYAnchor.constraint(equalTo: alphabetView.centerYAnchor).isActive = true
-//        stackView.centerXAnchor.constraint(equalTo: alphabetView.centerXAnchor).isActive = true
-//    }
-//
-//    private func createButton(for entry: String) -> UIButton {
-//        let button = UIButton(type: .system)
-//        button.setTitle(entry, for: .normal)
-//        button.setTitleColor(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), for: .normal)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-//        button.addTarget(self, action: #selector(handleTapButton), for: .touchUpInside)
-//        return button
-//    }
-    
-//    @objc private func handleTapButton(sender: UIButton) {
-//        guard let tag = buttons.lastIndex(of: sender) else { return }
-//        guard let index = sectionsName.lastIndex(of: ((sender.titleLabel!.text!))) else { return }
-//        if tag == index {
-//            tableView.scrollToRow(at: IndexPath(row: 0, section: tag), at: .top, animated: true)
-//        }
-//    }
 }
 
 extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
@@ -147,7 +127,7 @@ extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
         guard let users = friendDictionary[letter] else { return UITableViewCell() }
         let friend = users[indexPath.row]
         
-        cell.friend = friend
+        cell.setupCell(friend: friend)
         
         return cell
     }
@@ -193,7 +173,7 @@ extension MyFriendsController: UISearchBarDelegate {
         }
 
         let filteredFriends = friends.filter({ (friend) -> Bool in
-            return friend.name.lowercased().contains(searchText.lowercased())
+            return friend.last_name.lowercased().contains(searchText.lowercased())
         })
         
         (sectionsName, friendDictionary) = sortFriends(friends: filteredFriends)

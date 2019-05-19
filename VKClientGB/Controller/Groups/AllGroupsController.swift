@@ -3,21 +3,8 @@ import UIKit
 class AllGroupsController: UITableViewController {
 
     // MARK: - Variables
-    var groups = [
-        Group(name: "Группа № 1", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 2", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 3", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 4", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 5", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 6", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 7", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 8", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 9", iconImage: UIImage(named: "garden")),
-        Group(name: "Группа № 10", iconImage: UIImage(named: "garden")),
-    ]
-    
+    var groups = [Group]()
     let searchController = UISearchController(searchResultsController: nil)
-    var filteredGroup = [Group]()
     
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
@@ -25,7 +12,6 @@ class AllGroupsController: UITableViewController {
         
         navigationItem.title = "Все группы"
         tableView.tableFooterView = UIView()
-        filteredGroup = groups
         setupSearchBar()
     }
     
@@ -40,7 +26,7 @@ class AllGroupsController: UITableViewController {
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredGroup.count
+        return groups.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,7 +34,7 @@ class AllGroupsController: UITableViewController {
             fatalError("Can not load group cell")
         }
         
-        let group = filteredGroup[indexPath.row]
+        let group = groups[indexPath.row]
         cell.group = group
         
         return cell
@@ -59,13 +45,27 @@ class AllGroupsController: UITableViewController {
 extension AllGroupsController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            filteredGroup = groups
-        } else {
-            filteredGroup = self.groups.filter({ (group) -> Bool in
+
+        guard !searchText.isEmpty else {
+            groups.removeAll()
+            tableView.reloadData()
+            return
+        }
+
+        AlamofireService.shared.fetchAllGroups(searchText: searchText) { [weak self] groups in
+
+            self?.groups = groups.filter({ (group) -> Bool in
                 return group.name.lowercased().contains(searchText.lowercased())
             })
+            
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
         }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        groups.removeAll()
         tableView.reloadData()
     }
 }
