@@ -6,12 +6,15 @@ class GroupsCell: UITableViewCell {
     
     var group: Group! {
         didSet {
-            self.iconGroup.image = group.iconImage
+            let url = URL(string: group.photo_100)
+            guard let data = try? Data(contentsOf: url!) else { return }
+            self.iconGroup.image = UIImage(data: data)
+
             self.nameGroup.text = group.name
         }
     }
 
-    @IBOutlet weak var iconGroup: UIImageView! {
+    @IBOutlet weak var iconGroup: WebImageView! {
         didSet {
             iconGroup.layer.cornerRadius = iconGroup.frame.width / 2
             iconGroup.contentMode = .scaleAspectFill

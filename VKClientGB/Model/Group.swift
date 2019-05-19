@@ -1,11 +1,15 @@
 import UIKit
 
-class Group {
+struct GroupsResponseWrapped: Decodable {
+    let response: GroupsResponse
+}
+
+struct GroupsResponse: Decodable {
+    let count: Int
+    let items: [Group]
+}
+
+struct Group: Decodable {
     let name: String
-    let iconImage: UIImage?
-    
-    init(name: String, iconImage: UIImage?) {
-        self.name = name
-        self.iconImage = iconImage
-    }
+    let photo_100: String
 }

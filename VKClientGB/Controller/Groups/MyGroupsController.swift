@@ -9,6 +9,8 @@ class MyGroupsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchData()
+        
         navigationItem.title = "Мои группы"
         tableView.tableFooterView = UIView()
     }
@@ -36,6 +38,17 @@ class MyGroupsController: UITableViewController {
         }
     }
     
+    // MARK: - Private fucntions
+    
+    private func fetchData() {
+        AlamofireService.shared.fetchMyGroups { [weak self] groups in
+            self?.groups = groups
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+    }
+    
     // MARK: - Navigation
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
@@ -43,7 +56,7 @@ class MyGroupsController: UITableViewController {
             if let allGroups = segue.source as? AllGroupsController,
                 let indexPath = allGroups.tableView.indexPathForSelectedRow {
                 
-                let myGroup = allGroups.filteredGroup[indexPath.row]
+                let myGroup = allGroups.groups[indexPath.row]
                 let newIndexPath = IndexPath(item: groups.count, section: 0)
                 
                 guard !groups.contains(where: { group -> Bool in

@@ -1,13 +1,17 @@
 import UIKit
 
-class Friend {
-    let name: String
-    let iconImage: UIImage?
-    let photos: [UIImage?]
+struct FriendsResponseWrapped: Decodable {
+    let response: FriendsResponse
+}
 
-    init(name: String, iconImage: UIImage?, photos: [UIImage?]) {
-        self.name = name
-        self.iconImage = iconImage
-        self.photos = photos
-    }
+struct FriendsResponse: Decodable {
+    let count: Int
+    let items: [Friend]
+}
+
+struct Friend: Decodable {
+    let id: Int
+    let first_name: String
+    let last_name: String
+    let photo_100: String
 }
