@@ -42,7 +42,8 @@ class MyGroupsController: UITableViewController {
     
     private func fetchData() {
         AlamofireService.shared.fetchMyGroups { [weak self] groups in
-            self?.groups = groups
+            self?.groups = groups.response.items
+            
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }

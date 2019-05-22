@@ -15,7 +15,7 @@ class AlamofireService {
     
     // Fetch friends
     
-    func fetchFrieds(completionHandler: @escaping ([Friend]) -> Void) {
+    func fetchFrieds(completionHandler: @escaping (FriendsResponseWrapped) -> Void) {
         
         let url = vkApi + vkApiFrieds
         
@@ -26,27 +26,13 @@ class AlamofireService {
             "fields": "nickname, photo_100",
             "v": "5.95"
         ]
-
-        Alamofire.request(url, method: .get, parameters: parameters).responseData { data in
-
-            switch data.result {
-            case .success(_):
-                guard let data = data.data else { return }
-                do {
-                    let searchResult = try JSONDecoder().decode(FriendsResponseWrapped.self, from: data)
-                    completionHandler(searchResult.response.items)
-                                    } catch let decodeErr {
-                    print("Failed to decode:", decodeErr)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }.resume()
+        
+        fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
     }
     
     // Fetch groups
     
-    func fetchMyGroups(completionHandler: @escaping ([Group]) -> Void) {
+    func fetchMyGroups(completionHandler: @escaping (GroupsResponseWrapped) -> Void) {
         
         let url = vkApi + vkApiGroups
         
@@ -56,28 +42,12 @@ class AlamofireService {
             "extended": 1,
             "v": "5.95"
         ]
-        
-        Alamofire.request(url, method: .get, parameters: parameters).responseData { data in
-            
-            switch data.result {
-            case .success(_):
-                guard let data = data.data else { return }
-                do {
-                    let searchResult = try JSONDecoder().decode(GroupsResponseWrapped.self, from: data)
-                    let result = searchResult.response.items
-                    completionHandler(result)
-                } catch let decodeErr {
-                    print("Failed to decode:", decodeErr)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }.resume()
+        fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
     }
-    
+
     // Fetch allGroups
     
-    func fetchAllGroups(searchText: String, completionHandler: @escaping ([Group]) -> Void) {
+    func fetchAllGroups(searchText: String, completionHandler: @escaping (GroupsResponseWrapped) -> Void) {
         
         let url = vkApi + vkApiAllGroups
         
@@ -89,27 +59,12 @@ class AlamofireService {
             "v": "5.95"
         ]
         
-        Alamofire.request(url, method: .get, parameters: parameters).responseData { data in
-            
-            switch data.result {
-            case .success(_):
-                guard let data = data.data else { return }
-                do {
-                    let searchResult = try JSONDecoder().decode(GroupsResponseWrapped.self, from: data)
-                    let result = searchResult.response.items
-                    completionHandler(result)
-                } catch let decodeErr {
-                    print("Failed to decode:", decodeErr)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }.resume()
+        fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
     }
     
     // Fetch photosFriends
     
-    func fetchPhotosFriend(friendId: Int, completionHandler: @escaping ([Photo]) -> Void) {
+    func fetchPhotosFriend(friendId: Int, completionHandler: @escaping (PhotosResponseWrapped) -> Void) {
         
         let url = vkApi + vkApiAllPhotosFriends
         
@@ -120,21 +75,30 @@ class AlamofireService {
             "v": "5.95"
         ]
         
-        Alamofire.request(url, method: .get, parameters: parameters).responseData { data in
-            
+        fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
+    }
+    
+    // Model fetching
+    
+    func fetchGenericJSONData<T: Decodable>(urlString: String, parameters: Parameters, completion: @escaping (T) -> Void) {
+        
+        guard let url = URL(string: urlString) else { return }
+        request(url, method: .get, parameters: parameters).validate().responseData { data in
             switch data.result {
             case .success(_):
                 guard let data = data.data else { return }
                 do {
-                    let searchResult = try JSONDecoder().decode(PhotosResponseWrapped.self, from: data)
-                    let result = searchResult.response.items
-                    completionHandler(result)
+                    let objects = try JSONDecoder().decode(T.self, from: data)
+                    print(objects)
+                    DispatchQueue.main.async {
+                        completion(objects)
+                    }
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
                 }
             case .failure(let error):
                 print(error)
             }
-        }.resume()
+        }
     }
 }

@@ -6,9 +6,14 @@ class PhotosFriendCell: UICollectionViewCell {
     
     var photoFriend: Photo! {
         didSet {
-            let url = URL(string: photoFriend.sizes[2].url)
-            guard let data = try? Data(contentsOf: url!) else { return }
-            self.photo.image = UIImage(data: data)
+            DispatchQueue.global().async {
+                guard let url = URL(string: self.photoFriend.sizes[2].url) else { return }
+                guard let data = try? Data(contentsOf: url) else { return }
+                
+                DispatchQueue.main.async {
+                    self.photo.image = UIImage(data: data)
+                }
+            }
         }
     }
     
@@ -32,5 +37,10 @@ class PhotosFriendCell: UICollectionViewCell {
                 self.transform = transform
             })
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        photo.image = nil
     }
 }

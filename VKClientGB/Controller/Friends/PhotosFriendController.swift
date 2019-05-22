@@ -41,8 +41,11 @@ class PhotosFriendController: UICollectionViewController {
     
     private func fetchPhoto() {
         AlamofireService.shared.fetchPhotosFriend(friendId: friendId) { [weak self] (photos) in
-            self?.photos = photos
-            self?.collectionView.reloadData()
+            self?.photos = photos.response.items
+            
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         }
     }
 

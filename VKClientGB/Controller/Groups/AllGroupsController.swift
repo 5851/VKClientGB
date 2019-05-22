@@ -54,7 +54,7 @@ extension AllGroupsController: UISearchBarDelegate {
 
         AlamofireService.shared.fetchAllGroups(searchText: searchText) { [weak self] groups in
 
-            self?.groups = groups.filter({ (group) -> Bool in
+            self?.groups = groups.response.items.filter({ (group) -> Bool in
                 return group.name.lowercased().contains(searchText.lowercased())
             })
             
