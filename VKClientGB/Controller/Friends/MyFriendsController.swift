@@ -49,8 +49,8 @@ class MyFriendsController: UIViewController {
     private func fetchData() {
         
         AlamofireService.shared.fetchFrieds { friends in
-            self.friends = friends
-            (self.sectionsName,self.friendDictionary) = (self.sortFriends(friends: friends))
+            self.friends = friends.response.items
+            (self.sectionsName,self.friendDictionary) = (self.sortFriends(friends: friends.response.items))
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }

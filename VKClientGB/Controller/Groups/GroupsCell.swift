@@ -6,10 +6,14 @@ class GroupsCell: UITableViewCell {
     
     var group: Group! {
         didSet {
-            let url = URL(string: group.photo_100)
-            guard let data = try? Data(contentsOf: url!) else { return }
-            self.iconGroup.image = UIImage(data: data)
-
+            DispatchQueue.global().async {
+                guard let url = URL(string: self.group.photo_100) else { return }
+                guard let data = try? Data(contentsOf: url) else { return }
+                
+                DispatchQueue.main.async {
+                    self.iconGroup.image = UIImage(data: data)
+                }
+            }
             self.nameGroup.text = group.name
         }
     }
@@ -30,5 +34,11 @@ class GroupsCell: UITableViewCell {
             shadowView.backgroundColor = UIColor.black
             shadowView.layer.cornerRadius = shadowView.frame.width / 2
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nameGroup.text = ""
+        iconGroup.image = nil
     }
 }
