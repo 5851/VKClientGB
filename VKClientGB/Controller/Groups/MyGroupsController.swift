@@ -1,10 +1,11 @@
 import UIKit
 
-class MyGroupsController: UITableViewController {
+class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Variables
     var groups = [Group]()
-    
+    @IBOutlet weak var tableView: UITableView!
+
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,14 +14,15 @@ class MyGroupsController: UITableViewController {
         
         navigationItem.title = "Мои группы"
         tableView.tableFooterView = UIView()
+        tableView.delegate = self
     }
 
     // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.cellId, for: indexPath) as? GroupsCell else {
             fatalError("Can not load group cell")
         }
@@ -31,7 +33,7 @@ class MyGroupsController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             groups.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -65,8 +67,21 @@ class MyGroupsController: UITableViewController {
                 }) else { return }
              
                 groups.append(myGroup)
+                
                 tableView.insertRows(at: [newIndexPath], with: .fade)
             }
         }
+    }
+    
+    // MARK: Sorting
+    
+    @IBAction func sortSelection(_ sender: UISegmentedControl) {
+        
+        if sender.selectedSegmentIndex == 0 {
+            groups = groups.sorted(by: { $0.name < $1.name })
+        } else {
+//            groups = groups.sorted(by: { $0.members_count > $1.members_count })
+        }
+        tableView.reloadData()
     }
 }

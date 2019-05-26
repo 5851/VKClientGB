@@ -10,7 +10,7 @@ class AllGroupsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Все группы"
+        setupNavigationBar()
         tableView.tableFooterView = UIView()
         setupSearchBar()
     }
@@ -22,6 +22,14 @@ class AllGroupsController: UITableViewController {
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Enter group name"
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.title = "Все группы"
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        }
+        navigationItem.leftBarButtonItem = nil
     }
 
     // MARK: - Table view data source
@@ -53,7 +61,7 @@ extension AllGroupsController: UISearchBarDelegate {
         }
 
         AlamofireService.shared.fetchAllGroups(searchText: searchText) { [weak self] groups in
-
+            
             self?.groups = groups.response.items.filter({ (group) -> Bool in
                 return group.name.lowercased().contains(searchText.lowercased())
             })

@@ -12,4 +12,6 @@ struct GroupsResponse: Decodable {
 struct Group: Decodable {
     let name: String
     let photo_100: String
+//    let description: String
+//    let members_count: Int
 }

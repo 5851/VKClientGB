@@ -11,6 +11,7 @@ class AlamofireService {
     let vkApiFrieds = "friends.get"
     let vkApiGroups = "groups.get"
     let vkApiAllGroups = "groups.search"
+    let vkApiJoinGroups = "groups.search"
     let vkApiAllPhotosFriends = "photos.getAll"
     
     // Fetch friends
@@ -39,6 +40,7 @@ class AlamofireService {
         let parameters: Parameters = [
             "user_id": Session.shared.userId,
             "access_token": Session.shared.token,
+//            "fields": "description,members_count",
             "extended": 1,
             "v": "5.95"
         ]
