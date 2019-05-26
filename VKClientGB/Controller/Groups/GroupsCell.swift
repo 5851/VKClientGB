@@ -15,6 +15,7 @@ class GroupsCell: UITableViewCell {
                 }
             }
             self.nameGroup.text = group.name
+//            self.membersCount.text = formattedCounter(group.members_count)
         }
     }
 
@@ -35,10 +36,25 @@ class GroupsCell: UITableViewCell {
             shadowView.layer.cornerRadius = shadowView.frame.width / 2
         }
     }
+    @IBOutlet weak var membersCount: UILabel!
+    
     
     override func prepareForReuse() {
         super.prepareForReuse()
         nameGroup.text = ""
         iconGroup.image = nil
+    }
+    
+    private func formattedCounter(_ counter: Int?) -> String? {
+        guard let counter = counter, counter > 0 else { return nil }
+        var counterString = String(counter)
+        
+        if 4...6 ~= counterString.count {
+            counterString = String(counterString.dropLast(3)) + "K"
+        } else if counterString.count > 6 {
+            counterString = String(counterString.dropLast(6)) + "M"
+        }
+        
+        return counterString
     }
 }
