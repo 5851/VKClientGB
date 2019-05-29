@@ -6,14 +6,14 @@ class GroupsCell: UITableViewCell {
     
     var group: Group! {
         didSet {
-            DispatchQueue.global().async {
+//            DispatchQueue.global(qos: .userInteractive).async {
                 guard let url = URL(string: self.group.photo_100) else { return }
                 guard let data = try? Data(contentsOf: url) else { return }
                 
                 DispatchQueue.main.async {
                     self.iconGroup.image = UIImage(data: data)
                 }
-            }
+//            }
             self.nameGroup.text = group.name
 //            self.membersCount.text = formattedCounter(group.members_count)
         }

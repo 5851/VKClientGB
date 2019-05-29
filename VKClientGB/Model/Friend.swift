@@ -1,17 +1,18 @@
 import UIKit
+import RealmSwift
 
-struct FriendsResponseWrapped: Decodable {
+class FriendsResponseWrapped: Decodable {
     let response: FriendsResponse
 }
 
-struct FriendsResponse: Decodable {
+class FriendsResponse: Decodable {
     let count: Int
     let items: [Friend]
 }
 
-struct Friend: Decodable {
-    let id: Int
-    let first_name: String
-    let last_name: String
-    let photo_100: String
+class Friend: Object, Decodable {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var first_name: String = ""
+    @objc dynamic var last_name: String = ""
+    @objc dynamic var photo_100: String = ""
 }

@@ -27,6 +27,7 @@
 		B556C437225AE67300521335 /* PhotosFriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B556C436225AE67300521335 /* PhotosFriendController.swift */; };
 		B556C439225AE68C00521335 /* PhotosFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B556C438225AE68C00521335 /* PhotosFriendCell.swift */; };
 		B58C1C252290EC420015E16A /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58C1C242290EC420015E16A /* Photo.swift */; };
+		B58DC9A4229DF9AE00A78059 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58DC9A3229DF9AE00A78059 /* RealmService.swift */; };
 		B5BD31252279565F009711FB /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD31242279565F009711FB /* SwipeController.swift */; };
 		B5C2642B22901FA700C0AF1B /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C2642A22901FA700C0AF1B /* Session.swift */; };
 		B5C264302290218E00C0AF1B /* AuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C2642F2290218E00C0AF1B /* AuthorizationController.swift */; };
@@ -71,6 +72,7 @@
 		B556C436225AE67300521335 /* PhotosFriendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFriendController.swift; sourceTree = "<group>"; };
 		B556C438225AE68C00521335 /* PhotosFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFriendCell.swift; sourceTree = "<group>"; };
 		B58C1C242290EC420015E16A /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		B58DC9A3229DF9AE00A78059 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		B5BD31242279565F009711FB /* SwipeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
 		B5C2642A22901FA700C0AF1B /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		B5C2642F2290218E00C0AF1B /* AuthorizationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationController.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			children = (
 				B5C2642C22901FAC00C0AF1B /* Model */,
 				B5C26434229049B200C0AF1B /* AlamofireService.swift */,
+				B58DC9A3229DF9AE00A78059 /* RealmService.swift */,
 				B5C264392290686C00C0AF1B /* WebImageView.swift */,
 			);
 			path = Services;
@@ -365,12 +368,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VKClientGB/Pods-VKClientGB-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -436,6 +443,7 @@
 				B505D9602282515C00446449 /* CustomNavigationController.swift in Sources */,
 				B5C2643822904BB100C0AF1B /* Constants.swift in Sources */,
 				B5FDD5A02269664D00381B24 /* FeedsCell.swift in Sources */,
+				B58DC9A4229DF9AE00A78059 /* RealmService.swift in Sources */,
 				B556C435225ADB6600521335 /* MainTabBarController.swift in Sources */,
 				B5532647225055F4003CD775 /* LoginFormController.swift in Sources */,
 				B5F1BC052258258E00F2DA69 /* AllGroupsController.swift in Sources */,

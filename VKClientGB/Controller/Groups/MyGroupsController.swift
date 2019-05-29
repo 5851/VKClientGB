@@ -1,15 +1,20 @@
 import UIKit
+import RealmSwift
 
 class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Variables
-    var groups = [Group]()
+    var groups: Results<Group>? = {
+        return realm.objects(Group.self).sorted(byKeyPath: "name")
+    }()
+    
+    // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
 
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         fetchData()
         
         navigationItem.title = "Мои группы"
@@ -19,7 +24,7 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        return groups?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -27,7 +32,7 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
             fatalError("Can not load group cell")
         }
         
-        let group = groups[indexPath.row]
+        let group = groups?[indexPath.row]
         cell.group = group
         
         return cell
@@ -35,21 +40,15 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            groups.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            RealmService.shared.deleteGroups([groups![indexPath.row]])
+            tableView.reloadData()
         }
     }
     
     // MARK: - Private fucntions
     
-    private func fetchData() {
-        AlamofireService.shared.fetchMyGroups { [weak self] groups in
-            self?.groups = groups.response.items
-            
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
+    private func fetchData() {        
+        AlamofireService.shared.fetchMyGroups()
     }
     
     // MARK: - Navigation
@@ -58,17 +57,14 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier  == "addGroup" {
             if let allGroups = segue.source as? AllGroupsController,
                 let indexPath = allGroups.tableView.indexPathForSelectedRow {
-                
-                let myGroup = allGroups.groups[indexPath.row]
-                let newIndexPath = IndexPath(item: groups.count, section: 0)
-                
-                guard !groups.contains(where: { group -> Bool in
+
+                let myGroup = allGroups.groups[indexPath.row]            
+                guard !(groups?.contains(where: { group -> Bool in
                     return group.name == myGroup.name
-                }) else { return }
-             
-                groups.append(myGroup)
-                
-                tableView.insertRows(at: [newIndexPath], with: .fade)
+                }))! else { return }
+
+                RealmService.shared.addGroupFromAllGroups([myGroup])
+                tableView.reloadData()
             }
         }
     }
@@ -76,12 +72,12 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Sorting
     
     @IBAction func sortSelection(_ sender: UISegmentedControl) {
-        
-        if sender.selectedSegmentIndex == 0 {
-            groups = groups.sorted(by: { $0.name < $1.name })
-        } else {
+
+//        if sender.selectedSegmentIndex == 0 {
+//            groups = groups.sorted(by: { $0.name < $1.name })
+//        } else {
 //            groups = groups.sorted(by: { $0.members_count > $1.members_count })
-        }
-        tableView.reloadData()
+//        }
+//        tableView.reloadData()
     }
 }

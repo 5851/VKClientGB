@@ -1,4 +1,5 @@
 import UIKit
+import RealmSwift
 
 class MyFriendsController: UIViewController {
 
@@ -7,6 +8,10 @@ class MyFriendsController: UIViewController {
     @IBOutlet weak var alphabetView: UIView!
     
     // MARK: - Variables
+    
+    var friendsRealm: Results<Friend>? = {
+        return realm.objects(Friend.self)
+    }()
     var friends = [Friend]()
     var filteredFriends = [Friend]()
     
@@ -22,10 +27,15 @@ class MyFriendsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        friends = Array(friendsRealm!)
+        (sectionsName, friendDictionary) = sortFriends(friends: friends)
         fetchData()
         
         setupSearchBar()
         setupTableView()
+        
+        tableView.reloadData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -47,14 +57,7 @@ class MyFriendsController: UIViewController {
     
     // MARK: - Private functions
     private func fetchData() {
-        
-        AlamofireService.shared.fetchFrieds { friends in
-            self.friends = friends.response.items
-            (self.sectionsName,self.friendDictionary) = (self.sortFriends(friends: friends.response.items))
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+        AlamofireService.shared.fetchFrieds()
     }
     
     private func setupSearchBar() {
@@ -175,7 +178,7 @@ extension MyFriendsController: UISearchBarDelegate {
         let filteredFriends = friends.filter({ (friend) -> Bool in
             return friend.last_name.lowercased().contains(searchText.lowercased())
         })
-        
+
         (sectionsName, friendDictionary) = sortFriends(friends: filteredFriends)
        
         tableView.reloadData()

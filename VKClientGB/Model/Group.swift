@@ -1,17 +1,18 @@
 import UIKit
+import RealmSwift
 
-struct GroupsResponseWrapped: Decodable {
+class GroupsResponseWrapped: Decodable {
     let response: GroupsResponse
 }
 
-struct GroupsResponse: Decodable {
+class GroupsResponse: Decodable {
     let count: Int
     let items: [Group]
 }
 
-struct Group: Decodable {
-    let name: String
-    let photo_100: String
+class Group: Object, Decodable {
+    @objc dynamic var name = ""
+    @objc dynamic var photo_100: String = ""
 //    let description: String
 //    let members_count: Int
 }
