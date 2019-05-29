@@ -7,5 +7,6 @@ target 'VKClientGB' do
 
   # Pods for VKClientGB
   pod 'Alamofire'
+  pod 'RealmSwift'
 
 end

@@ -1,20 +1,33 @@
 import Foundation
+import RealmSwift
 
-struct PhotosResponseWrapped: Decodable {
+class PhotosResponseWrapped: Decodable {
     let response: PhotosResponse
 }
 
-struct PhotosResponse: Decodable {
+class PhotosResponse: Decodable {
     let count: Int
     let items: [Photo]
 }
 
-struct Photo: Decodable {
-    let owner_id: Int
-    let sizes: [SizePhoto]
+class Photo: Object, Decodable {
+    @objc dynamic var owner_id: Int = 0
+    let sizes = List<SizePhoto>()
+    
+    private enum CodingKeys: String, CodingKey {
+        case owner_id, sizes
+    }
+    
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.owner_id = try container.decode(Int.self, forKey: .owner_id)
+        let sizesList = try container.decodeIfPresent([SizePhoto].self, forKey: .sizes) ?? [SizePhoto()]
+        sizes.append(objectsIn: sizesList)
+    }
 }
 
-struct SizePhoto: Decodable {
-    let type: String
-    let url: String
+class SizePhoto: Object, Decodable {
+    @objc dynamic var type: String = ""
+    @objc dynamic var url: String = ""
 }

@@ -16,7 +16,7 @@ class AlamofireService {
     
     // Fetch friends
     
-    func fetchFrieds(completionHandler: @escaping (FriendsResponseWrapped) -> Void) {
+    func fetchFrieds() {
         
         let url = vkApi + vkApiFrieds
         
@@ -28,12 +28,25 @@ class AlamofireService {
             "v": "5.95"
         ]
         
-        fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
+        request(url, method: .get, parameters: parameters).validate().responseData { data in
+            switch data.result {
+            case .success(_):
+                guard let data = data.data else { return }
+                do {
+                    let objects = try JSONDecoder().decode(FriendsResponseWrapped.self, from: data)
+                    RealmService.shared.saveFriends(objects.response.items)
+                } catch let decodeErr {
+                    print("Failed to decode:", decodeErr)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     // Fetch groups
     
-    func fetchMyGroups(completionHandler: @escaping (GroupsResponseWrapped) -> Void) {
+    func fetchMyGroups() {
         
         let url = vkApi + vkApiGroups
         
@@ -44,7 +57,21 @@ class AlamofireService {
             "extended": 1,
             "v": "5.95"
         ]
-        fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
+
+        request(url, method: .get, parameters: parameters).validate().responseData { data in
+            switch data.result {
+            case .success(_):
+                guard let data = data.data else { return }
+                do {
+                    let objects = try JSONDecoder().decode(GroupsResponseWrapped.self, from: data)
+                    RealmService.shared.saveGroups(objects.response.items)
+                } catch let decodeErr {
+                    print("Failed to decode:", decodeErr)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     // Fetch allGroups
@@ -91,7 +118,7 @@ class AlamofireService {
                 guard let data = data.data else { return }
                 do {
                     let objects = try JSONDecoder().decode(T.self, from: data)
-                    print(objects)
+//                    print(objects)
                     DispatchQueue.main.async {
                         completion(objects)
                     }
