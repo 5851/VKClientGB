@@ -25,15 +25,7 @@ class MyFriendsCell: UITableViewCell {
     
     func setupCell(friend: Friend) {
         self.nameFriend.text = friend.last_name + " " + friend.first_name
-        
-//        DispatchQueue.global().async {
-            guard let url = URL(string: friend.photo_100) else { return }
-            guard let data = try? Data(contentsOf: url) else { return }
-            
-            DispatchQueue.main.async {
-                self.iconFriend.image = UIImage(data: data)
-            }
-//        }
+        self.iconFriend.set(imageUrl: friend.photo_100)
     }
     
     override func prepareForReuse() {

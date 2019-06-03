@@ -48,7 +48,13 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Private fucntions
     
     private func fetchData() {        
-        AlamofireService.shared.fetchMyGroups()
+        AlamofireService.shared.fetchMyGroups { [weak self] in
+            
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     // MARK: - Navigation
@@ -67,17 +73,5 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
                 tableView.reloadData()
             }
         }
-    }
-    
-    // MARK: Sorting
-    
-    @IBAction func sortSelection(_ sender: UISegmentedControl) {
-
-//        if sender.selectedSegmentIndex == 0 {
-//            groups = groups.sorted(by: { $0.name < $1.name })
-//        } else {
-//            groups = groups.sorted(by: { $0.members_count > $1.members_count })
-//        }
-//        tableView.reloadData()
     }
 }

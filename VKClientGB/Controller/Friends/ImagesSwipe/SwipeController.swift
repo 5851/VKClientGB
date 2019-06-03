@@ -37,10 +37,8 @@ class SwipeController: UIViewController {
             imageView.frame = CGRect(x: width * CGFloat(i), y: 0, width: width, height: heigth)
             imageView.contentMode = .scaleAspectFit
             imageView.tag = i
-            
-            let url = URL(string: photo.sizes[2].url)
-            guard let data = try? Data(contentsOf: url!) else { return }
-            imageView.image = UIImage(data: data)
+
+            imageView.set(imageUrl: photo.sizes[2].url)
             
             imagesContainer.addSubview(imageView)
         }
@@ -99,7 +97,6 @@ class SwipeController: UIViewController {
 
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.1, animations: {
                 previousView.frame = CGRect(x: previousFrame.origin.x + self.offsetValue, y: previousFrame.origin.y + self.offsetValue, width: previousFrame.width - self.offsetValue * 2, height: previousFrame.height - self.offsetValue * 2)
-
             })
 
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {

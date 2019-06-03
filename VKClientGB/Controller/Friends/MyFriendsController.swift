@@ -9,9 +9,8 @@ class MyFriendsController: UIViewController {
     
     // MARK: - Variables
     
-    var friendsRealm: Results<Friend>? = {
-        return realm.objects(Friend.self)
-    }()
+    var friendsRealm: Results<Friend>?
+    
     var friends = [Friend]()
     var filteredFriends = [Friend]()
     
@@ -27,15 +26,10 @@ class MyFriendsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        friends = Array(friendsRealm!)
-        (sectionsName, friendDictionary) = sortFriends(friends: friends)
         fetchData()
-        
+
         setupSearchBar()
         setupTableView()
-        
-        tableView.reloadData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -57,7 +51,16 @@ class MyFriendsController: UIViewController {
     
     // MARK: - Private functions
     private func fetchData() {
-        AlamofireService.shared.fetchFrieds()
+        
+        AlamofireService.shared.fetchFrieds { [weak self] in
+            
+            guard let self = self else { return }            
+            self.friends = RealmService.shared.loadFriends()
+            (self.sectionsName, self.friendDictionary) = self.sortFriends(friends: self.friends)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     private func setupSearchBar() {

@@ -1,9 +1,13 @@
 import UIKit
+import RealmSwift
 
 class PhotosFriendController: UICollectionViewController {
 
     // MARK: - Variables
-    var photos = [Photo]()
+    var photos: Results<Photo>? = {
+        return realm.objects(Photo.self)
+    }()
+    
     var friendId = 0
     var currentImage = 0
     
@@ -22,7 +26,7 @@ class PhotosFriendController: UICollectionViewController {
 
     // MARK: - UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return photos?.count ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -30,7 +34,7 @@ class PhotosFriendController: UICollectionViewController {
             fatalError("Can not load cell")
         }
         
-        let photo = photos[indexPath.item]
+        let photo = photos?[indexPath.item]
         cell.photoFriend = photo
         cell.likeControl.addTarget(self, action: #selector(cellLikePressed), for: .valueChanged)
         
@@ -40,9 +44,10 @@ class PhotosFriendController: UICollectionViewController {
     // MARK: - Private functions
     
     private func fetchPhoto() {
-        AlamofireService.shared.fetchPhotosFriend(friendId: friendId) { [weak self] (photos) in
-            self?.photos = photos.response.items
+        AlamofireService.shared.fetchPhotosFriend(friendId: friendId) { [weak self] in
             
+//            self?.photos = photos.response.items
+//
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
@@ -59,7 +64,7 @@ class PhotosFriendController: UICollectionViewController {
 
         if segue.identifier == "showImages" {
             let imagesController = segue.destination as? SwipeController
-            imagesController?.photos = photos
+//            imagesController?.photos = photos
             currentImage = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
             imagesController?.currentImage = currentImage
         }
