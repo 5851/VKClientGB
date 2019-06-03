@@ -8,7 +8,7 @@ class AlamofireService {
     private init() {  }    
     
     let vkApi = "https://api.vk.com/method/"
-    let vkApiFrieds = "friends.get"
+    let vkApiFriends = "friends.get"
     let vkApiGroups = "groups.get"
     let vkApiAllGroups = "groups.search"
     let vkApiJoinGroups = "groups.search"
@@ -16,9 +16,9 @@ class AlamofireService {
     
     // Fetch friends
     
-    func fetchFrieds() {
+    func fetchFrieds(completion: @escaping () -> Void) {
         
-        let url = vkApi + vkApiFrieds
+        let url = vkApi + vkApiFriends
         
         let parameters: Parameters = [
             "user_id": Session.shared.userId,
@@ -35,6 +35,7 @@ class AlamofireService {
                 do {
                     let objects = try JSONDecoder().decode(FriendsResponseWrapped.self, from: data)
                     RealmService.shared.saveFriends(objects.response.items)
+                    completion()
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
                 }
@@ -46,7 +47,7 @@ class AlamofireService {
     
     // Fetch groups
     
-    func fetchMyGroups() {
+    func fetchMyGroups(completion: @escaping () -> Void) {
         
         let url = vkApi + vkApiGroups
         
@@ -65,6 +66,7 @@ class AlamofireService {
                 do {
                     let objects = try JSONDecoder().decode(GroupsResponseWrapped.self, from: data)
                     RealmService.shared.saveGroups(objects.response.items)
+                    completion()
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
                 }
@@ -93,7 +95,7 @@ class AlamofireService {
     
     // Fetch photosFriends
     
-    func fetchPhotosFriend(friendId: Int, completionHandler: @escaping (PhotosResponseWrapped) -> Void) {
+    func fetchPhotosFriend(friendId: Int, completion: @escaping () -> Void) {
         
         let url = vkApi + vkApiAllPhotosFriends
         
@@ -104,7 +106,21 @@ class AlamofireService {
             "v": "5.95"
         ]
         
-        fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
+        request(url, method: .get, parameters: parameters).validate().responseData { data in
+            switch data.result {
+            case .success(_):
+                guard let data = data.data else { return }
+                do {
+                    let objects = try JSONDecoder().decode(PhotosResponseWrapped.self, from: data)
+                    RealmService.shared.savePhotos(objects.response.items)
+                    completion()
+                } catch let decodeErr {
+                    print("Failed to decode:", decodeErr)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     // Model fetching

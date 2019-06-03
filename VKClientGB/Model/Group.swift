@@ -11,6 +11,7 @@ class GroupsResponse: Decodable {
 }
 
 class Group: Object, Decodable {
+    @objc dynamic var id = 0
     @objc dynamic var name = ""
     @objc dynamic var photo_100: String = ""
 //    let description: String

@@ -57,6 +57,13 @@ class RealmService {
         }
     }
     
+    func loadFriends() -> [Friend] {
+        do {
+            let friendsFromRealm = realm.objects(Friend.self)
+            return Array(friendsFromRealm)
+        }
+    }
+    
     func savePhotos(_ photos: [Photo]) {
         do {
             let oldPhotos = realm.objects(Photo.self)
