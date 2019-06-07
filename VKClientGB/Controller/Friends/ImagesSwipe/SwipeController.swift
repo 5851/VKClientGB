@@ -1,9 +1,10 @@
 import UIKit
+import RealmSwift
 
 class SwipeController: UIViewController {
     
     let imagesContainer = UIView()
-    var photos = [Photo]()
+    var photos: Results<Photo> = try! RealmService.get(Photo.self)
     var curImageView = UIView()
     var curImageFrame = CGRect()
     

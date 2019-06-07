@@ -14,7 +14,7 @@ class PhotosFriendController: UICollectionViewController {
         super.viewDidLoad()
         
         navigationItem.title = "Фотографии друга"
-        
+
         fetchPhoto()
     }
 
