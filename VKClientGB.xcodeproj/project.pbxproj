@@ -26,6 +26,7 @@
 		B556C435225ADB6600521335 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B556C434225ADB6500521335 /* MainTabBarController.swift */; };
 		B556C437225AE67300521335 /* PhotosFriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B556C436225AE67300521335 /* PhotosFriendController.swift */; };
 		B556C439225AE68C00521335 /* PhotosFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B556C438225AE68C00521335 /* PhotosFriendCell.swift */; };
+		B56C143122AA079C00DA9A9F /* UITableView+RealmChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56C143022AA079C00DA9A9F /* UITableView+RealmChanges.swift */; };
 		B58C1C252290EC420015E16A /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58C1C242290EC420015E16A /* Photo.swift */; };
 		B58DC9A4229DF9AE00A78059 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58DC9A3229DF9AE00A78059 /* RealmService.swift */; };
 		B5BD31252279565F009711FB /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD31242279565F009711FB /* SwipeController.swift */; };
@@ -71,6 +72,7 @@
 		B556C434225ADB6500521335 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		B556C436225AE67300521335 /* PhotosFriendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFriendController.swift; sourceTree = "<group>"; };
 		B556C438225AE68C00521335 /* PhotosFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFriendCell.swift; sourceTree = "<group>"; };
+		B56C143022AA079C00DA9A9F /* UITableView+RealmChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+RealmChanges.swift"; sourceTree = "<group>"; };
 		B58C1C242290EC420015E16A /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		B58DC9A3229DF9AE00A78059 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		B5BD31242279565F009711FB /* SwipeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
@@ -187,9 +189,18 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B56C142F22AA077000DA9A9F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B56C143022AA079C00DA9A9F /* UITableView+RealmChanges.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		B59A290822658AF300A4D83C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B56C142F22AA077000DA9A9F /* Extensions */,
 				B505D95E22824FB400446449 /* Custom */,
 				B50FBD662265CD8E00BD041B /* LikeControl.swift */,
 				B5FFC7042266C76300B9DD8F /* FriendsDataBase.swift */,
@@ -458,6 +469,7 @@
 				B5532645225055F4003CD775 /* AppDelegate.swift in Sources */,
 				B5C2642B22901FA700C0AF1B /* Session.swift in Sources */,
 				B5C264302290218E00C0AF1B /* AuthorizationController.swift in Sources */,
+				B56C143122AA079C00DA9A9F /* UITableView+RealmChanges.swift in Sources */,
 				B5FFC7052266C76300B9DD8F /* FriendsDataBase.swift in Sources */,
 				B54E8D502274007F00128EBE /* CustomActivityIndicator.swift in Sources */,
 				B556C42D225AC0F600521335 /* Group.swift in Sources */,

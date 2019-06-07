@@ -1,6 +1,6 @@
+import Foundation
+import Realm
 import RealmSwift
-
-let realm = try! Realm()
 
 class RealmService {
     
@@ -10,62 +10,36 @@ class RealmService {
     
     // MARK: - Actions with groups
     
-    func saveGroups(_ groups: [Group]) {
-        do {
-            print(realm.configuration.fileURL)
-            let oldGroups = realm.objects(Group.self)
-            try realm.write {
-                realm.delete(oldGroups)
-                realm.add(groups)
-            }
-        } catch {
-            print("Ошибка записи групп", error)
+    static let deleteIfMigration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+    
+    static func save<T: Object>(items: [T],
+                         configaration: Realm.Configuration = deleteIfMigration,
+                         update: Realm.UpdatePolicy = .modified) throws {
+        let realm = try Realm(configuration: configaration)
+        print(realm.configuration.fileURL)
+        try realm.write {
+            realm.add(items, update: update)
         }
     }
     
-    func deleteGroups(_ groups: [Group]) {
-        do {
-            try realm.write {
-                realm.delete(groups)
-            }
-        } catch {
-            print("Ошибка удаления группы", error)
-        }
+    static func get<T: Object>(_ type: T.Type,
+                               configuaration: Realm.Configuration = deleteIfMigration) throws -> Results<T> {
+        let realm = try Realm(configuration: configuaration)
+        return realm.objects(type)
     }
     
-    func addGroupFromAllGroups(_ groups: [Group]) {
-        do {
-            try realm.write {
-                realm.add(groups)
-            }
-        } catch {
-            print("Ошибка добавления группы", error)
-        }
-    }
-    
-    // MARK: - Actions with friends
-    
-    func saveFriends(_ friends: [Friend]) {
-        do {
-            let oldFriends = realm.objects(Friend.self)
-            try realm.write {
-                realm.delete(oldFriends)
-                realm.add(friends)
-            }
-        } catch {
-            print("Ошибка записи групп", error)
-        }
-    }
-    
-    func loadFriends() -> [Friend] {
-        do {
-            let friendsFromRealm = realm.objects(Friend.self)
-            return Array(friendsFromRealm)
+    static func delete<T: Object>(items: [T],
+                                  configaration: Realm.Configuration = deleteIfMigration,
+                                  update: Realm.UpdatePolicy = .modified) throws {
+        let realm = try Realm(configuration: configaration)
+        try realm.write {
+            realm.delete(items)
         }
     }
     
     func savePhotos(_ photos: [Photo]) {
         do {
+            let realm = try Realm()
             let oldPhotos = realm.objects(Photo.self)
             try realm.write {
                 realm.delete(oldPhotos)

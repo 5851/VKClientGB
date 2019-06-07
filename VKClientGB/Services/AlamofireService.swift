@@ -16,7 +16,7 @@ class AlamofireService {
     
     // Fetch friends
     
-    func fetchFrieds(completion: @escaping () -> Void) {
+    func fetchFrieds() {
         
         let url = vkApi + vkApiFriends
         
@@ -34,8 +34,8 @@ class AlamofireService {
                 guard let data = data.data else { return }
                 do {
                     let objects = try JSONDecoder().decode(FriendsResponseWrapped.self, from: data)
-                    RealmService.shared.saveFriends(objects.response.items)
-                    completion()
+                    
+                    try RealmService.save(items: objects.response.items)
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
                 }
@@ -47,7 +47,7 @@ class AlamofireService {
     
     // Fetch groups
     
-    func fetchMyGroups(completion: @escaping () -> Void) {
+    func fetchMyGroups() {
         
         let url = vkApi + vkApiGroups
         
@@ -65,8 +65,7 @@ class AlamofireService {
                 guard let data = data.data else { return }
                 do {
                     let objects = try JSONDecoder().decode(GroupsResponseWrapped.self, from: data)
-                    RealmService.shared.saveGroups(objects.response.items)
-                    completion()
+                    try RealmService.save(items: objects.response.items)
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
                 }

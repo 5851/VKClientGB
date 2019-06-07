@@ -4,9 +4,8 @@ import RealmSwift
 class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Variables
-    var groups: Results<Group>? = {
-        return realm.objects(Group.self).sorted(byKeyPath: "name")
-    }()
+    var groups: Results<Group> = try! RealmService.get(Group.self).sorted(byKeyPath: "name")
+    private var groupsToken: NotificationToken?
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -15,16 +14,14 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchData()
-        
+        fetchAndUpdateData()
+        setupTableView()
         navigationItem.title = "Мои группы"
-        tableView.tableFooterView = UIView()
-        tableView.delegate = self
     }
 
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups?.count ?? 0
+        return groups.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -32,7 +29,7 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
             fatalError("Can not load group cell")
         }
         
-        let group = groups?[indexPath.row]
+        let group = groups[indexPath.row]
         cell.group = group
         
         return cell
@@ -40,21 +37,32 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            RealmService.shared.deleteGroups([groups![indexPath.row]])
-            tableView.reloadData()
+            try! RealmService.delete(items: [groups[indexPath.row]])
         }
     }
     
     // MARK: - Private fucntions
     
-    private func fetchData() {        
-        AlamofireService.shared.fetchMyGroups { [weak self] in
+    private func fetchAndUpdateData() {
+        AlamofireService.shared.fetchMyGroups()
+        
+        groupsToken = groups._observe({ [weak tableView] changes in
+            guard let tableView = tableView else { return }
             
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let updates):
+                tableView.applyChanges(deletions: deletions, insertions: insertions, updates: updates)
+            case .error:
+                break
             }
-        }
+        })
+    }
+    
+    private func setupTableView() {
+        tableView.tableFooterView = UIView()
+        tableView.delegate = self
     }
     
     // MARK: - Navigation
@@ -65,12 +73,11 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
                 let indexPath = allGroups.tableView.indexPathForSelectedRow {
 
                 let myGroup = allGroups.groups[indexPath.row]            
-                guard !(groups?.contains(where: { group -> Bool in
+                guard !(groups.contains(where: { group -> Bool in
                     return group.name == myGroup.name
-                }))! else { return }
+                })) else { return }
 
-                RealmService.shared.addGroupFromAllGroups([myGroup])
-                tableView.reloadData()
+                try! RealmService.save(items: [myGroup])
             }
         }
     }

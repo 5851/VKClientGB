@@ -8,8 +8,8 @@ class MyFriendsController: UIViewController {
     @IBOutlet weak var alphabetView: UIView!
     
     // MARK: - Variables
-    
-    var friendsRealm: Results<Friend>?
+    var friendsRealm: Results<Friend> = try! RealmService.get(Friend.self)
+    private var friendsToken: NotificationToken?
     
     var friends = [Friend]()
     var filteredFriends = [Friend]()
@@ -26,8 +26,7 @@ class MyFriendsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchData()
-
+        fetchAndUpdateData()
         setupSearchBar()
         setupTableView()
     }
@@ -50,17 +49,25 @@ class MyFriendsController: UIViewController {
     }
     
     // MARK: - Private functions
-    private func fetchData() {
+    private func fetchAndUpdateData() {
         
-        AlamofireService.shared.fetchFrieds { [weak self] in
+        AlamofireService.shared.fetchFrieds()
+        
+        friendsToken = friendsRealm._observe({ [weak tableView] changes in
+            guard let tableView = tableView else { return }
             
-            guard let self = self else { return }            
-            self.friends = RealmService.shared.loadFriends()
-            (self.sectionsName, self.friendDictionary) = self.sortFriends(friends: self.friends)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let updates):
+                tableView.applyChanges(deletions: deletions, insertions: insertions, updates: updates)
+            case .error:
+                break
             }
-        }
+        })
+        
+        friends = Array(friendsRealm)
+        (self.sectionsName, self.friendDictionary) = self.sortFriends(friends: self.friends)
     }
     
     private func setupSearchBar() {
@@ -151,13 +158,6 @@ extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
         header.backgroundView?.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-
-        }
-    }
-    
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         var sections = [String]()
         for char in sectionsName {
@@ -183,7 +183,6 @@ extension MyFriendsController: UISearchBarDelegate {
         })
 
         (sectionsName, friendDictionary) = sortFriends(friends: filteredFriends)
-       
         tableView.reloadData()
     }
     
