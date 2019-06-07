@@ -4,9 +4,7 @@ import RealmSwift
 class PhotosFriendController: UICollectionViewController {
 
     // MARK: - Variables
-    var photos: Results<Photo>? = {
-        return realm.objects(Photo.self)
-    }()
+    var photos: Results<Photo>? = try! RealmService.get(Photo.self)
     
     var friendId = 0
     var currentImage = 0

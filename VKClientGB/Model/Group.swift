@@ -16,4 +16,8 @@ class Group: Object, Decodable {
     @objc dynamic var photo_100: String = ""
 //    let description: String
 //    let members_count: Int
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
