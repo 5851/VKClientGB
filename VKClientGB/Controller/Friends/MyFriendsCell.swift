@@ -24,6 +24,7 @@ class MyFriendsCell: UITableViewCell {
     }
     
     func setupCell(friend: Friend) {
+        reset()
         self.nameFriend.text = friend.last_name + " " + friend.first_name
         self.iconFriend.set(imageUrl: friend.photo_100)
     }
@@ -32,5 +33,9 @@ class MyFriendsCell: UITableViewCell {
         super.prepareForReuse()
         iconFriend.image = nil
         nameFriend.text = ""
+    }
+    
+    private func reset() {
+        iconFriend.image = nil
     }
 }

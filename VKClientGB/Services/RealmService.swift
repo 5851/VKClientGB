@@ -3,13 +3,7 @@ import Realm
 import RealmSwift
 
 class RealmService {
-    
-    static let shared = RealmService()
-    
-    private init() {  }
-    
-    // MARK: - Actions with groups
-    
+
     static let deleteIfMigration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
     
     static func save<T: Object>(items: [T],
@@ -37,16 +31,14 @@ class RealmService {
         }
     }
     
-    func savePhotos(_ photos: [Photo]) {
-        do {
-            let realm = try Realm()
-            let oldPhotos = realm.objects(Photo.self)
-            try realm.write {
-                realm.delete(oldPhotos)
-                realm.add(photos)
-            }
-        } catch {
-            print("Ошибка записи групп", error)
+    static func savePhotos(_ photos: [Photo], friendId: Int) {
+
+        guard let realm = try? Realm(),
+              let friend = realm.object(ofType: Friend.self, forPrimaryKey: friendId) else { return }
+
+        try? realm.write {
+            realm.add(photos, update: .modified)
+            friend.photos.append(objectsIn: photos)
         }
     }
 }

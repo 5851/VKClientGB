@@ -16,7 +16,7 @@ class AlamofireService {
     
     // Fetch friends
     
-    func fetchFrieds() {
+    func fetchFrieds(completion: @escaping ([Friend]) -> ()) {
         
         let url = vkApi + vkApiFriends
         
@@ -34,8 +34,8 @@ class AlamofireService {
                 guard let data = data.data else { return }
                 do {
                     let objects = try JSONDecoder().decode(FriendsResponseWrapped.self, from: data)
-                    
-                    try RealmService.save(items: objects.response.items)
+//                    try RealmService.save(items: objects.response.items)
+                    completion(objects.response.items)
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
                 }
@@ -65,6 +65,7 @@ class AlamofireService {
                 guard let data = data.data else { return }
                 do {
                     let objects = try JSONDecoder().decode(GroupsResponseWrapped.self, from: data)
+
                     try RealmService.save(items: objects.response.items)
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
@@ -88,13 +89,12 @@ class AlamofireService {
             "sort": "3",
             "v": "5.95"
         ]
-        
         fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
     }
     
     // Fetch photosFriends
     
-    func fetchPhotosFriend(friendId: Int, completion: @escaping () -> Void) {
+    func fetchPhotosFriend(friendId: Int) {
         
         let url = vkApi + vkApiAllPhotosFriends
         
@@ -102,6 +102,7 @@ class AlamofireService {
             "owner_id": friendId,
             "access_token": Session.shared.token,
             "extended": "1",
+            "count": "200",
             "v": "5.95"
         ]
         
@@ -110,9 +111,9 @@ class AlamofireService {
             case .success(_):
                 guard let data = data.data else { return }
                 do {
-                    let objects = try JSONDecoder().decode(PhotosResponseWrapped.self, from: data)
-                    RealmService.shared.savePhotos(objects.response.items)
-                    completion()
+                    let objects = try JSONDecoder().decode(PhotosResponseWrapped.self, from: data).response.items
+                    
+                    RealmService.savePhotos(objects, friendId: friendId)
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
                 }
@@ -133,7 +134,6 @@ class AlamofireService {
                 guard let data = data.data else { return }
                 do {
                     let objects = try JSONDecoder().decode(T.self, from: data)
-//                    print(objects)
                     DispatchQueue.main.async {
                         completion(objects)
                     }
