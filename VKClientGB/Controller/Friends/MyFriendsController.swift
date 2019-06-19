@@ -10,30 +10,44 @@ class MyFriendsController: UIViewController {
     // MARK: - Variables
     var friendsRealm: Results<Friend> = try! RealmService.get(Friend.self)
     private var friendsToken: NotificationToken?
-    
-    var friends = [Friend]()
-    var filteredFriends = [Friend]()
-    
-    let searchController = UISearchController(searchResultsController: nil)
 
-    var sectionsName = [Character]()
-    var friendDictionary = [Character: [Friend]]()
-    
-    var buttons: [UIButton] = []
-    var filteredButtons: [UIButton] = []
+    var filteredFriends = [Friend]()
+    let searchController = UISearchController(searchResultsController: nil)
     
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        fetchAndUpdateData()
+        
         setupSearchBar()
         setupTableView()
+        AlamofireService.shared.fetchFrieds { friends in
+            try! RealmService.save(items: friends)
+            self.filteredFriends = Array(self.friendsRealm)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        filteredFriends = Array(friendsRealm)
+        
+        friendsToken = friendsRealm.observe { [weak self] change in
+            guard let self = self else { return }
+            switch change {
+            case .initial:
+                break
+            case .update:
+                self.tableView.reloadData()
+            case .error(let error):
+                print(error)
+            }
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         searchController.isActive = false
+        friendsToken?.invalidate()
     }
     
     // MARK: - Navigation
@@ -41,35 +55,12 @@ class MyFriendsController: UIViewController {
         if segue.identifier == "showPhotos",
             let photosController = segue.destination as? PhotosFriendController,
             let indexPath = tableView.indexPathForSelectedRow {
-                let friendKey = sectionsName[indexPath.section]
-                if let friendValues = friendDictionary[friendKey] {
-                    photosController.friendId = friendValues[indexPath.row].id
-            }
+            print(friendsRealm[indexPath.row].id)
+            photosController.friendId = friendsRealm[indexPath.row].id
         }
     }
     
     // MARK: - Private functions
-    private func fetchAndUpdateData() {
-        
-        AlamofireService.shared.fetchFrieds()
-        
-        friendsToken = friendsRealm._observe({ [weak tableView] changes in
-            guard let tableView = tableView else { return }
-            
-            switch changes {
-            case .initial:
-                tableView.reloadData()
-            case .update(_, let deletions, let insertions, let updates):
-                tableView.applyChanges(deletions: deletions, insertions: insertions, updates: updates)
-            case .error:
-                break
-            }
-        })
-        
-        friends = Array(friendsRealm)
-        (self.sectionsName, self.friendDictionary) = self.sortFriends(friends: self.friends)
-    }
-    
     private func setupSearchBar() {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -86,60 +77,21 @@ class MyFriendsController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
     }
-    
-    private func sortFriends(friends: [Friend]) -> (sectionsName: [Character], friendDictionary: [Character: [Friend]]) {
-        
-        var sectionsName = [Character]()
-        var friendDictionary = [Character: [Friend]]()
-        
-        for friend in friends {
-            guard let sectionName = friend.last_name.first else {
-                continue
-            }
-            if friendDictionary[sectionName] != nil {
-                friendDictionary[sectionName]!.append(friend)
-            } else {
-                friendDictionary[sectionName] = [friend]
-            }
-        }
-        
-        sectionsName = Array(friendDictionary.keys.sorted())
-        
-        return (sectionsName, friendDictionary)
-    }
 }
 
 extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let letter = sectionsName[section]
-        guard let friends = friendDictionary[letter] else { return 0 }
-        return friends.count
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionsName.count
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return String(sectionsName[section])
-    }
-    
-    func tableView(_ tableView: UITableView,
-                   heightForHeaderInSection section: Int) -> CGFloat {
-        return tableView.dataSource?.tableView(tableView, numberOfRowsInSection: section) == 0 ? 0: 44
+        return filteredFriends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyFriendsCell.cellId, for: indexPath) as? MyFriendsCell else {
             fatalError("Can not load group cell")
         }
-        
-        let letter = sectionsName[indexPath.section]
-        guard let users = friendDictionary[letter] else { return UITableViewCell() }
-        let friend = users[indexPath.row]
-        
+
+        let friend = filteredFriends[indexPath.row]
         cell.setupCell(friend: friend)
         
         return cell
@@ -157,37 +109,28 @@ extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
         guard let header = view as? UITableViewHeaderFooterView else { return }
         header.backgroundView?.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
     }
-    
-    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        var sections = [String]()
-        for char in sectionsName {
-            sections.append(String(char))
-        }
-        return sections
-    }
 }
 
 // MARK: - UISearchBarDelegate
 extension MyFriendsController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+
         guard !searchText.isEmpty else {
-            (sectionsName, friendDictionary) = sortFriends(friends: friends)
+            filteredFriends = Array(friendsRealm)
             tableView.reloadData()
             return
         }
 
-        let filteredFriends = friends.filter({ (friend) -> Bool in
+        filteredFriends = Array(friendsRealm).filter({ (friend) -> Bool in
             return friend.last_name.lowercased().contains(searchText.lowercased())
         })
-
-        (sectionsName, friendDictionary) = sortFriends(friends: filteredFriends)
+        
         tableView.reloadData()
     }
-    
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        (sectionsName, friendDictionary) = sortFriends(friends: friends)
+        filteredFriends = Array(friendsRealm)
         tableView.reloadData()
     }
 }

@@ -31,7 +31,6 @@ class GroupsCell: UITableViewCell {
     }
     @IBOutlet weak var membersCount: UILabel!
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         nameGroup.text = ""
