@@ -11,8 +11,12 @@ class MyFriendsController: UIViewController {
     var friendsRealm: Results<Friend> = try! RealmService.get(Friend.self)
     private var friendsToken: NotificationToken?
 
-    var filteredFriends = [Friend]()
+//    var filteredFriends = [Friend]()
     let searchController = UISearchController(searchResultsController: nil)
+    
+    private var firstLetters = [Character]()
+    private var sortedFriends = [Character: Results<Friend>]()
+    private var searchedFriends = [Friend]()
     
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
@@ -20,16 +24,17 @@ class MyFriendsController: UIViewController {
         
         setupSearchBar()
         setupTableView()
-        AlamofireService.shared.fetchFrieds { friends in
-            try! RealmService.save(items: friends)
-            self.filteredFriends = Array(self.friendsRealm)
-        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        filteredFriends = Array(friendsRealm)
+        AlamofireService.shared.fetchFrieds { friends in
+            try! RealmService.save(items: friends)
+            self.firstLetters = self.sort(self.friendsRealm)
+            self.tableView.reloadData()
+        }
         
         friendsToken = friendsRealm.observe { [weak self] change in
             guard let self = self else { return }
@@ -55,8 +60,19 @@ class MyFriendsController: UIViewController {
         if segue.identifier == "showPhotos",
             let photosController = segue.destination as? PhotosFriendController,
             let indexPath = tableView.indexPathForSelectedRow {
-            print(friendsRealm[indexPath.row].id)
-            photosController.friendId = friendsRealm[indexPath.row].id
+            let letter = String(firstLetters[indexPath.section])
+            let sectionFriends: Results<Friend> = {
+                if let searchText = searchController.searchBar.text,
+                    !searchText.isEmpty {
+                    return friendsRealm
+                        .filter("last_name BEGINSWITH %@", letter)
+                        .filter("last_name CONTAINS[cd] %@ OR first_name CONTAINS[cd] %@", searchText, searchText)
+                    
+                } else {
+                    return friendsRealm.filter("last_name BEGINSWITH %@", letter)
+                }
+            }()
+            photosController.friendId = sectionFriends[indexPath.row].id
         }
     }
     
@@ -77,13 +93,47 @@ class MyFriendsController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
     }
+    
+    private func sort(_ friends: Results<Friend>) -> [Character] {
+        
+        var firstLetters = [Character]()
+        
+        for friend in friends {
+            guard let firstLetter = friend.last_name.first else { continue }
+            
+            if !firstLetters.contains(firstLetter) {
+                firstLetters.append(firstLetter)
+            }
+        }
+        
+        return firstLetters.sorted()
+    }
 }
 
 extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Table view data source
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return firstLetters.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return String(firstLetters[section])
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredFriends.count
+        
+        let letter = String(firstLetters[section])
+        let predicate = NSPredicate(format: "last_name BEGINSWITH %@", letter)
+        if let searchText = searchController.searchBar.text,
+            !searchText.isEmpty {
+            let sectionFriends = friendsRealm.filter(predicate).filter("last_name CONTAINS[cd] %@ OR first_name CONTAINS[cd] %@", searchText, searchText)
+            
+            return sectionFriends.count
+        } else {
+            let sectionFriends = friendsRealm.filter(predicate)
+            return sectionFriends.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,7 +141,22 @@ extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
             fatalError("Can not load group cell")
         }
 
-        let friend = filteredFriends[indexPath.row]
+        let letter = String(firstLetters[indexPath.section])
+        
+        let sectionFriends: Results<Friend> = {
+            if let searchText = searchController.searchBar.text,
+                !searchText.isEmpty {
+                return friendsRealm
+                    .filter("last_name BEGINSWITH %@", letter)
+                    .filter("last_name CONTAINS[cd] %@ OR first_name CONTAINS[cd] %@", searchText, searchText)
+                
+            } else {
+                return friendsRealm.filter("last_name BEGINSWITH %@", letter)
+            }
+        }()
+        
+        
+        let friend = sectionFriends[indexPath.row]
         cell.setupCell(friend: friend)
         
         return cell
@@ -117,20 +182,21 @@ extension MyFriendsController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         guard !searchText.isEmpty else {
-            filteredFriends = Array(friendsRealm)
+            searchedFriends = Array(friendsRealm)
+            firstLetters = sort(self.friendsRealm)
             tableView.reloadData()
             return
         }
 
-        filteredFriends = Array(friendsRealm).filter({ (friend) -> Bool in
-            return friend.last_name.lowercased().contains(searchText.lowercased())
-        })
+        let filteredFriends = self.friendsRealm.filter("last_name CONTAINS[c] %@ OR first_name CONTAINS[c] %@", searchText, searchText)
+        
+        firstLetters = sort(filteredFriends)
         
         tableView.reloadData()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        filteredFriends = Array(friendsRealm)
+        searchedFriends = Array(friendsRealm)
         tableView.reloadData()
     }
 }
