@@ -34,11 +34,19 @@ class RealmService {
     static func savePhotos(_ photos: [Photo], friendId: Int) {
 
         guard let realm = try? Realm(),
-              let friend = realm.object(ofType: Friend.self, forPrimaryKey: friendId) else { return }
+              let friend = realm.object(ofType: Profile.self, forPrimaryKey: friendId) else { return }
 
         try? realm.write {
             realm.add(photos, update: .modified)
             friend.photos.append(objectsIn: photos)
+        }
+    }
+    
+    static func saveToMyGroup(groups: [Group]) {
+        
+        let realm = try? Realm()
+        try? realm?.write {
+            realm?.add(groups, update: .modified)
         }
     }
 }

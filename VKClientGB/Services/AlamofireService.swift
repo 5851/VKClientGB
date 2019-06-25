@@ -13,10 +13,40 @@ class AlamofireService {
     let vkApiAllGroups = "groups.search"
     let vkApiJoinGroups = "groups.search"
     let vkApiAllPhotosFriends = "photos.getAll"
+    let vkApiNewsFeed = "newsfeed.get"
+    
+    // Fetch newsfeed
+    
+    func fetchNewsFeed(completion: @escaping (NewsFeedResponse) -> ()) {
+        
+        let url = vkApi + vkApiNewsFeed
+        
+        let parameters: Parameters = [
+            "access_token": Session.shared.token,
+            "filters": "post",
+            "count":"20",
+            "v": "5.95",
+        ]
+        
+        request(url, method: .get, parameters: parameters).validate().responseData { data in
+            switch data.result {
+            case .success(_):
+                guard let data = data.data else { return }
+                do {
+                    let objects = try JSONDecoder().decode(NewsFeedResponseWrapped.self, from: data)
+                    completion(objects.response)
+                } catch let decodeErr {
+                    print("Failed to decode:", decodeErr)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
     
     // Fetch friends
     
-    func fetchFrieds(completion: @escaping ([Friend]) -> ()) {
+    func fetchFrieds(completion: @escaping ([Profile]) -> ()) {
         
         let url = vkApi + vkApiFriends
         
@@ -33,8 +63,8 @@ class AlamofireService {
             case .success(_):
                 guard let data = data.data else { return }
                 do {
-                    let objects = try JSONDecoder().decode(FriendsResponseWrapped.self, from: data)
-//                    try RealmService.save(items: objects.response.items)
+                    let objects = try JSONDecoder().decode(ProfilesResponseWrapped.self, from: data)
+                    
                     completion(objects.response.items)
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)

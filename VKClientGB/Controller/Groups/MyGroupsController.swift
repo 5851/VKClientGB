@@ -72,7 +72,9 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
             if let allGroups = segue.source as? AllGroupsController,
                 let indexPath = allGroups.tableView.indexPathForSelectedRow {
 
-                let myGroup = allGroups.groups[indexPath.row]            
+                let myGroup = allGroups.groups[indexPath.row]
+                
+                
                 guard !(groups.contains(where: { group -> Bool in
                     return group.name == myGroup.name
                 })) else { return }
