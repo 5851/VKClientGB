@@ -14,7 +14,7 @@ class Photo: Object, Decodable {
     @objc dynamic var id: Int = 0
     @objc dynamic var owner_id: Int = 0
     let sizes = List<SizePhoto>()
-    var friends = LinkingObjects(fromType: Friend.self, property: "photos")
+    var friends = LinkingObjects(fromType: Profile.self, property: "photos")
     
     private enum CodingKeys: String, CodingKey {
         case id, owner_id, sizes

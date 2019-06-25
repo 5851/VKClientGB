@@ -8,7 +8,7 @@ class GroupsCell: UITableViewCell {
         didSet {
             self.iconGroup.set(imageUrl: self.group.photo_100)
             self.nameGroup.text = group.name
-//            self.membersCount.text = formattedCounter(group.members_count)
+//            self.membersCount.text = formattedCounter(myGroup.members_count)
         }
     }
 

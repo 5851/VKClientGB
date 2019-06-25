@@ -8,15 +8,15 @@ class MyFriendsController: UIViewController {
     @IBOutlet weak var alphabetView: UIView!
     
     // MARK: - Variables
-    var friendsRealm: Results<Friend> = try! RealmService.get(Friend.self)
+    var friendsRealm: Results<Profile> = try! RealmService.get(Profile.self)
     private var friendsToken: NotificationToken?
 
 //    var filteredFriends = [Friend]()
     let searchController = UISearchController(searchResultsController: nil)
     
     private var firstLetters = [Character]()
-    private var sortedFriends = [Character: Results<Friend>]()
-    private var searchedFriends = [Friend]()
+    private var sortedFriends = [Character: Results<Profile>]()
+    private var searchedFriends = [Profile]()
     
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
@@ -61,7 +61,7 @@ class MyFriendsController: UIViewController {
             let photosController = segue.destination as? PhotosFriendController,
             let indexPath = tableView.indexPathForSelectedRow {
             let letter = String(firstLetters[indexPath.section])
-            let sectionFriends: Results<Friend> = {
+            let sectionFriends: Results<Profile> = {
                 if let searchText = searchController.searchBar.text,
                     !searchText.isEmpty {
                     return friendsRealm
@@ -94,7 +94,7 @@ class MyFriendsController: UIViewController {
         tableView.separatorStyle = .none
     }
     
-    private func sort(_ friends: Results<Friend>) -> [Character] {
+    private func sort(_ friends: Results<Profile>) -> [Character] {
         
         var firstLetters = [Character]()
         
@@ -143,7 +143,7 @@ extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
 
         let letter = String(firstLetters[indexPath.section])
         
-        let sectionFriends: Results<Friend> = {
+        let sectionFriends: Results<Profile> = {
             if let searchText = searchController.searchBar.text,
                 !searchText.isEmpty {
                 return friendsRealm

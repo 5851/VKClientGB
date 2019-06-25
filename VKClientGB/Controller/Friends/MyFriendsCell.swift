@@ -23,7 +23,7 @@ class MyFriendsCell: UITableViewCell {
         }
     }
     
-    func setupCell(friend: Friend) {
+    func setupCell(friend: Profile) {
         reset()
         self.nameFriend.text = friend.last_name + " " + friend.first_name
         self.iconFriend.set(imageUrl: friend.photo_100)
