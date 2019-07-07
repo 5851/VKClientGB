@@ -4,7 +4,8 @@ class FeedsController: UITableViewController {
 
     // MARK: - Variables
     private var feedViewModel = FeedViewModel.init(cell: [])
-
+    var cellLayoutCalculator: FeedCellLayoutCalculatorProtocol = FeedCellLayoutCalculator()
+    
     let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.locale = Locale(identifier: "ru_Ru")
@@ -53,7 +54,7 @@ class FeedsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 212
     }
     
     //MARK: - private functions    
@@ -63,6 +64,8 @@ class FeedsController: UITableViewController {
         tableView.estimatedRowHeight = 500
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.backgroundColor = .clear
+        view.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
     }
     
     private func cellViewModel(from feedItem: NewsFeedModel, profiles: [ProfileNews], groups:[GroupNews]) -> FeedViewModel.Cell {
@@ -72,6 +75,8 @@ class FeedsController: UITableViewController {
         let date = Date(timeIntervalSince1970: feedItem.date)
         let dateTitle = dateFormatter.string(from: date)
         let postText = feedItem.text?.replacingOccurrences(of: "<br>", with: "\n")
+
+        let sizes = cellLayoutCalculator.sizes(postText: feedItem.text, photoAttachmant: photoAttachment)
         
         return FeedViewModel.Cell.init(iconUrlString: profile.photo,
                                        name: profile.name,
@@ -81,7 +86,8 @@ class FeedsController: UITableViewController {
                                        comments: formattedCounter(feedItem.comments?.count),
                                        shares: formattedCounter(feedItem.reposts?.count),
                                        views: formattedCounter(feedItem.views?.count),
-                                       photoAttachment: photoAttachment)
+                                       photoAttachment: photoAttachment,
+                                       sizes: sizes)
     }
     
     private func profile(for sourceId: Int, profiles: [ProfileNews], groups: [GroupNews]) -> ProfileRepresentable {

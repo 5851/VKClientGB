@@ -10,7 +10,7 @@ class RealmService {
                          configaration: Realm.Configuration = deleteIfMigration,
                          update: Realm.UpdatePolicy = .modified) throws {
         let realm = try Realm(configuration: configaration)
-        print(realm.configuration.fileURL)
+        print(realm.configuration.fileURL!)
         try realm.write {
             realm.add(items, update: update)
         }
