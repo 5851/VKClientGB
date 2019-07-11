@@ -28,7 +28,7 @@ class AlamofireService {
             "v": "5.95",
         ]
         
-        request(url, method: .get, parameters: parameters).validate().responseData { data in
+        request(url, method: .get, parameters: parameters).validate().responseData(queue: .global(qos: .userInteractive)) { data in
             switch data.result {
             case .success(_):
                 guard let data = data.data else { return }
@@ -88,11 +88,12 @@ class AlamofireService {
             "extended": 1,
             "v": "5.95"
         ]
-
-        request(url, method: .get, parameters: parameters).validate().responseData { data in
+        
+        request(url, method: .get, parameters: parameters).validate().responseData(queue: .global(qos: .userInteractive)) { data in
             switch data.result {
             case .success(_):
                 guard let data = data.data else { return }
+                print(data)
                 do {
                     let objects = try JSONDecoder().decode(GroupsResponseWrapped.self, from: data)
 
@@ -158,7 +159,7 @@ class AlamofireService {
     func fetchGenericJSONData<T: Decodable>(urlString: String, parameters: Parameters, completion: @escaping (T) -> Void) {
         
         guard let url = URL(string: urlString) else { return }
-        request(url, method: .get, parameters: parameters).validate().responseData { data in
+        request(url, method: .get, parameters: parameters).validate().responseData(queue: .global(qos: .userInteractive)) { data in
             switch data.result {
             case .success(_):
                 guard let data = data.data else { return }

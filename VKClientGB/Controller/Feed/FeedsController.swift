@@ -5,7 +5,7 @@ class FeedsController: UITableViewController {
     // MARK: - Variables
     private var feedViewModel = FeedViewModel.init(cell: [])
     var cellLayoutCalculator: FeedCellLayoutCalculatorProtocol = FeedCellLayoutCalculator()
-    
+
     let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.locale = Locale(identifier: "ru_Ru")
@@ -54,14 +54,14 @@ class FeedsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 212
+        let cellViewModel = feedViewModel.cell[indexPath.row]
+        return cellViewModel.sizes.totalHeight
     }
     
     //MARK: - private functions    
     private func setupTableView() {
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "FeedsCell", bundle: nil), forCellReuseIdentifier: FeedsCell.cellId)
-        tableView.estimatedRowHeight = 500
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.backgroundColor = .clear
@@ -71,12 +71,12 @@ class FeedsController: UITableViewController {
     private func cellViewModel(from feedItem: NewsFeedModel, profiles: [ProfileNews], groups:[GroupNews]) -> FeedViewModel.Cell {
         
         let profile = self.profile(for: feedItem.source_id, profiles: profiles, groups: groups)
-        let photoAttachment = self.photoAttachment(feedItem: feedItem)
+        let photoAttachments = self.photoAttachments(feedItem: feedItem)
         let date = Date(timeIntervalSince1970: feedItem.date)
         let dateTitle = dateFormatter.string(from: date)
         let postText = feedItem.text?.replacingOccurrences(of: "<br>", with: "\n")
 
-        let sizes = cellLayoutCalculator.sizes(postText: feedItem.text, photoAttachmant: photoAttachment)
+        let sizes = cellLayoutCalculator.sizes(postText: feedItem.text, photoAttachmants: photoAttachments)
         
         return FeedViewModel.Cell.init(iconUrlString: profile.photo,
                                        name: profile.name,
@@ -86,7 +86,7 @@ class FeedsController: UITableViewController {
                                        comments: formattedCounter(feedItem.comments?.count),
                                        shares: formattedCounter(feedItem.reposts?.count),
                                        views: formattedCounter(feedItem.views?.count),
-                                       photoAttachment: photoAttachment,
+                                       photoAttachments: photoAttachments,
                                        sizes: sizes)
     }
     
@@ -100,15 +100,14 @@ class FeedsController: UITableViewController {
         return profileRepresentable!
     }
     
-    private func photoAttachment(feedItem: NewsFeedModel) -> FeedViewModel.FeedCellPhotoAttachment? {
-        guard let photos = feedItem.attachments?.compactMap({ attachment in
-            attachment.photo
-        }), let firstPhoto = photos.first else {
-            return nil
-        }
-        return FeedViewModel.FeedCellPhotoAttachment.init(photoUrlString: firstPhoto.srcBIG,
-                                                          width: firstPhoto.width,
-                                                          height: firstPhoto.height)
+    private func photoAttachments(feedItem: NewsFeedModel) -> [FeedViewModel.FeedCellPhotoAttachment] {
+        guard let attachments = feedItem.attachments else { return [] }
+        return attachments.compactMap({ (attachment) -> FeedViewModel.FeedCellPhotoAttachment? in
+            guard let photo = attachment.photo else { return nil }
+            return FeedViewModel.FeedCellPhotoAttachment.init(photoUrlString: photo.srcBIG,
+                                                              width: photo.width,
+                                                              height: photo.height)
+        })
     }
     
     private func formattedCounter(_ counter: Int?) -> String? {

@@ -1,5 +1,6 @@
 import UIKit
 import RealmSwift
+import Alamofire
 
 class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -14,7 +15,8 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchAndUpdateData()
+//        fetchAndUpdateData()
+        fetchMyGroups()
         setupTableView()
         navigationItem.title = "Мои группы"
     }
@@ -63,6 +65,35 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
     private func setupTableView() {
         tableView.tableFooterView = UIView()
         tableView.delegate = self
+    }
+    
+    func fetchMyGroups() {
+        
+        let url = "https://api.vk.com/method/groups.get"
+        
+        let parameters: Parameters = [
+            "user_id": Session.shared.userId,
+            "access_token": Session.shared.token,
+            //            "fields": "description,members_count",
+            "extended": 1,
+            "v": "5.95"
+        ]
+        
+        let queque: OperationQueue = {
+            let queque = OperationQueue()
+            queque.qualityOfService = .userInteractive
+            return queque
+        }()
+        let request1 = Alamofire.request(url, method: .get, parameters: parameters).validate()
+        let getDataOperation = GetDataOperation(request: request1)
+        queque.addOperation(getDataOperation)
+        let parseData = ParseData()
+        parseData.addDependency(getDataOperation)
+        queque.addOperation(parseData)
+        
+        let reloadTableController = RealodTableController(controller: self)
+        reloadTableController.addDependency(parseData)
+        OperationQueue.main.addOperation(reloadTableController)
     }
     
     // MARK: - Navigation

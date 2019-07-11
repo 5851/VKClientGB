@@ -9,13 +9,15 @@ protocol FeedCellViewModel {
     var comments: String? { get }
     var shares: String? { get }
     var views: String? { get }
-    var photoAttachment: FeedCellPhotoAttachmentViewModel? { get }
+    var photoAttachments: [FeedCellPhotoAttachmentViewModel] { get }
     var sizes: FeedCellSizes { get }
 }
 
 protocol FeedCellSizes {
     var postLabelFrame: CGRect { get }
     var attachmentFrame: CGRect { get }
+    var bottomView: CGRect { get }
+    var totalHeight: CGFloat { get }
 }
 
 protocol FeedCellPhotoAttachmentViewModel {
@@ -47,14 +49,18 @@ class FeedsCell: UITableViewCell {
     @IBOutlet weak var newsImage: WebImageView! {
         didSet {
             newsImage.contentMode = .scaleAspectFill
-            newsImage.layer.cornerRadius = 5
-            newsImage.clipsToBounds = true
         }
     }
     @IBOutlet weak var likesLabel: UILabel!
     @IBOutlet weak var sharesLabel: UILabel!
     @IBOutlet weak var commentsLabel: UILabel!
     @IBOutlet weak var viewsLabel: UILabel!
+    @IBOutlet weak var bottomView: UIView!
+    
+    override func prepareForReuse() {
+        iconImageView.set(imageUrl: nil)
+        newsImage.set(imageUrl: nil)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -72,13 +78,13 @@ class FeedsCell: UITableViewCell {
         commentsLabel.text = viewModel.comments
         sharesLabel.text = viewModel.shares
         viewsLabel.text = viewModel.views
-        
         postLabel.frame = viewModel.sizes.postLabelFrame
-        newsImage.frame = viewModel.sizes.attachmentFrame
+        bottomView.frame = viewModel.sizes.bottomView
         
-        if let photoAttachment = viewModel.photoAttachment {
+        if let photoAttachment = viewModel.photoAttachments.first {
             newsImage.set(imageUrl: photoAttachment.photoUrlString)
             newsImage.isHidden = false
+            newsImage.frame = viewModel.sizes.attachmentFrame
         } else {
             newsImage.isHidden = true
         }
