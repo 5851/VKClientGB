@@ -81,7 +81,7 @@ class FeedsCell: UITableViewCell {
         postLabel.frame = viewModel.sizes.postLabelFrame
         bottomView.frame = viewModel.sizes.bottomView
         
-        if let photoAttachment = viewModel.photoAttachments.first {
+        if let photoAttachment = viewModel.photoAttachments.first, viewModel.photoAttachments.count > 1 {
             newsImage.set(imageUrl: photoAttachment.photoUrlString)
             newsImage.isHidden = false
             newsImage.frame = viewModel.sizes.attachmentFrame

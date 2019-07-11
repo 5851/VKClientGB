@@ -3,10 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04400FEC22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04400FEB22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift */; };
+		04400FF522D2C2C4006C8983 /* String+Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04400FF422D2C2C4006C8983 /* String+Height.swift */; };
+		04400FFF22D6B0DD006C8983 /* GetDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04400FFE22D6B0DD006C8983 /* GetDataOperation.swift */; };
+		0440100122D6B44A006C8983 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440100022D6B44A006C8983 /* AsyncOperation.swift */; };
+		0440100322D6BE66006C8983 /* ParseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440100222D6BE66006C8983 /* ParseData.swift */; };
+		0440100522D6C2A2006C8983 /* ReloadTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440100422D6C2A2006C8983 /* ReloadTableController.swift */; };
 		B505D9602282515C00446449 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D95F2282515C00446449 /* CustomNavigationController.swift */; };
 		B505D9622282540E00446449 /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D9612282540D00446449 /* CustomPushAnimator.swift */; };
 		B505D9642282589400446449 /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D9632282589400446449 /* CustomPopAnimator.swift */; };
@@ -49,6 +55,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04400FEB22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsCellLayoutCalculator.swift; sourceTree = "<group>"; };
+		04400FF422D2C2C4006C8983 /* String+Height.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Height.swift"; sourceTree = "<group>"; };
+		04400FFE22D6B0DD006C8983 /* GetDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataOperation.swift; sourceTree = "<group>"; };
+		0440100022D6B44A006C8983 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		0440100222D6BE66006C8983 /* ParseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseData.swift; sourceTree = "<group>"; };
+		0440100422D6C2A2006C8983 /* ReloadTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadTableController.swift; sourceTree = "<group>"; };
 		8FA80C5228B744B9E5FB2515 /* Pods_VKClientGB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientGB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B505D95F2282515C00446449 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		B505D9612282540D00446449 /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
@@ -107,6 +119,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04400FF622D4144F006C8983 /* GalleryView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GalleryView;
+			sourceTree = "<group>";
+		};
+		04400FFD22D6B0C3006C8983 /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				04400FFE22D6B0DD006C8983 /* GetDataOperation.swift */,
+				0440100022D6B44A006C8983 /* AsyncOperation.swift */,
+				0440100222D6BE66006C8983 /* ParseData.swift */,
+				0440100422D6C2A2006C8983 /* ReloadTableController.swift */,
+			);
+			path = Operation;
+			sourceTree = "<group>";
+		};
 		B505D95E22824FB400446449 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				B56C143022AA079C00DA9A9F /* UITableView+RealmChanges.swift */,
+				04400FF422D2C2C4006C8983 /* String+Height.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -198,6 +229,7 @@
 		B59A290822658AF300A4D83C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				04400FFD22D6B0C3006C8983 /* Operation */,
 				B56C142F22AA077000DA9A9F /* Extensions */,
 				B505D95E22824FB400446449 /* Custom */,
 				B50FBD662265CD8E00BD041B /* LikeControl.swift */,
@@ -276,9 +308,11 @@
 		B5FDD59A226960F900381B24 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				04400FF622D4144F006C8983 /* GalleryView */,
 				B5FDD59B2269611A00381B24 /* FeedsController.swift */,
 				B5FDD59F2269664D00381B24 /* FeedsCell.swift */,
 				B5FDD59D2269620400381B24 /* FeedsCell.xib */,
+				04400FEB22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -304,7 +338,6 @@
 				B553263E225055F4003CD775 /* Frameworks */,
 				B553263F225055F4003CD775 /* Resources */,
 				33A01233DC309A64CD1F2685 /* [CP] Embed Pods Frameworks */,
-				5F79F43AF958C0D24BAFAFA9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -372,45 +405,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-VKClientGB/Pods-VKClientGB-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-VKClientGB/Pods-VKClientGB-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-VKClientGB/Pods-VKClientGB-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VKClientGB/Pods-VKClientGB-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5F79F43AF958C0D24BAFAFA9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VKClientGB/Pods-VKClientGB-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VKClientGB/Pods-VKClientGB-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CA87E8A3CB6A0D2CABFD4397 /* [CP] Check Pods Manifest.lock */ = {
@@ -442,18 +445,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0440100522D6C2A2006C8983 /* ReloadTableController.swift in Sources */,
 				B505D9642282589400446449 /* CustomPopAnimator.swift in Sources */,
 				B5BD31252279565F009711FB /* SwipeController.swift in Sources */,
 				B556C437225AE67300521335 /* PhotosFriendController.swift in Sources */,
+				0440100322D6BE66006C8983 /* ParseData.swift in Sources */,
 				B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */,
 				B50FBD672265CD8E00BD041B /* LikeControl.swift in Sources */,
 				B5C26435229049B200C0AF1B /* AlamofireService.swift in Sources */,
 				B5F1BC07225825AD00F2DA69 /* MyGroupsController.swift in Sources */,
 				B505D9602282515C00446449 /* CustomNavigationController.swift in Sources */,
 				B5C2643822904BB100C0AF1B /* Constants.swift in Sources */,
+				04400FF522D2C2C4006C8983 /* String+Height.swift in Sources */,
 				B5FDD5A02269664D00381B24 /* FeedsCell.swift in Sources */,
 				B58DC9A4229DF9AE00A78059 /* RealmService.swift in Sources */,
 				B556C435225ADB6600521335 /* MainTabBarController.swift in Sources */,
+				0440100122D6B44A006C8983 /* AsyncOperation.swift in Sources */,
 				B5532647225055F4003CD775 /* LoginFormController.swift in Sources */,
 				B5F1BC052258258E00F2DA69 /* AllGroupsController.swift in Sources */,
 				B532530522BF549300E78A22 /* NewsFeed.swift in Sources */,
@@ -464,6 +471,7 @@
 				B5F1BBFC2258221900F2DA69 /* MyFriendsController.swift in Sources */,
 				B505D9662282695700446449 /* CustomSegue.swift in Sources */,
 				B5FDD59C2269611A00381B24 /* FeedsController.swift in Sources */,
+				04400FEC22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift in Sources */,
 				B556C433225AD60700521335 /* Friend.swift in Sources */,
 				B5532645225055F4003CD775 /* AppDelegate.swift in Sources */,
 				B5C2642B22901FA700C0AF1B /* Session.swift in Sources */,
@@ -471,6 +479,7 @@
 				B56C143122AA079C00DA9A9F /* UITableView+RealmChanges.swift in Sources */,
 				B5B6923922BBDDCB00D31E0C /* Group.swift in Sources */,
 				B54E8D502274007F00128EBE /* CustomActivityIndicator.swift in Sources */,
+				04400FFF22D6B0DD006C8983 /* GetDataOperation.swift in Sources */,
 				B58C1C252290EC420015E16A /* Photo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

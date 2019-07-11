@@ -15,8 +15,8 @@ class MyGroupsController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        fetchAndUpdateData()
-        fetchMyGroups()
+        fetchAndUpdateData()
+//        fetchMyGroups()
         setupTableView()
         navigationItem.title = "Мои группы"
     }

@@ -48,7 +48,7 @@ final class FeedCellLayoutCalculator: FeedCellLayoutCalculatorProtocol {
         if let attachment = photoAttachmants.first {
             let photoHeight: Float = Float(attachment.height)
             let photoWidth: Float = Float(attachment.width)
-            let ratio = CGFloat(photoHeight / photoWidth)
+            let ratio = ceil(CGFloat(photoHeight / photoWidth))
             if photoAttachmants.count == 1 {
                 attachmentFrame.size = CGSize(width: cardViewWidth, height: cardViewWidth * ratio)
             } else if photoAttachmants.count > 1 {
