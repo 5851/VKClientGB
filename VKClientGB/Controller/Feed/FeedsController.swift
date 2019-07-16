@@ -20,7 +20,7 @@ class FeedsController: UITableViewController {
         navigationItem.title = "Новости"
         setupTableView()
     
-        AlamofireService.shared.fetchNewsFeed { [weak self] feedResposne in
+        NewsFeedRequest.fetchNewsFeed { [weak self] feedResposne in
             guard let self = self else { return }
             
             let cells = feedResposne.items.map({ feedItem in

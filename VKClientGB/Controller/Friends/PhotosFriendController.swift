@@ -1,5 +1,6 @@
 import UIKit
 import RealmSwift
+import PromiseKit
 
 class PhotosFriendController: UICollectionViewController {
 
@@ -14,7 +15,32 @@ class PhotosFriendController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        AlamofireService.shared.fetchPhotosFriend(friendId: friendId)
+        //  Стандартный вариант (работает)
+//        PhotosFriendsRequest.fetchPhotosFriend(friendId: friendId)
+        
+        // Вариант с PromiseKit and URLSession (работает)
+//        PhotosFriendsRequest.fetchPhotosFriendWithPromise(friendId: friendId)
+//            .done { [weak self] photos in
+//                guard let self = self else { return }
+//                print(self.friendId)
+//                RealmService.savePhotos(photos, friendId: self.friendId)
+//                self.collectionView.reloadData()
+//            }.catch { error in
+//                print(error)
+//        }
+        
+        // Вариант с PromiseKit and Decodable
+        PhotosFriendsRequest.fetchPhotosFriendWithPromiseDecodable(friendId: friendId, on: .global())
+            .get { [weak self] photos in
+                guard let self = self else { return }
+                RealmService.savePhotos(photos.response.items, friendId: self.friendId)
+            }.done(on: .main) { [weak self] photos in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }.catch { error in
+                print(error)
+        }
+        
         navigationItem.title = "Фотографии друга"
     }
     
