@@ -31,8 +31,12 @@ class AllGroupsController: UITableViewController {
         }
         navigationItem.leftBarButtonItem = nil
     }
+}
 
-    // MARK: - Table view data source
+// MARK: - Table view data source and delegate
+
+extension AllGroupsController {
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
@@ -49,7 +53,9 @@ class AllGroupsController: UITableViewController {
     }
 }
 
-    // MARK: - UISearchBarDelegate
+
+
+// MARK: - UISearchBarDelegate
 extension AllGroupsController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -60,7 +66,7 @@ extension AllGroupsController: UISearchBarDelegate {
             return
         }
 
-        AlamofireService.shared.fetchAllGroups(searchText: searchText) { [weak self] groups in
+        AllGroupsRequest.fetchAllGroups(searchText: searchText) { [weak self] groups in
             
             self?.groups = groups.response.items.filter({ (group) -> Bool in
                 return group.name.lowercased().contains(searchText.lowercased())

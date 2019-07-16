@@ -1,5 +1,7 @@
 import UIKit
 import RealmSwift
+import PromiseKit
+import Alamofire
 
 class MyFriendsController: UIViewController {
 
@@ -30,10 +32,23 @@ class MyFriendsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        AlamofireService.shared.fetchFrieds { friends in
-            try! RealmService.save(items: friends)
-            self.firstLetters = self.sort(self.friendsRealm)
-            self.tableView.reloadData()
+//        FriendsListRequest.fetchFriends { friends in
+//            try! RealmService.save(items: friends)
+//            self.firstLetters = self.sort(self.friendsRealm)
+//            self.tableView.reloadData()
+//        }
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        FriendsListRequest.fetchFriendsWithPromiseKit()
+            .done { [weak self] profiles in
+                guard let self = self else { return }
+                try! RealmService.save(items: profiles)
+                self.firstLetters = self.sort(self.friendsRealm)
+                self.tableView.reloadData()
+            }.catch { error in
+                print(error)
+            }.finally {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = true
         }
         
         friendsToken = friendsRealm.observe { [weak self] change in
