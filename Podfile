@@ -8,5 +8,7 @@ target 'VKClientGB' do
   pod 'Kingfisher', '~> 5.5.0'
   pod 'PromiseKit'
   pod 'PromiseKit/Alamofire'
+  pod 'RxSwift'
+  pod 'RxCocoa'
   
 end

@@ -1,6 +1,7 @@
 import UIKit
 import RealmSwift
 import PromiseKit
+import RxSwift
 
 class PhotosFriendController: UICollectionViewController {
 
@@ -10,6 +11,7 @@ class PhotosFriendController: UICollectionViewController {
     var friendId: Int = 0
     var currentImage = 0
     private lazy var photos: Results<Photo> = try! RealmService.get(Photo.self).filter("owner_id == %@", friendId)
+    private let disposeBag = DisposeBag()
     
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
@@ -29,17 +31,26 @@ class PhotosFriendController: UICollectionViewController {
 //                print(error)
 //        }
         
-        // Вариант с PromiseKit and Decodable
-        PhotosFriendsRequest.fetchPhotosFriendWithPromiseDecodable(friendId: friendId, on: .global())
-            .get { [weak self] photos in
-                guard let self = self else { return }
-                RealmService.savePhotos(photos.response.items, friendId: self.friendId)
-            }.done(on: .main) { [weak self] photos in
-                guard let self = self else { return }
+        // Вариант с PromiseKit and Decodable (работает у меня на swift 4.2)
+//        PhotosFriendsRequest.fetchPhotosFriendWithPromiseDecodable(friendId: friendId, on: .global())
+//            .get { [weak self] photos in
+//                guard let self = self else { return }
+//                RealmService.savePhotos(photos.response.items, friendId: self.friendId)
+//            }.done(on: .main) { [weak self] photos in
+//                guard let self = self else { return }
+//                self.collectionView.reloadData()
+//            }.catch { error in
+//                print(error)
+//        }
+        
+        // Вариант с PromiseKit and RxSwift (работает)
+        PhotosFriendsRequest.fetchPhotosFriendWithRxSwift(friendId: friendId)
+            .subscribe(onSuccess: { [unowned self] photos in
+                RealmService.savePhotos(photos, friendId: self.friendId)
                 self.collectionView.reloadData()
-            }.catch { error in
+            }) { error in
                 print(error)
-        }
+        }.disposed(by: disposeBag)
         
         navigationItem.title = "Фотографии друга"
     }
