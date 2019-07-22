@@ -37,7 +37,7 @@ class FeedsCell: UITableViewCell {
         }
     }
     
-    @IBOutlet weak var iconImageView: WebImageView! {
+    @IBOutlet weak var iconImageView: UIImageView! {
         didSet {
             iconImageView.layer.cornerRadius = iconImageView.frame.width / 2
             iconImageView.clipsToBounds = true
@@ -46,7 +46,7 @@ class FeedsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var postLabel: UILabel!
-    @IBOutlet weak var newsImage: WebImageView! {
+    @IBOutlet weak var newsImage: UIImageView! {
         didSet {
             newsImage.contentMode = .scaleAspectFill
         }
@@ -58,8 +58,8 @@ class FeedsCell: UITableViewCell {
     @IBOutlet weak var bottomView: UIView!
     
     override func prepareForReuse() {
-        iconImageView.set(imageUrl: nil)
-        newsImage.set(imageUrl: nil)
+        iconImageView.image = nil
+        newsImage.image = nil
     }
     
     override func awakeFromNib() {
@@ -69,8 +69,15 @@ class FeedsCell: UITableViewCell {
         selectionStyle = .none
     }
     
-    func set(viewModel: FeedCellViewModel) {
-        iconImageView.set(imageUrl: viewModel.iconUrlString)
+    func set(viewModel: FeedCellViewModel, by imageService: ImageService) {
+        
+        imageService.photo(with: viewModel.iconUrlString).done { [weak self] image in
+            guard let self = self else { return }
+            self.iconImageView.image = image
+            } .catch { error in
+                print(error)
+        }
+//        iconImageView.set(imageUrl: viewModel.iconUrlString)
         nameLabel.text = viewModel.name
         dateLabel.text = viewModel.date
         postLabel.text = viewModel.text
@@ -82,7 +89,13 @@ class FeedsCell: UITableViewCell {
         bottomView.frame = viewModel.sizes.bottomView
         
         if let photoAttachment = viewModel.photoAttachments.first {
-            newsImage.set(imageUrl: photoAttachment.photoUrlString)
+//            newsImage.set(imageUrl: photoAttachment.photoUrlString)
+            imageService.photo(with: photoAttachment.photoUrlString ?? "").done { [weak self] image in
+                guard let self = self else { return }
+                self.newsImage.image = image
+                } .catch { error in
+                    print(error)
+            }
             newsImage.isHidden = false
             newsImage.frame = viewModel.sizes.attachmentFrame
         } else {

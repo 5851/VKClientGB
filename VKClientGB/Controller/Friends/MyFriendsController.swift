@@ -12,6 +12,7 @@ class MyFriendsController: UIViewController {
     // MARK: - Variables
     var friendsRealm: Results<Profile> = try! RealmService.get(Profile.self)
     private var friendsToken: NotificationToken?
+    private let imageService = ImageService()
 
 //    var filteredFriends = [Friend]()
     let searchController = UISearchController(searchResultsController: nil)
@@ -170,9 +171,8 @@ extension MyFriendsController: UITableViewDataSource, UITableViewDelegate {
             }
         }()
         
-        
         let friend = sectionFriends[indexPath.row]
-        cell.setupCell(friend: friend)
+        cell.setupCell(friend: friend, by: imageService)
         
         return cell
     }

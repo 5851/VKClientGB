@@ -14,6 +14,7 @@ class MyGroupsController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
+    private let imageService = ImageService()
 
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
@@ -94,7 +95,7 @@ extension MyGroupsController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let group = groups[indexPath.row]
-        cell.group = group
+        cell.setupCell(group: group, by: imageService)
         
         return cell
     }
