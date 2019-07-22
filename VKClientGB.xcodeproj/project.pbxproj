@@ -19,6 +19,7 @@
 		045B76AC22DC0BA100C21FA9 /* MyGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B76AB22DC0BA100C21FA9 /* MyGroupsRequest.swift */; };
 		045B76AE22DC0BAD00C21FA9 /* AllGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B76AD22DC0BAD00C21FA9 /* AllGroupsRequest.swift */; };
 		045B76B022DC0BBD00C21FA9 /* PhotosFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B76AF22DC0BBD00C21FA9 /* PhotosFriendsRequest.swift */; };
+		0465844422E15E9B00F7494C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0465844322E15E9B00F7494C /* ImageService.swift */; };
 		B505D9602282515C00446449 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D95F2282515C00446449 /* CustomNavigationController.swift */; };
 		B505D9622282540E00446449 /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D9612282540D00446449 /* CustomPushAnimator.swift */; };
 		B505D9642282589400446449 /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D9632282589400446449 /* CustomPopAnimator.swift */; };
@@ -72,6 +73,7 @@
 		045B76AB22DC0BA100C21FA9 /* MyGroupsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsRequest.swift; sourceTree = "<group>"; };
 		045B76AD22DC0BAD00C21FA9 /* AllGroupsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsRequest.swift; sourceTree = "<group>"; };
 		045B76AF22DC0BBD00C21FA9 /* PhotosFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFriendsRequest.swift; sourceTree = "<group>"; };
+		0465844322E15E9B00F7494C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		8FA80C5228B744B9E5FB2515 /* Pods_VKClientGB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientGB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B505D95F2282515C00446449 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		B505D9612282540D00446449 /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				045B76A622DA388400C21FA9 /* NetworkService */,
 				B58DC9A3229DF9AE00A78059 /* RealmService.swift */,
 				B5C264392290686C00C0AF1B /* WebImageView.swift */,
+				0465844322E15E9B00F7494C /* ImageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				B54E8D502274007F00128EBE /* CustomActivityIndicator.swift in Sources */,
 				B58C1C252290EC420015E16A /* Photo.swift in Sources */,
 				045B76AC22DC0BA100C21FA9 /* MyGroupsRequest.swift in Sources */,
+				0465844422E15E9B00F7494C /* ImageService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

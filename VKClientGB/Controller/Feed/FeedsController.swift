@@ -5,6 +5,7 @@ class FeedsController: UITableViewController {
     // MARK: - Variables
     private var feedViewModel = FeedViewModel.init(cell: [])
     var cellLayoutCalculator: FeedCellLayoutCalculatorProtocol = FeedCellLayoutCalculator()
+    private let imageService = ImageService()
 
     let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -48,7 +49,7 @@ class FeedsController: UITableViewController {
         }
         
         let cellViewModel = feedViewModel.cell[indexPath.row]
-        cell.set(viewModel: cellViewModel)
+        cell.set(viewModel: cellViewModel, by: imageService)
         
         return cell
     }

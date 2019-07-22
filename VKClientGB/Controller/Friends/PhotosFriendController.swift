@@ -7,6 +7,7 @@ class PhotosFriendController: UICollectionViewController {
 
     // MARK: - Variables
     private var photosToken: NotificationToken?
+    private let imageService = ImageService()
     
     var friendId: Int = 0
     var currentImage = 0
@@ -90,7 +91,7 @@ class PhotosFriendController: UICollectionViewController {
         }
         
         let photo = photos[indexPath.row]
-        cell.setupCell(photos: photo)
+        cell.setupCell(photos: photo, by: imageService)
         cell.likeControl.addTarget(self, action: #selector(cellLikePressed), for: .valueChanged)        
         return cell
     }

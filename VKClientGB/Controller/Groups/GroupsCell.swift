@@ -3,16 +3,8 @@ import UIKit
 class GroupsCell: UITableViewCell {
     
     static var cellId = "groupsCell"
-    
-    var group: Group! {
-        didSet {
-            self.iconGroup.set(imageUrl: self.group.photo_100)
-            self.nameGroup.text = group.name
-//            self.membersCount.text = formattedCounter(myGroup.members_count)
-        }
-    }
 
-    @IBOutlet weak var iconGroup: WebImageView! {
+    @IBOutlet weak var iconGroup: UIImageView! {
         didSet {
             iconGroup.layer.cornerRadius = iconGroup.frame.width / 2
             iconGroup.contentMode = .scaleAspectFill
@@ -48,5 +40,17 @@ class GroupsCell: UITableViewCell {
         }
         
         return counterString
+    }
+    
+    func setupCell(group: Group, by imageService: ImageService) {
+        
+        nameGroup.text = group.name
+        let imageString = group.photo_100
+        imageService.photo(with: imageString).done(on: DispatchQueue.main) { [weak self] image in
+            guard let self = self else { return }
+            self.iconGroup.image = image
+            } .catch { error in
+                print(error)
+        }
     }
 }

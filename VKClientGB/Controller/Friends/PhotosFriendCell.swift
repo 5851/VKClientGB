@@ -4,27 +4,13 @@ import Kingfisher
 class PhotosFriendCell: UICollectionViewCell {
     
     static let cellId = "photosFriendCell"
-    
-    func setupCell(photos: Photo) {
-        
-        let imageString = photos.sizes[2].url
-        let iconUrl = URL(string: imageString)
-        photo.kf.setImage(with: iconUrl)
-        
-//        guard let url = URL(string: photo.sizes[2].url) else { return }
-//        guard let data = try? Data(contentsOf: url) else { return }
-//
-//        DispatchQueue.main.async {
-//            self.photo.image = UIImage(data: data)
-//        }
-    }
-    
+
     @IBOutlet weak var likeNumber: UILabel!
-    @IBOutlet weak var photo: UIImageView! {
+    @IBOutlet weak var iconPhoto: UIImageView! {
         didSet {
-            photo.contentMode = .scaleAspectFill
-            photo.layer.cornerRadius = 10
-            photo.clipsToBounds = true
+            iconPhoto.contentMode = .scaleAspectFill
+            iconPhoto.layer.cornerRadius = 10
+            iconPhoto.clipsToBounds = true
         }
     }
     @IBOutlet var likeControl: LikeControl!
@@ -43,6 +29,25 @@ class PhotosFriendCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        photo.image = nil
+        iconPhoto.image = nil
+    }
+    
+    func setupCell(photos: Photo, by imageService: ImageService) {
+        
+        let imageString = photos.sizes[2].url
+        imageService.photo(with: imageString).done(on: DispatchQueue.main) { [weak self] image in
+            guard let self = self else { return }
+            self.iconPhoto.image = image
+            } .catch { error in
+                print(error)
+        }
+        
+        //        let iconUrl = URL(string: imageString)
+        //        photo.kf.setImage(with: iconUrl)
+        //        guard let url = URL(string: photo.sizes[2].url) else { return }
+        //        guard let data = try? Data(contentsOf: url) else { return }
+        //        DispatchQueue.main.async {
+        //            self.photo.image = UIImage(data: data)
+        //        }
     }
 }

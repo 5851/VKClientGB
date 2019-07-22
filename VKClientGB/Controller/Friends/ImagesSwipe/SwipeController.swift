@@ -3,6 +3,7 @@ import RealmSwift
 
 class SwipeController: UIViewController {
     
+    private let imageService = ImageService()
     let imagesContainer = UIView()
     var photos: Results<Photo> = try! RealmService.get(Photo.self)
     var curImageView = UIView()
@@ -18,7 +19,7 @@ class SwipeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupImages()
+        setupImages(imageService: imageService)
         setupStartImage()
         setupGesture()
         view.backgroundColor = .black
@@ -28,18 +29,24 @@ class SwipeController: UIViewController {
         imagesContainer.frame.origin.x = -width * CGFloat(currentImage)
     }
     
-    private func setupImages() {
+    private func setupImages(imageService: ImageService) {
         width = view.frame.width
         heigth = view.frame.height
         
         imagesContainer.frame = CGRect(x: 0, y: 0, width: width * CGFloat(photos.count), height: heigth)
         for (i, photo) in photos.enumerated() {
-            let imageView = WebImageView()
+            let imageView = UIImageView()
             imageView.frame = CGRect(x: width * CGFloat(i), y: 0, width: width, height: heigth)
             imageView.contentMode = .scaleAspectFit
             imageView.tag = i
 
-            imageView.set(imageUrl: photo.sizes[2].url)
+            let imageString = photo.sizes[2].url
+            imageService.photo(with: imageString).done(on: DispatchQueue.main) { image in
+                imageView.image = image
+                } .catch { error in
+                    print(error)
+            }
+//            imageView.set(imageUrl: photo.sizes[2].url)
             
             imagesContainer.addSubview(imageView)
         }

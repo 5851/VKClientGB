@@ -5,6 +5,7 @@ class AllGroupsController: UITableViewController {
     // MARK: - Variables
     var groups = [Group]()
     let searchController = UISearchController(searchResultsController: nil)
+    private let imageService = ImageService()
     
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
@@ -47,7 +48,7 @@ extension AllGroupsController {
         }
         
         let group = groups[indexPath.row]
-        cell.group = group
+        cell.setupCell(group: group, by: imageService)
         
         return cell
     }
