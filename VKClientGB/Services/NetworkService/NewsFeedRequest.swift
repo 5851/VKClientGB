@@ -1,6 +1,5 @@
 import Foundation
 import Alamofire
-import PromiseKit
 
 class NewsFeedRequest {
     
@@ -21,6 +20,16 @@ class NewsFeedRequest {
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+    
+    // Функция с помощью созданного Request Router
+    static func fetchNewsFeedWithRequestRouter(urlRequest: URLRequestConvertible,
+                               completionHandler: @escaping (Result<NewsFeedResponseWrapped>) -> Void) {
+        request(urlRequest).responseData(queue: .global(qos: .userInteractive)) { response in
+            let decoder = JSONDecoder()
+            let result: Result<NewsFeedResponseWrapped> = decoder.decodeResponse(from: response)
+            completionHandler(result)
         }
     }
 }

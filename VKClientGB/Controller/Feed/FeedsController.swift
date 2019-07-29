@@ -21,16 +21,37 @@ class FeedsController: UITableViewController {
         navigationItem.title = "Новости"
         setupTableView()
     
-        NewsFeedRequest.fetchNewsFeed { [weak self] feedResposne in
+//        NewsFeedRequest.fetchNewsFeed { [weak self] feedResposne in
+//            guard let self = self else { return }
+//
+//            let cells = feedResposne.items.map({ feedItem in
+//                self.cellViewModel(from: feedItem,
+//                                   profiles: feedResposne.profiles,
+//                                   groups: feedResposne.groups)
+//            })
+//
+//            self.feedViewModel = FeedViewModel.init(cell: cells)
+//
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
+        
+        NewsFeedRequest.fetchNewsFeedWithRequestRouter(urlRequest: RequestRouter.getNewsFeed(parameters: ParametersVK.newsFeedParameters)) { [weak self] (result) in
             guard let self = self else { return }
             
-            let cells = feedResposne.items.map({ feedItem in
-                self.cellViewModel(from: feedItem,
-                                   profiles: feedResposne.profiles,
-                                   groups: feedResposne.groups)
-            })
-            
-            self.feedViewModel = FeedViewModel.init(cell: cells)
+            switch result {
+            case .success(let data):
+                let cells = data.response.items.map({ feedItem in
+                    self.cellViewModel(from: feedItem,
+                                       profiles: data.response.profiles,
+                                       groups: data.response.groups)
+                })
+                
+                self.feedViewModel = FeedViewModel.init(cell: cells)
+            case .failure(let error):
+                print("Error: \(error)")
+            }
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()

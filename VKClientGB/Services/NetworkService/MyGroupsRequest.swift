@@ -1,6 +1,5 @@
-import Foundation
+import UIKit
 import Alamofire
-import PromiseKit
 
 class MyGroupsRequest {
 

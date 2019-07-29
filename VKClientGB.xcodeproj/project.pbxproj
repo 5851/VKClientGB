@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0402A42F22E67E8D00F136B0 /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402A42E22E67E8D00F136B0 /* Extensions+UIView.swift */; };
+		0402FFF822EE8838006DF023 /* RequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402FFF722EE8838006DF023 /* RequestRouter.swift */; };
+		0402FFFA22EE8B9E006DF023 /* JSONEncoder+EncodeResposne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402FFF922EE8B9E006DF023 /* JSONEncoder+EncodeResposne.swift */; };
+		0402FFFC22EE8C69006DF023 /* BackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402FFFB22EE8C69006DF023 /* BackendError.swift */; };
 		04400FEC22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04400FEB22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift */; };
 		04400FF522D2C2C4006C8983 /* String+Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04400FF422D2C2C4006C8983 /* String+Height.swift */; };
 		0440100122D6B44A006C8983 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440100022D6B44A006C8983 /* AsyncOperation.swift */; };
@@ -61,6 +65,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0402A42E22E67E8D00F136B0 /* Extensions+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
+		0402FFF722EE8838006DF023 /* RequestRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRouter.swift; sourceTree = "<group>"; };
+		0402FFF922EE8B9E006DF023 /* JSONEncoder+EncodeResposne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONEncoder+EncodeResposne.swift"; sourceTree = "<group>"; };
+		0402FFFB22EE8C69006DF023 /* BackendError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendError.swift; sourceTree = "<group>"; };
 		04400FEB22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsCellLayoutCalculator.swift; sourceTree = "<group>"; };
 		04400FF422D2C2C4006C8983 /* String+Height.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Height.swift"; sourceTree = "<group>"; };
 		0440100022D6B44A006C8983 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
@@ -167,6 +175,7 @@
 				045B76A922DC0B9200C21FA9 /* FriendsListRequest.swift */,
 				045B76AF22DC0BBD00C21FA9 /* PhotosFriendsRequest.swift */,
 				B5C26434229049B200C0AF1B /* NewsFeedRequest.swift */,
+				0402FFF722EE8838006DF023 /* RequestRouter.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -256,6 +265,8 @@
 			children = (
 				B56C143022AA079C00DA9A9F /* UITableView+RealmChanges.swift */,
 				04400FF422D2C2C4006C8983 /* String+Height.swift */,
+				0402A42E22E67E8D00F136B0 /* Extensions+UIView.swift */,
+				0402FFF922EE8B9E006DF023 /* JSONEncoder+EncodeResposne.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -296,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				B5C2642A22901FA700C0AF1B /* Session.swift */,
+				0402FFFB22EE8C69006DF023 /* BackendError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -490,6 +502,8 @@
 				04400FF522D2C2C4006C8983 /* String+Height.swift in Sources */,
 				B5FDD5A02269664D00381B24 /* FeedsCell.swift in Sources */,
 				B58DC9A4229DF9AE00A78059 /* RealmService.swift in Sources */,
+				0402A42F22E67E8D00F136B0 /* Extensions+UIView.swift in Sources */,
+				0402FFFC22EE8C69006DF023 /* BackendError.swift in Sources */,
 				B556C435225ADB6600521335 /* MainTabBarController.swift in Sources */,
 				0440100122D6B44A006C8983 /* AsyncOperation.swift in Sources */,
 				B5532647225055F4003CD775 /* LoginFormController.swift in Sources */,
@@ -504,6 +518,7 @@
 				B5F1BBFC2258221900F2DA69 /* MyFriendsController.swift in Sources */,
 				B505D9662282695700446449 /* CustomSegue.swift in Sources */,
 				045B76A222D8F5BB00C21FA9 /* MyGroupsPersistOperation.swift in Sources */,
+				0402FFF822EE8838006DF023 /* RequestRouter.swift in Sources */,
 				045B76A522D9CBB400C21FA9 /* MyGroupDisplayOperation.swift in Sources */,
 				B5FDD59C2269611A00381B24 /* FeedsController.swift in Sources */,
 				04400FEC22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift in Sources */,
@@ -514,6 +529,7 @@
 				B5C264302290218E00C0AF1B /* AuthorizationController.swift in Sources */,
 				B56C143122AA079C00DA9A9F /* UITableView+RealmChanges.swift in Sources */,
 				045B76A022D8E75500C21FA9 /* MyGroupsParseDataOperation.swift in Sources */,
+				0402FFFA22EE8B9E006DF023 /* JSONEncoder+EncodeResposne.swift in Sources */,
 				045B76AA22DC0B9200C21FA9 /* FriendsListRequest.swift in Sources */,
 				B5B6923922BBDDCB00D31E0C /* Group.swift in Sources */,
 				045B769E22D8E4C300C21FA9 /* MyGroupsFetchDataOperation.swift in Sources */,

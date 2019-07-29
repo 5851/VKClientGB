@@ -11,6 +11,7 @@ class PhotosResponse: Decodable {
 }
 
 class Photo: Object, Decodable {
+
     @objc dynamic var id: Int = 0
     @objc dynamic var owner_id: Int = 0
     let sizes = List<SizePhoto>()
