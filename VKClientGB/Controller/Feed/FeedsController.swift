@@ -6,6 +6,12 @@ class FeedsController: UITableViewController {
     private var feedViewModel = FeedViewModel.init(cell: [])
     var cellLayoutCalculator: FeedCellLayoutCalculatorProtocol = FeedCellLayoutCalculator()
     private let imageService = ImageService()
+    
+    private var refreshedControl: UIRefreshControl? = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
 
     let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -18,55 +24,26 @@ class FeedsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Новости"
         setupTableView()
-    
-        NewsFeedRequest.fetchNewsFeed { [weak self] feedResposne in
-            guard let self = self else { return }
-            
-            let cells = feedResposne.items.map({ feedItem in
-                self.cellViewModel(from: feedItem,
-                                   profiles: feedResposne.profiles,
-                                   groups: feedResposne.groups)
-            })
-            
-            self.feedViewModel = FeedViewModel.init(cell: cells)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-
-    // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return feedViewModel.cell.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedsCell.cellId, for: indexPath) as? FeedsCell else {
-            fatalError("Can not load feed cell")
-        }
-        
-        let cellViewModel = feedViewModel.cell[indexPath.row]
-        cell.set(viewModel: cellViewModel, by: imageService)
-        
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cellViewModel = feedViewModel.cell[indexPath.row]
-        return cellViewModel.sizes.totalHeight
+        fetchNewsFeed()
     }
     
     //MARK: - private functions    
     private func setupTableView() {
+        let topInset: CGFloat = 8
+        tableView.contentInset.top = topInset
+        
+        navigationItem.title = "Новости"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.backgroundColor : UIColor.white]
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "FeedsCell", bundle: nil), forCellReuseIdentifier: FeedsCell.cellId)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.backgroundColor = .clear
         view.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+        
+        guard let refreshedControl = refreshedControl else { return }
+        tableView.addSubview(refreshedControl)
     }
     
     private func cellViewModel(from feedItem: NewsFeedModel, profiles: [ProfileNews], groups:[GroupNews]) -> FeedViewModel.Cell {
@@ -112,7 +89,7 @@ class FeedsController: UITableViewController {
     }
     
     private func formattedCounter(_ counter: Int?) -> String? {
-        guard let counter = counter, counter > 0 else { return "0" }
+        guard let counter = counter, counter > 0 else { return "" }
         var counterString = String(counter)
         
         if 4...6 ~= counterString.count {
@@ -122,5 +99,80 @@ class FeedsController: UITableViewController {
         }
         
         return counterString
+    }
+    
+    fileprivate func fetchNewsFeed() {
+        //        NewsFeedRequest.fetchNewsFeed { [weak self] feedResposne in
+        //            guard let self = self else { return }
+        //
+        //            let cells = feedResposne.items.map({ feedItem in
+        //                self.cellViewModel(from: feedItem,
+        //                                   profiles: feedResposne.profiles,
+        //                                   groups: feedResposne.groups)
+        //            })
+        //
+        //            self.feedViewModel = FeedViewModel.init(cell: cells)
+        //
+        //            DispatchQueue.main.async {
+        //                self.tableView.reloadData()
+        //            }
+        //        }
+        
+        NewsFeedRequest.fetchNewsFeedWithRequestRouter(urlRequest: RequestRouter.getNewsFeed(parameters: ParametersVK.newsFeedParameters)) { [weak self] (result) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let data):
+                
+                let cells = data.response.items.map({ feedItem in
+                    self.cellViewModel(from: feedItem,
+                                       profiles: data.response.profiles,
+                                       groups: data.response.groups)
+                })
+                
+                self.feedViewModel = FeedViewModel.init(cell: cells)
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    @objc private func  refresh() {
+        fetchNewsFeed()
+        refreshedControl?.endRefreshing()
+    }
+}
+
+extension FeedsController {
+    
+    // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return feedViewModel.cell.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedsCell.cellId, for: indexPath) as? FeedsCell else {
+            fatalError("Can not load feed cell")
+        }
+        
+        let cellViewModel = feedViewModel.cell[indexPath.row]
+        cell.set(viewModel: cellViewModel, by: imageService)
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cellViewModel = feedViewModel.cell[indexPath.row]
+        return cellViewModel.sizes.totalHeight
+    }
+    
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView.contentOffset.y > scrollView.contentSize.height / 1.1 {
+
+        }
     }
 }

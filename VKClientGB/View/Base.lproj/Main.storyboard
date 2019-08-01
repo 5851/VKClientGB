@@ -182,7 +182,7 @@
         <scene sceneID="bam-vY-28C">
             <objects>
                 <tabBarController id="5hO-8T-ms1" customClass="MainTabBarController" customModule="VKClientGB" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="R4H-TV-Vtv">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="R4H-TV-Vtv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -204,7 +204,9 @@
         <scene sceneID="Whn-H7-6a1">
             <objects>
                 <viewControllerPlaceholder storyboardName="Groups" id="JFc-dL-SDI" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Группы" id="5nn-Yf-1AZ"/>
+                    <tabBarItem key="tabBarItem" title="Группы" id="5nn-Yf-1AZ">
+                        <color key="badgeColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </tabBarItem>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wh2-Jh-YMs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

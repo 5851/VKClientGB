@@ -1,6 +1,5 @@
 import Foundation
 
-
 class Session {
     
     private init() { }

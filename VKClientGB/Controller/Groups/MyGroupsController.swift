@@ -21,8 +21,7 @@ class MyGroupsController: UIViewController {
         super.viewDidLoad()
 
         fetchMyGroups()
-        navigationItem.title = "Мои группы"
-        tableView.tableFooterView = UIView()
+        setupTebleView()
     }
     
     // MARK: - Private fucntions
@@ -59,6 +58,12 @@ class MyGroupsController: UIViewController {
                 break
             }
         })
+    }
+    
+    private func setupTebleView() {
+        navigationItem.title = "Мои группы"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.backgroundColor : UIColor.white]
+        tableView.tableFooterView = UIView()
     }
     
     // MARK: - Navigation
