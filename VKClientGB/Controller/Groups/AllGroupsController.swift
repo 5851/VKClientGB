@@ -27,6 +27,7 @@ class AllGroupsController: UITableViewController {
     
     private func setupNavigationBar() {
         navigationItem.title = "Все группы"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.backgroundColor : UIColor.white]
         if let topItem = navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }

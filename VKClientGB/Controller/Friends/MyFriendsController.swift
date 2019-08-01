@@ -27,7 +27,6 @@ class MyFriendsController: UIViewController {
         
         setupSearchBar()
         setupTableView()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,6 +105,7 @@ class MyFriendsController: UIViewController {
     private func setupTableView() {
         tableView.delegate = self
         navigationItem.title = "Мои друзья"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.backgroundColor : UIColor.white]
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
     }
