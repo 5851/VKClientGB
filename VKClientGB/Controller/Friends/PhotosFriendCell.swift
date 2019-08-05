@@ -5,15 +5,19 @@ class PhotosFriendCell: UICollectionViewCell {
     
     static let cellId = "photosFriendCell"
 
-    @IBOutlet weak var likeNumber: UILabel!
-    @IBOutlet weak var iconPhoto: UIImageView! {
-        didSet {
-            iconPhoto.contentMode = .scaleAspectFill
-            iconPhoto.layer.cornerRadius = 10
-            iconPhoto.clipsToBounds = true
-        }
-    }
-    @IBOutlet var likeControl: LikeControl!
+    var iconPhoto: UIImageView = {
+        let photoView = UIImageView()
+        photoView.layer.cornerRadius = 12
+        photoView.clipsToBounds = true
+        photoView.contentMode = .scaleAspectFill
+        return photoView
+    }()
+    var likeControl: LikeControl! = {
+        let control = LikeControl()
+        control.isOpaque = true
+        control.backgroundColor = .blue
+        return control
+    }()
 
     override var isHighlighted: Bool {
         didSet {
@@ -25,6 +29,16 @@ class PhotosFriendCell: UICollectionViewCell {
                 self.transform = transform
             })
         }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+//        addSubview(likeControl)
+//        fillSuperview()
+        
+        addSubview(iconPhoto)
+        iconPhoto.fillSuperview(padding: .init(top: 10, left: 0, bottom: 0, right: 0))
     }
     
     override func prepareForReuse() {
@@ -41,13 +55,9 @@ class PhotosFriendCell: UICollectionViewCell {
             } .catch { error in
                 print(error)
         }
-        
-        //        let iconUrl = URL(string: imageString)
-        //        photo.kf.setImage(with: iconUrl)
-        //        guard let url = URL(string: photo.sizes[2].url) else { return }
-        //        guard let data = try? Data(contentsOf: url) else { return }
-        //        DispatchQueue.main.async {
-        //            self.photo.image = UIImage(data: data)
-        //        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

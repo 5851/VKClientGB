@@ -20,11 +20,12 @@ class ImageService {
     }()
     
     private func getFilePath(urlString: String) -> String? {
-        guard let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
+        guard let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first,
+            let filename = urlString.split(separator: "/").last else { return nil }
         
-        let hashName = String(describing: urlString.hashValue)
+//        let hashName = String(describing: urlString.hashValue)
         
-        return cacheDir.appendingPathComponent(ImageService.pathName + "/" + hashName).path
+        return cacheDir.appendingPathComponent(ImageService.pathName + "/" + filename).path
     }
     
     private func saveImageToCache(urlString: String, image: UIImage) {

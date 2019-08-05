@@ -24,6 +24,7 @@ class FeedsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         setupTableView()
         fetchNewsFeed()
     }
@@ -33,15 +34,12 @@ class FeedsController: UITableViewController {
         let topInset: CGFloat = 8
         tableView.contentInset.top = topInset
         
-        navigationItem.title = "Новости"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.backgroundColor : UIColor.white]
-        tableView.tableFooterView = UIView()
-        tableView.register(UINib(nibName: "FeedsCell", bundle: nil), forCellReuseIdentifier: FeedsCell.cellId)
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.backgroundColor = .clear
-        view.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
         
+        tableView.register(NewsFeedCodeCell.self, forCellReuseIdentifier: NewsFeedCodeCell.cellId)
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.allowsSelection = false
         guard let refreshedControl = refreshedControl else { return }
         tableView.addSubview(refreshedControl)
     }
@@ -64,7 +62,7 @@ class FeedsController: UITableViewController {
                                        comments: formattedCounter(feedItem.comments?.count),
                                        shares: formattedCounter(feedItem.reposts?.count),
                                        views: formattedCounter(feedItem.views?.count),
-                                       photoAttachments: photoAttachments,
+                                       photoAttachements: photoAttachments,
                                        sizes: sizes)
     }
     
@@ -82,41 +80,11 @@ class FeedsController: UITableViewController {
         guard let attachments = feedItem.attachments else { return [] }
         return attachments.compactMap({ (attachment) -> FeedViewModel.FeedCellPhotoAttachment? in
             guard let photo = attachment.photo else { return nil }
-            return FeedViewModel.FeedCellPhotoAttachment.init(photoUrlString: photo.srcBIG,
-                                                              width: photo.width,
-                                                              height: photo.height)
+            return FeedViewModel.FeedCellPhotoAttachment.init(photoUrlString: photo.srcBIG, width: photo.width, height: photo.height)
         })
     }
     
-    private func formattedCounter(_ counter: Int?) -> String? {
-        guard let counter = counter, counter > 0 else { return "" }
-        var counterString = String(counter)
-        
-        if 4...6 ~= counterString.count {
-            counterString = String(counterString.dropLast(3)) + "K"
-        } else if counterString.count > 6 {
-            counterString = String(counterString.dropLast(6)) + "M"
-        }
-        
-        return counterString
-    }
-    
     fileprivate func fetchNewsFeed() {
-        //        NewsFeedRequest.fetchNewsFeed { [weak self] feedResposne in
-        //            guard let self = self else { return }
-        //
-        //            let cells = feedResposne.items.map({ feedItem in
-        //                self.cellViewModel(from: feedItem,
-        //                                   profiles: feedResposne.profiles,
-        //                                   groups: feedResposne.groups)
-        //            })
-        //
-        //            self.feedViewModel = FeedViewModel.init(cell: cells)
-        //
-        //            DispatchQueue.main.async {
-        //                self.tableView.reloadData()
-        //            }
-        //        }
         
         NewsFeedRequest.fetchNewsFeedWithRequestRouter(urlRequest: RequestRouter.getNewsFeed(parameters: ParametersVK.newsFeedParameters)) { [weak self] (result) in
             guard let self = self else { return }
@@ -145,6 +113,19 @@ class FeedsController: UITableViewController {
         fetchNewsFeed()
         refreshedControl?.endRefreshing()
     }
+    
+    private func formattedCounter(_ counter: Int?) -> String? {
+        guard let counter = counter, counter > 0 else { return "" }
+        var counterString = String(counter)
+        
+        if 4...6 ~= counterString.count {
+            counterString = String(counterString.dropLast(3)) + "K"
+        } else if counterString.count > 6 {
+            counterString = String(counterString.dropLast(6)) + "M"
+        }
+        
+        return counterString
+    }
 }
 
 extension FeedsController {
@@ -155,10 +136,8 @@ extension FeedsController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedsCell.cellId, for: indexPath) as? FeedsCell else {
-            fatalError("Can not load feed cell")
-        }
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewsFeedCodeCell.cellId, for: indexPath) as! NewsFeedCodeCell
+
         let cellViewModel = feedViewModel.cell[indexPath.row]
         cell.set(viewModel: cellViewModel, by: imageService)
         

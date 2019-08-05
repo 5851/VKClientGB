@@ -1,11 +1,3 @@
-//
-//  WebImageView.swift
-//  VKNewsFeedSwiftBook
-//
-//  Created by Максим on 10/05/2019.
-//  Copyright © 2019 MaksimEliseev. All rights reserved.
-//
-
 import UIKit
 
 class WebImageView: UIImageView {

@@ -18,6 +18,8 @@ class PhotosFriendController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCollectionView()
+        
         //  Стандартный вариант (работает)
 //        PhotosFriendsRequest.fetchPhotosFriend(friendId: friendId)
         
@@ -91,25 +93,41 @@ class PhotosFriendController: UICollectionViewController {
         }
         
         let photo = photos[indexPath.row]
+        cell.likeControl.addTarget(self, action: #selector(cellLikePressed(_:)), for: .valueChanged)
         cell.setupCell(photos: photo, by: imageService)
-        cell.likeControl.addTarget(self, action: #selector(cellLikePressed), for: .valueChanged)        
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let imagesController = SwipeController()
+        imagesController.photos = photos
+        currentImage = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
+        imagesController.currentImage = currentImage
+        navigationController?.pushViewController(imagesController, animated: true)
     }
     
     // MARK: - Private functions
     @objc private func cellLikePressed(_ sender: LikeControl) {
-
+        print("Нажатие")
     }
     
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if segue.identifier == "showImages" {
-            let imagesController = segue.destination as? SwipeController
-            imagesController?.photos = photos
-            currentImage = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
-            imagesController?.currentImage = currentImage
-        }
+    private func setupCollectionView() {
+        collectionView.backgroundColor = .white
+        collectionView.register(PhotosFriendCell.self, forCellWithReuseIdentifier: PhotosFriendCell.cellId)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .done, target: self, action: #selector(handleCancel))
+        navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+    }
+    
+    @objc private func handleCancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    init() {
+        super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

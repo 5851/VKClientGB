@@ -27,6 +27,7 @@ class LikeControl: UIControl {
         let stackView = UIStackView(arrangedSubviews: [
             heartImageView, likeNumber
             ])
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
         stackView.heightAnchor.constraint(equalToConstant: frame.height).isActive = true

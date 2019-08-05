@@ -2,31 +2,30 @@ import UIKit
 import RealmSwift
 import Alamofire
 
-class MyGroupsController: UIViewController {
+class MyGroupsController: UITableViewController {
 
     // MARK: - Variables
     var groups: Results<Group> = try! RealmService.get(Group.self).sorted(byKeyPath: "name")
     var groupsToken: NotificationToken?
+    private let imageService = ImageService()
     private let queque: OperationQueue = {
         let queque = OperationQueue()
         return queque
     }()
-    
-    // MARK: - Outlets
-    @IBOutlet weak var tableView: UITableView!
-    private let imageService = ImageService()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var timer: Timer?
 
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         fetchMyGroups()
-        setupTebleView()
+        setupTableView()
+        setupSearchBar()
     }
     
     // MARK: - Private fucntions
-    
-    func fetchMyGroups() {
+    private func fetchMyGroups() {
         
         let url = ParametersVK.vkApi + ParametersVK.vkApiGroups
 
@@ -43,58 +42,50 @@ class MyGroupsController: UIViewController {
         queque.addOperation(persistOperation)
         
         let displayOPeration = MyGroupDisplayOperation(controller: self)
-        displayOPeration.addDependency(parseDataOperation)
+        displayOPeration.addDependency(persistOperation)
         OperationQueue.main.addOperation(displayOPeration)
-        
-        groupsToken = groups._observe({ [weak tableView] changes in
-            guard let tableView = tableView else { return }
-
-            switch changes {
-            case .initial:
-                tableView.reloadData()
-            case .update(_, let deletions, let insertions, let updates):
-                tableView.applyChanges(deletions: deletions, insertions: insertions, updates: updates)
-            case .error:
-                break
-            }
-        })
     }
     
-    private func setupTebleView() {
-        navigationItem.title = "Мои группы"
+    private func setupTableView() {
+        tableView.backgroundColor = .white
+        tableView.register(GroupsCell.self, forCellReuseIdentifier: GroupsCell.cellId)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addGroup))
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.backgroundColor : UIColor.white]
         tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
+    }
+    
+    private func setupSearchBar() {
+        definesPresentationContext = true
+        navigationItem.searchController = self.searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Enter group name"
+        searchController.searchBar.isTranslucent = false
+    }
+    
+    func reloadTable(results: Results<Group>) {
+        groups = results.sorted(byKeyPath: "name")
+        tableView.reloadData()
     }
     
     // MARK: - Navigation
-    
-    @IBAction func addGroup(segue: UIStoryboardSegue) {
-        if segue.identifier  == "addGroup" {
-            if let allGroups = segue.source as? AllGroupsController,
-                let indexPath = allGroups.tableView.indexPathForSelectedRow {
-
-                let myGroup = allGroups.groups[indexPath.row]
-                
-                
-                guard !(groups.contains(where: { group -> Bool in
-                    return group.name == myGroup.name
-                })) else { return }
-
-                try! RealmService.save(items: [myGroup])
-            }
-        }
+    @objc private func addGroup() {
+        let allGroupsController = AllGroupsController()
+        allGroupsController.navigationItem.title = "Все группы"
+        navigationController?.pushViewController(allGroupsController, animated: true)
     }
 }
 
 // MARK: - Table view data source and delegate
+extension MyGroupsController {
 
-extension MyGroupsController: UITableViewDataSource, UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.cellId, for: indexPath) as? GroupsCell else {
             fatalError("Can not load group cell")
         }
@@ -105,9 +96,37 @@ extension MyGroupsController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             try! RealmService.delete(items: [groups[indexPath.row]])
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension MyGroupsController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            if searchText.count == 0 {
+                self.groups = try! RealmService.get(Group.self).sorted(byKeyPath: "name")
+                self.tableView.reloadData()
+                return
+            } else {
+                let filteredGroups = self.groups.filter("name CONTAINS[cd] %@", searchText)
+                self.groups = filteredGroups
+                self.tableView.reloadData()
+            }
+        })
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        groups = try! RealmService.get(Group.self).sorted(byKeyPath: "name")
+        tableView.reloadData()
     }
 }
