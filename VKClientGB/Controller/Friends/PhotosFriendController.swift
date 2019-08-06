@@ -49,6 +49,7 @@ class PhotosFriendController: UICollectionViewController {
         // Вариант с PromiseKit and RxSwift (работает)
         PhotosFriendsRequest.fetchPhotosFriendWithRxSwift(friendId: friendId)
             .subscribe(onSuccess: { [unowned self] photos in
+                print(photos)
                 RealmService.savePhotos(photos, friendId: self.friendId)
                 self.collectionView.reloadData()
             }) { error in
@@ -93,8 +94,8 @@ class PhotosFriendController: UICollectionViewController {
         }
         
         let photo = photos[indexPath.row]
-        cell.likeControl.addTarget(self, action: #selector(cellLikePressed(_:)), for: .valueChanged)
         cell.setupCell(photos: photo, by: imageService)
+        
         return cell
     }
     
@@ -112,7 +113,7 @@ class PhotosFriendController: UICollectionViewController {
     }
     
     private func setupCollectionView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
         collectionView.register(PhotosFriendCell.self, forCellWithReuseIdentifier: PhotosFriendCell.cellId)
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)

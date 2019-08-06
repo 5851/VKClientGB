@@ -48,7 +48,7 @@ class MyGroupsController: UITableViewController {
     
     private func setupTableView() {
         tableView.backgroundColor = .white
-        tableView.register(GroupsCell.self, forCellReuseIdentifier: GroupsCell.cellId)
+        tableView.register(MyGroupsCell.self, forCellReuseIdentifier: MyGroupsCell.cellId)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addGroup))
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.backgroundColor : UIColor.white]
         tableView.tableFooterView = UIView()
@@ -86,7 +86,7 @@ extension MyGroupsController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.cellId, for: indexPath) as? GroupsCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyGroupsCell.cellId, for: indexPath) as? MyGroupsCell else {
             fatalError("Can not load group cell")
         }
         

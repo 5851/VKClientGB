@@ -51,7 +51,6 @@ class MyGroupsCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         iconGroup.layer.cornerRadius = 35 / 2
         iconGroup.clipsToBounds = true
         shadowView.layer.cornerRadius = 35 / 2
@@ -68,7 +67,6 @@ class MyGroupsCell: UITableViewCell {
     }
     
     private func setupBaseLayer() {
-        
         horizontalView = UIStackView(arrangedSubviews: [
             iconGroup, groupView
             ])
@@ -88,11 +86,9 @@ class MyGroupsCell: UITableViewCell {
         verticalStackView.spacing = 10
         groupView.addSubview(verticalStackView)
         verticalStackView.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 0))
-        
     }
     
     func setupCell(group: Group, by imageService: ImageService) {
-        
         let count = "\(group.members_count)"
         if count.last == "0" || count.last == "5" || count.last == "6" || count.last == "7" || count.last == "8" || count.last == "9" {
             membersCount.text = "\(group.members_count) участников"

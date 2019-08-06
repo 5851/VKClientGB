@@ -3,7 +3,7 @@ import Alamofire
 
 class AllGroupsRequest {
     
-    static func fetchAllGroups(searchText: String, completionHandler: @escaping (GroupsResponseWrapped) -> Void) {
+    static func fetchAllGroups(searchText: String, completionHandler: @escaping (AllGroupsResponseWrapped) -> Void) {
         
         let url = ParametersVK.vkApi + ParametersVK.vkApiAllGroups
 

@@ -1,9 +1,12 @@
 import UIKit
+import RealmSwift
 
 class AllGroupsController: UITableViewController {
 
     // MARK: - Variables
-    var groups = [Group]()
+    var groups = [AllGroup]()
+//    var groupProtocol = [BaseGroupProtocol]()
+//    var myGroup2 = [Group]()
     let searchController = UISearchController(searchResultsController: nil)
     private var timer: Timer?
     private let imageService = ImageService()
@@ -28,7 +31,7 @@ class AllGroupsController: UITableViewController {
     // MARK: - Private functions
     private func setupTableView() {
         tableView.tableFooterView = UIView()
-        tableView.register(GroupsCell.self, forCellReuseIdentifier: GroupsCell.cellId)
+        tableView.register(AllGroupsCell.self, forCellReuseIdentifier: AllGroupsCell.cellId)
         tableView.addSubview(enterSearchLabel)
         enterSearchLabel.anchor(top: tableView.topAnchor, leading: tableView.leadingAnchor, bottom: nil, trailing: tableView.trailingAnchor, padding: .init(top: 100, left: 20, bottom: 0, right: 20), size: .init(width: tableView.frame.width - 40, height: 100))
     }
@@ -59,7 +62,7 @@ extension AllGroupsController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.cellId, for: indexPath) as? GroupsCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AllGroupsCell.cellId, for: indexPath) as? AllGroupsCell else {
             fatalError("Can not load group cell")
         }
         
@@ -72,7 +75,6 @@ extension AllGroupsController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let myGroup = groups[indexPath.row]
-        
         try! RealmService.save(items: [myGroup])
         
         searchController.isActive = false
@@ -84,7 +86,7 @@ extension AllGroupsController {
 extension AllGroupsController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+    
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
             guard !searchText.isEmpty else {
@@ -94,13 +96,13 @@ extension AllGroupsController: UISearchBarDelegate {
             }
             
             AllGroupsRequest.fetchAllGroups(searchText: searchText) { [weak self] groups in
-                
-                self?.groups = groups.response.items.filter({ (group) -> Bool in
+                guard let self = self else { return }
+                self.groups = groups.response.items.filter({ (group) -> Bool in
                     return group.name.lowercased().contains(searchText.lowercased())
                 })
                 
                 DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+                    self.tableView.reloadData()
                 }
             }
         })

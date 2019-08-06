@@ -14,7 +14,7 @@ class ParametersVK {
     static let myGroupsParameters: Parameters = [
         "user_id": Session.shared.userId,
         "access_token": Session.shared.token,
-        //            "fields": "description,members_count",
+        "fields": "members_count",
         "extended": 1,
         "v": "5.95"
     ]
