@@ -23,6 +23,8 @@ class SwipeController: UIViewController {
         setupStartImage()
         setupGesture()
         view.backgroundColor = .black
+        tabBarController?.tabBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
     }
     
     private func setupStartImage() {
@@ -82,7 +84,7 @@ class SwipeController: UIViewController {
                 setupCurrentImage()
             }
         case .down:
-            dismiss(animated: true, completion: nil)
+            navigationController?.popViewController(animated: true)
             imagesContainer.isHidden = true
         default:
             print("No swipe")

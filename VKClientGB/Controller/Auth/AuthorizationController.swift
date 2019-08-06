@@ -1,22 +1,20 @@
-//
-//  AuthorizationController.swift
-//  VKClientGB
-//
-//  Created by Максим on 18/05/2019.
-//  Copyright © 2019 MaksimEliseev. All rights reserved.
-//
-
 import UIKit
 import WebKit
 
 class AuthorizationController: UIViewController {
     
-    @IBOutlet weak var webview: WKWebView!
+    private weak var webview: WKWebView! = {
+        let webview = WKWebView()
+        webview.backgroundColor = .white
+        return webview
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupVK()
+        view.addSubview(webview)
+        webview.fillSuperview()
     }
     
     private func setupVK() {
@@ -25,7 +23,7 @@ class AuthorizationController: UIViewController {
         urlComponents.host = "oauth.vk.com"
         urlComponents.path = "/authorize"
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "6988292"),
+            URLQueryItem(name: "client_id", value: "7081871"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "scope", value: "270342"), // 262144 + 2 + 4 + 8192
@@ -70,6 +68,6 @@ extension AuthorizationController: WKNavigationDelegate {
         
         decisionHandler(.cancel)
         
-        performSegue(withIdentifier: "showMainScreen", sender: nil)
+        present(MainTabBarController(), animated: true, completion: nil)
     }
 }
