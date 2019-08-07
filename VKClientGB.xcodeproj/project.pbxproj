@@ -255,6 +255,7 @@
 				B505D95E22824FB400446449 /* Custom */,
 				B50FBD662265CD8E00BD041B /* LikeControl.swift */,
 				B54E8D4F2274007F00128EBE /* CustomActivityIndicator.swift */,
+				B5C264392290686C00C0AF1B /* WebImageView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -273,7 +274,6 @@
 				B5C2642C22901FAC00C0AF1B /* Model */,
 				045B76A622DA388400C21FA9 /* NetworkService */,
 				B58DC9A3229DF9AE00A78059 /* RealmService.swift */,
-				B5C264392290686C00C0AF1B /* WebImageView.swift */,
 				0465844322E15E9B00F7494C /* ImageService.swift */,
 			);
 			path = Services;
