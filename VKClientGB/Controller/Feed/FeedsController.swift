@@ -29,7 +29,7 @@ class FeedsController: UITableViewController {
         fetchNewsFeed()
     }
     
-    //MARK: - private functions    
+    //MARK: - private functions
     private func setupTableView() {
         let topInset: CGFloat = 8
         tableView.contentInset.top = topInset
@@ -85,24 +85,19 @@ class FeedsController: UITableViewController {
     }
     
     fileprivate func fetchNewsFeed() {
-        
         NewsFeedRequest.fetchNewsFeedWithRequestRouter(urlRequest: RequestRouter.getNewsFeed(parameters: ParametersVK.newsFeedParameters)) { [weak self] (result) in
             guard let self = self else { return }
-            
             switch result {
             case .success(let data):
-                
                 let cells = data.response.items.map({ feedItem in
                     self.cellViewModel(from: feedItem,
                                        profiles: data.response.profiles,
                                        groups: data.response.groups)
                 })
-                
                 self.feedViewModel = FeedViewModel.init(cell: cells)
             case .failure(let error):
                 print("Error: \(error)")
             }
-            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -123,7 +118,6 @@ class FeedsController: UITableViewController {
         } else if counterString.count > 6 {
             counterString = String(counterString.dropLast(6)) + "M"
         }
-        
         return counterString
     }
 }

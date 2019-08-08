@@ -33,4 +33,11 @@ class ParametersVK {
         "count":"20",
         "v": "5.95",
     ]
+    
+    static let userParameters: Parameters = [
+        "access_token": Session.shared.token,
+        "user_ids": Session.shared.userId,
+        "fields": "photo_100",
+        "v": "5.95",
+    ]
 }
