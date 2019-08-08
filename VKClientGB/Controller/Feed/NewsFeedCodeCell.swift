@@ -44,12 +44,27 @@ class NewsFeedCodeCell: UITableViewCell {
         return view
     }()
     
-    let postLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = ConstantsInsets.postLabelFont
-        label.textColor = #colorLiteral(red: 0.1728, green: 0.1764, blue: 0.18, alpha: 1)
-        return label
+//    let postLabel: UILabel = {
+//        let label = UILabel()
+//        label.numberOfLines = 0
+//        label.font = ConstantsInsets.postLabelFont
+//        label.textColor = #colorLiteral(red: 0.1728, green: 0.1764, blue: 0.18, alpha: 1)
+//        return label
+//    }()
+    
+    let postLabel: UITextView = {
+        let textView = UITextView()
+        textView.font = ConstantsInsets.postLabelFont
+        textView.textColor = #colorLiteral(red: 0.1728, green: 0.1764, blue: 0.18, alpha: 1)
+        textView.isScrollEnabled = false
+        textView.isSelectable = true
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        
+        let padding = textView.textContainer.lineFragmentPadding
+        textView.textContainerInset = UIEdgeInsets.init(top: 0, left: -padding, bottom: 0, right: padding)
+        textView.dataDetectorTypes = UIDataDetectorTypes.all
+        return textView
     }()
     
     let newsImage: WebImageView = {

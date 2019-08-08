@@ -2,7 +2,7 @@ import UIKit
 import RealmSwift
 import Alamofire
 
-class MyGroupsController: UITableViewController {
+class MyGroupsController: UIViewController {
 
     // MARK: - Variables
     var groups: Results<Group> = try! RealmService.get(Group.self).sorted(byKeyPath: "name")
@@ -14,14 +14,22 @@ class MyGroupsController: UITableViewController {
     }()
     private let searchController = UISearchController(searchResultsController: nil)
     private var timer: Timer?
+    private let tableView = UITableView()
+    private var refreshedControl: UIRefreshControl? = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
 
     // MARK: - Controller lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchMyGroups()
+        view.backgroundColor = .white
         setupTableView()
+        fetchMyGroups()
         setupSearchBar()
+        setupContstraints()
     }
     
     // MARK: - Private fucntions
@@ -46,13 +54,23 @@ class MyGroupsController: UITableViewController {
         OperationQueue.main.addOperation(displayOPeration)
     }
     
+    private func setupContstraints() {
+        view.addSubview(tableView)
+        tableView.fillSuperview()
+    }
+    
     private func setupTableView() {
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.backgroundColor = .white
         tableView.register(MyGroupsCell.self, forCellReuseIdentifier: MyGroupsCell.cellId)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addGroup))
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.backgroundColor : UIColor.white]
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
+        guard let refreshedControl = refreshedControl else { return }
+        tableView.addSubview(refreshedControl)
     }
     
     private func setupSearchBar() {
@@ -70,6 +88,11 @@ class MyGroupsController: UITableViewController {
         tableView.reloadData()
     }
     
+    @objc private func  refresh() {
+        fetchMyGroups()
+        refreshedControl?.endRefreshing()
+    }
+    
     // MARK: - Navigation
     @objc private func addGroup() {
         let allGroupsController = AllGroupsController()
@@ -79,13 +102,13 @@ class MyGroupsController: UITableViewController {
 }
 
 // MARK: - Table view data source and delegate
-extension MyGroupsController {
+extension MyGroupsController: UITableViewDelegate, UITableViewDataSource {
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyGroupsCell.cellId, for: indexPath) as? MyGroupsCell else {
             fatalError("Can not load group cell")
         }
@@ -96,13 +119,13 @@ extension MyGroupsController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             try! RealmService.delete(items: [groups[indexPath.row]])
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

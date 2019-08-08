@@ -27,6 +27,10 @@
 		04F9623322F6D50D0012F2F9 /* NewsFeedCodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9623222F6D50D0012F2F9 /* NewsFeedCodeCell.swift */; };
 		04F9623622F8F7640012F2F9 /* AllGroupsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9623522F8F7640012F2F9 /* AllGroupsCell.swift */; };
 		04F9623822F8F8B50012F2F9 /* AllGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9623722F8F8B50012F2F9 /* AllGroup.swift */; };
+		04F9623F22FA59090012F2F9 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9623E22FA59090012F2F9 /* UserRequest.swift */; };
+		04F9624122FA5A270012F2F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9624022FA5A270012F2F9 /* User.swift */; };
+		04F9624922FBB6C30012F2F9 /* LikeRequst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9624822FBB6C30012F2F9 /* LikeRequst.swift */; };
+		04F9624B22FBB7280012F2F9 /* Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9624A22FBB7280012F2F9 /* Likes.swift */; };
 		B505D9602282515C00446449 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D95F2282515C00446449 /* CustomNavigationController.swift */; };
 		B505D9622282540E00446449 /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D9612282540D00446449 /* CustomPushAnimator.swift */; };
 		B505D9642282589400446449 /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B505D9632282589400446449 /* CustomPopAnimator.swift */; };
@@ -82,6 +86,10 @@
 		04F9623222F6D50D0012F2F9 /* NewsFeedCodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCodeCell.swift; sourceTree = "<group>"; };
 		04F9623522F8F7640012F2F9 /* AllGroupsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsCell.swift; sourceTree = "<group>"; };
 		04F9623722F8F8B50012F2F9 /* AllGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroup.swift; sourceTree = "<group>"; };
+		04F9623E22FA59090012F2F9 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
+		04F9624022FA5A270012F2F9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		04F9624822FBB6C30012F2F9 /* LikeRequst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRequst.swift; sourceTree = "<group>"; };
+		04F9624A22FBB7280012F2F9 /* Likes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Likes.swift; sourceTree = "<group>"; };
 		8FA80C5228B744B9E5FB2515 /* Pods_VKClientGB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientGB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B505D95F2282515C00446449 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		B505D9612282540D00446449 /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
@@ -162,6 +170,8 @@
 				045B76A922DC0B9200C21FA9 /* FriendsListRequest.swift */,
 				045B76AF22DC0BBD00C21FA9 /* PhotosFriendsRequest.swift */,
 				B5C26434229049B200C0AF1B /* NewsFeedRequest.swift */,
+				04F9623E22FA59090012F2F9 /* UserRequest.swift */,
+				04F9624822FBB6C30012F2F9 /* LikeRequst.swift */,
 				0402FFF722EE8838006DF023 /* RequestRouter.swift */,
 			);
 			path = NetworkService;
@@ -232,6 +242,8 @@
 				B556C432225AD60700521335 /* Friend.swift */,
 				B58C1C242290EC420015E16A /* Photo.swift */,
 				B532530422BF549300E78A22 /* NewsFeed.swift */,
+				04F9624022FA5A270012F2F9 /* User.swift */,
+				04F9624A22FBB7280012F2F9 /* Likes.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -255,6 +267,7 @@
 				B505D95E22824FB400446449 /* Custom */,
 				B50FBD662265CD8E00BD041B /* LikeControl.swift */,
 				B54E8D4F2274007F00128EBE /* CustomActivityIndicator.swift */,
+				B5C264392290686C00C0AF1B /* WebImageView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -273,7 +286,6 @@
 				B5C2642C22901FAC00C0AF1B /* Model */,
 				045B76A622DA388400C21FA9 /* NetworkService */,
 				B58DC9A3229DF9AE00A78059 /* RealmService.swift */,
-				B5C264392290686C00C0AF1B /* WebImageView.swift */,
 				0465844322E15E9B00F7494C /* ImageService.swift */,
 			);
 			path = Services;
@@ -461,11 +473,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F9624122FA5A270012F2F9 /* User.swift in Sources */,
 				B505D9642282589400446449 /* CustomPopAnimator.swift in Sources */,
 				B5BD31252279565F009711FB /* SwipeController.swift in Sources */,
 				B556C437225AE67300521335 /* PhotosFriendController.swift in Sources */,
 				B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */,
 				B50FBD672265CD8E00BD041B /* LikeControl.swift in Sources */,
+				04F9624922FBB6C30012F2F9 /* LikeRequst.swift in Sources */,
 				B5C26435229049B200C0AF1B /* NewsFeedRequest.swift in Sources */,
 				B5F1BC07225825AD00F2DA69 /* MyGroupsController.swift in Sources */,
 				B505D9602282515C00446449 /* CustomNavigationController.swift in Sources */,
@@ -489,6 +503,7 @@
 				B505D9662282695700446449 /* CustomSegue.swift in Sources */,
 				04F9623322F6D50D0012F2F9 /* NewsFeedCodeCell.swift in Sources */,
 				045B76A222D8F5BB00C21FA9 /* MyGroupsPersistOperation.swift in Sources */,
+				04F9624B22FBB7280012F2F9 /* Likes.swift in Sources */,
 				04F9623622F8F7640012F2F9 /* AllGroupsCell.swift in Sources */,
 				0402FFF822EE8838006DF023 /* RequestRouter.swift in Sources */,
 				045B76A522D9CBB400C21FA9 /* MyGroupDisplayOperation.swift in Sources */,
@@ -506,6 +521,7 @@
 				B5B6923922BBDDCB00D31E0C /* Group.swift in Sources */,
 				045B769E22D8E4C300C21FA9 /* MyGroupsFetchDataOperation.swift in Sources */,
 				B54E8D502274007F00128EBE /* CustomActivityIndicator.swift in Sources */,
+				04F9623F22FA59090012F2F9 /* UserRequest.swift in Sources */,
 				B58C1C252290EC420015E16A /* Photo.swift in Sources */,
 				045B76AC22DC0BA100C21FA9 /* MyGroupsRequest.swift in Sources */,
 				0465844422E15E9B00F7494C /* ImageService.swift in Sources */,

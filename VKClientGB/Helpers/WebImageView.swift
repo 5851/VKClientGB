@@ -13,7 +13,9 @@ class WebImageView: UIImageView {
             return }
         
         if let cachedResponse = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
-            self.image = UIImage(data: cachedResponse.data)
+            DispatchQueue.main.async {
+                self.image = UIImage(data: cachedResponse.data)
+            }
             return
         }
         
