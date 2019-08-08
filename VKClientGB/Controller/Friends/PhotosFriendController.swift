@@ -94,7 +94,11 @@ class PhotosFriendController: UICollectionViewController {
         }
         
         let photo = photos[indexPath.row]
+        print(photo.id)
+        print(photo.owner_id)
         cell.setupCell(photos: photo, by: imageService)
+        cell.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
+        cell.likeButton.setImage(#imageLiteral(resourceName: "like").withRenderingMode(.alwaysOriginal), for: .normal)
         
         return cell
     }
@@ -121,6 +125,18 @@ class PhotosFriendController: UICollectionViewController {
     
     @objc private func handleCancel() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    var isLiked = false
+    
+    @objc private func handleLike(sender: UIButton) {
+        if isLiked {
+            sender.setImage(#imageLiteral(resourceName: "like").withRenderingMode(.alwaysOriginal), for: .normal)
+            isLiked = false
+        } else {
+            sender.setImage(#imageLiteral(resourceName: "heartSelected").withRenderingMode(.alwaysOriginal), for: .normal)
+            isLiked = true
+        }
     }
     
     init() {

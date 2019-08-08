@@ -1,9 +1,14 @@
-//
-//  Like.swift
-//  VKClientGB
-//
-//  Created by MAC on 08/08/2019.
-//  Copyright © 2019 MaksimEliseev. All rights reserved.
-//
-
 import Foundation
+
+struct ResponseLikes: Decodable {
+    let response: LikesAddDelete
+}
+
+struct LikesAddDelete: Decodable {
+    
+    enum ResponseKeys: String, CodingKey {
+        case response
+    }
+    
+    var likes: Int
+}

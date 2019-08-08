@@ -11,6 +11,9 @@ enum RequestRouter: URLRequestConvertible {
     case getPhotoFriends
     case getNewsFeed(parameters: Parameters)
     case getUser(parameters: Parameters)
+    case addLike(parameters: Parameters)
+    case deleteLike(parameters: Parameters)
+    case isLiked(parameters: Parameters)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -20,7 +23,10 @@ enum RequestRouter: URLRequestConvertible {
                      .getMyFriends,
                      .getPhotoFriends,
                      .getNewsFeed,
-                     .getUser:
+                     .getUser,
+                     .addLike,
+                     .deleteLike,
+                     .isLiked:
                 return .get
             }
         }
@@ -40,6 +46,12 @@ enum RequestRouter: URLRequestConvertible {
                 relativePath = "newsfeed.get"
             case .getUser:
                 relativePath = "users.get"
+            case .addLike:
+                relativePath = "likes.add"
+            case .deleteLike:
+                relativePath = "likes.delete"
+            case .isLiked:
+                relativePath = "likes.isLiked"
             }
             
             var url = URL(string: RequestRouter.basicURLString)!
@@ -62,6 +74,12 @@ enum RequestRouter: URLRequestConvertible {
         case .getNewsFeed(let parameters):
             request = try URLEncoding.default.encode(request, with: parameters)
         case .getUser(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .addLike(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .deleteLike(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .isLiked(let parameters):
             request = try URLEncoding.default.encode(request, with: parameters)
         }
         return request

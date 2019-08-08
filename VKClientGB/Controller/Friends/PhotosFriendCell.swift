@@ -4,7 +4,7 @@ import Kingfisher
 class PhotosFriendCell: UICollectionViewCell {
     
     static let cellId = "photosFriendCell"
-
+    
     // Base Layer
     private let baseView: UIView = {
         let view = UIView()
@@ -42,10 +42,9 @@ class PhotosFriendCell: UICollectionViewCell {
     }()
     
     // Third layer on bottom view
-    private let likeImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "like")
-        return imageView
+    let likeButton: UIButton = {
+        let likeButton = UIButton(type: .system)
+        return likeButton
     }()
     
     private let likeLabel: UILabel = {
@@ -114,17 +113,17 @@ class PhotosFriendCell: UICollectionViewCell {
     }
     
     private func setupThirdLayerOnBottomView() {
-        likesView.addSubview(likeImage)
+        likesView.addSubview(likeButton)
         likesView.addSubview(likeLabel)
         
         repostsView.addSubview(repostImage)
         repostsView.addSubview(repostLabel)
         
-        likeImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        likeImage.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        likeImage.anchor(top: likesView.topAnchor, leading: likesView.leadingAnchor, bottom: likesView.bottomAnchor, trailing: nil)
+        likeButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        likeButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        likeButton.anchor(top: likesView.topAnchor, leading: likesView.leadingAnchor, bottom: likesView.bottomAnchor, trailing: nil)
         
-        likeLabel.anchor(top: likesView.topAnchor, leading: likeImage.trailingAnchor, bottom: likesView.bottomAnchor, trailing: likesView.trailingAnchor)
+        likeLabel.anchor(top: likesView.topAnchor, leading: likeButton.trailingAnchor, bottom: likesView.bottomAnchor, trailing: likesView.trailingAnchor)
         
         repostImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
         repostImage.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -132,7 +131,6 @@ class PhotosFriendCell: UICollectionViewCell {
         
         repostLabel.anchor(top: repostsView.topAnchor, leading: repostImage.trailingAnchor, bottom: repostsView.bottomAnchor, trailing: repostsView.trailingAnchor)
     }
-    
     
     override func prepareForReuse() {
         super.prepareForReuse()

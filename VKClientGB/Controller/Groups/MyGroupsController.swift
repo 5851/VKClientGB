@@ -132,8 +132,6 @@ extension MyGroupsController: UITableViewDelegate, UITableViewDataSource {
 
 extension MyGroupsController: UISearchBarDelegate {
     
-    
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         timer?.invalidate()
