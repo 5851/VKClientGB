@@ -37,14 +37,15 @@ class MyGroupsCell: UITableViewCell {
     
     private var nameGroup: UILabel! = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return label
     }()
     
     private var membersCount: UILabel! = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return label
     }()
@@ -83,19 +84,20 @@ class MyGroupsCell: UITableViewCell {
             ])
         verticalStackView.distribution = .fillEqually
         verticalStackView.axis = .vertical
-        verticalStackView.spacing = 10
+        verticalStackView.spacing = 2
         groupView.addSubview(verticalStackView)
         verticalStackView.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 0))
     }
     
     func setupCell(group: Group, by imageService: ImageService) {
-        let count = "\(group.members_count)"
+        let members = group.members_count?.value
+        let count = "\(members ?? 0)"
         if count.last == "0" || count.last == "5" || count.last == "6" || count.last == "7" || count.last == "8" || count.last == "9" {
-            membersCount.text = "\(group.members_count) участников"
+            membersCount.text = "\(members ?? 0) участников"
         } else if count.last == "1"{
-            membersCount.text = "\(group.members_count) участник"
+            membersCount.text = "\(members ?? 0) участник"
         } else {
-            membersCount.text = "\(group.members_count) участника"
+            membersCount.text = "\(members ?? 0) участника"
         }
         nameGroup.text = group.name
         let imageString = group.photo_100

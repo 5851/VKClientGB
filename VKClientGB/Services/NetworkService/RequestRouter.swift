@@ -6,6 +6,7 @@ enum RequestRouter: URLRequestConvertible {
     static let basicURLString = "https://api.vk.com/method/"
     
     case getMyGroups(parameters: Parameters)
+    case getMyGroupsById(parameters: Parameters)
     case getAllGroups
     case getMyFriends
     case getPhotoFriends
@@ -19,6 +20,7 @@ enum RequestRouter: URLRequestConvertible {
         var method: HTTPMethod {
             switch self {
                 case .getMyGroups,
+                     .getMyGroupsById,
                      .getAllGroups,
                      .getMyFriends,
                      .getPhotoFriends,
@@ -36,6 +38,8 @@ enum RequestRouter: URLRequestConvertible {
             switch self {
             case .getMyGroups:
                 relativePath = "groups.get"
+            case .getMyGroupsById:
+                relativePath = "groups.getById"
             case .getAllGroups:
                 relativePath = "groups.search"
             case .getMyFriends:
@@ -64,6 +68,8 @@ enum RequestRouter: URLRequestConvertible {
         
         switch self {
         case .getMyGroups(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .getMyGroupsById(let parameters):
             request = try URLEncoding.default.encode(request, with: parameters)
         case .getAllGroups:
             request = try URLEncoding.default.encode(request, with: nil)

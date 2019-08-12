@@ -9,16 +9,9 @@ class PhotosFriendsRequest {
     static func fetchPhotosFriend(friendId: Int) {
         
         let url = ParametersVK.vkApi + ParametersVK.vkApiAllPhotosFriends
+        let photoParameters = ParametersVK.photoParameters(ownerId: friendId)
         
-        let parameters: Parameters = [
-            "owner_id": friendId,
-            "access_token": Session.shared.token,
-            "extended": "1",
-            "count": "200",
-            "v": "5.95"
-        ]
-        
-        request(url, method: .get, parameters: parameters).validate().responseData { data in
+        request(url, method: .get, parameters: photoParameters).validate().responseData { data in
             switch data.result {
             case .success(_):
                 guard let data = data.data else { return }
@@ -69,16 +62,9 @@ class PhotosFriendsRequest {
     static func fetchPhotosFriendWithPromiseDecodable(friendId: Int, on queue: DispatchQueue = .main) -> Promise<PhotosResponseWrapped> {
         
         let url = ParametersVK.vkApi + ParametersVK.vkApiAllPhotosFriends
-        
-        let parameters: Parameters = [
-            "owner_id": friendId,
-            "access_token": Session.shared.token,
-            "extended": "1",
-            "count": "200",
-            "v": "5.95"
-        ]
+        let photoParameters = ParametersVK.photoParameters(ownerId: friendId)
 
-        return request(url, method: .get, parameters: parameters)
+        return request(url, method: .get, parameters: photoParameters)
             .responseDecodable(PhotosResponseWrapped.self)
     }
     
@@ -86,18 +72,10 @@ class PhotosFriendsRequest {
     static func fetchPhotosFriendWithRxSwift(friendId: Int, on queue: DispatchQueue = .main) -> Single<[Photo]> {
         
         let url = ParametersVK.vkApi + ParametersVK.vkApiAllPhotosFriends
-        
-        let parameters: Parameters = [
-            "owner_id": friendId,
-            "access_token": Session.shared.token,
-            "extended": "1",
-            "count": "200",
-            "v": "5.95"
-        ]
-        
+        let photoParameters = ParametersVK.photoParameters(ownerId: friendId)
         let single = Single<[Photo]>.create { (single) -> Disposable in
             
-            let request = Alamofire.request(url, method: .get, parameters: parameters).validate().responseData(completionHandler: { data in
+            let request = Alamofire.request(url, method: .get, parameters: photoParameters).validate().responseData(completionHandler: { data in
                 switch data.result {
                 case .success(_):
                     guard let data = data.data else { return }

@@ -8,7 +8,3 @@ class UserResponseWrapped: Decodable {
 class UserResponse: Decodable {
     let photo_100: String?
 }
-
-//struct UserViewModel: TitleViewModelProtocol {
-//    var photoUrlString: String?
-//}

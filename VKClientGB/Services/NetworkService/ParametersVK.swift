@@ -19,6 +19,13 @@ class ParametersVK {
         "v": "5.95"
     ]
     
+    static let myGroupsByIDParameters: Parameters = [
+        "user_id": Session.shared.userId,
+        "access_token": Session.shared.token,
+        "fields": "members_count",
+        "v": "5.95"
+    ]
+    
     static let friendsListParameters: Parameters = [
         "user_id": Session.shared.userId,
         "access_token": Session.shared.token,
@@ -40,4 +47,40 @@ class ParametersVK {
         "fields": "photo_100",
         "v": "5.95",
     ]
+    
+    static func myGroupsByIDParameters(idGroup: Int) -> Parameters {
+        
+        let myGroupsByIDParameters: Parameters = [
+            "user_id": Session.shared.userId,
+            "access_token": Session.shared.token,
+            "group_ids": idGroup,
+            "fields": "members_count",
+            "v": "5.95"
+        ]
+        
+        return myGroupsByIDParameters
+    }
+    
+    static func allGroupsParameters(text: String) -> Parameters {
+        let parameters: Parameters = [
+            "access_token": Session.shared.token,
+            "q": text,
+            "extended": "1",
+            "sort": "3",
+            "v": "5.95"
+        ]
+        return parameters
+    }
+    
+    static func photoParameters(ownerId: Int) -> Parameters {
+        let parameters: Parameters = [
+            "owner_id": ownerId,
+            "access_token": Session.shared.token,
+            "extended": "1",
+            "count": "200",
+            "v": "5.95"
+        ]
+        return parameters
+    }
+
 }

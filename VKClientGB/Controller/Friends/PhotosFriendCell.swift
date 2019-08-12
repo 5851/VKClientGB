@@ -15,7 +15,6 @@ class PhotosFriendCell: UICollectionViewCell {
     }()
     
     // First layer
-    
     var verticalStackView: UIStackView = {
         let stackView = UIStackView()
         return stackView

@@ -27,9 +27,13 @@ class MyGroupsController: UIViewController {
         
         view.backgroundColor = .white
         setupTableView()
-        fetchMyGroups()
         setupSearchBar()
         setupContstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchMyGroups()
     }
     
     // MARK: - Private fucntions
