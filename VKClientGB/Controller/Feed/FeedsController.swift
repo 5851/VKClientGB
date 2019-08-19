@@ -6,11 +6,21 @@ class FeedsController: UITableViewController {
     private var feedViewModel = FeedViewModel.init(cell: [])
     var cellLayoutCalculator: FeedCellLayoutCalculatorProtocol = FeedCellLayoutCalculator()
     private let imageService = ImageService()
+    var isPrefetching = false
+    var nextFrom = ""
     
     private var refreshedControl: UIRefreshControl? = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return refreshControl
+    }()
+    
+    private var activityIndicator: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(style: .whiteLarge)
+        aiv.color = .black
+        aiv.startAnimating()
+        aiv.hidesWhenStopped = true
+        return aiv
     }()
 
     let dateFormatter: DateFormatter = {
@@ -24,7 +34,6 @@ class FeedsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         setupTableView()
         fetchNewsFeed()
     }
@@ -38,10 +47,13 @@ class FeedsController: UITableViewController {
         
         tableView.register(NewsFeedCodeCell.self, forCellReuseIdentifier: NewsFeedCodeCell.cellId)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .lightGray
         tableView.allowsSelection = false
         guard let refreshedControl = refreshedControl else { return }
         tableView.addSubview(refreshedControl)
+        
+        tableView.addSubview(activityIndicator)
+        activityIndicator.centerInSuperview()
     }
     
     private func cellViewModel(from feedItem: NewsFeedModel, profiles: [ProfileNews], groups:[GroupNews]) -> FeedViewModel.Cell {
@@ -87,6 +99,7 @@ class FeedsController: UITableViewController {
     fileprivate func fetchNewsFeed() {
         NewsFeedRequest.fetchNewsFeedWithRequestRouter(urlRequest: RequestRouter.getNewsFeed(parameters: ParametersVK.newsFeedParameters)) { [weak self] (result) in
             guard let self = self else { return }
+            
             switch result {
             case .success(let data):
                 let cells = data.response.items.map({ feedItem in
@@ -95,6 +108,11 @@ class FeedsController: UITableViewController {
                                        groups: data.response.groups)
                 })
                 self.feedViewModel = FeedViewModel.init(cell: cells)
+                
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                }
+                
             case .failure(let error):
                 print("Error: \(error)")
             }
@@ -102,6 +120,7 @@ class FeedsController: UITableViewController {
                 self.tableView.reloadData()
             }
         }
+        isPrefetching = false
     }
     
     @objc private func  refresh() {
@@ -145,7 +164,24 @@ extension FeedsController {
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y > scrollView.contentSize.height / 1.1 {
-
+            
+            NewsFeedRequest.fetchNewsFeed2(nextBatchFrom: "") { (feed) in
+                guard let nextFrom = feed.next_from else { return }
+                self.nextFrom = nextFrom
+                
+                let cells = feed.items.map({ feedItem in
+                    self.cellViewModel(from: feedItem,
+                                       profiles: feed.profiles,
+                                       groups: feed.groups)
+                })
+                for cell in cells {
+                     self.feedViewModel.cell.append(cell)
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
 }
