@@ -42,14 +42,12 @@ class SwipeController: UIViewController {
             imageView.contentMode = .scaleAspectFit
             imageView.tag = i
 
-            let imageString = photo.sizes[2].url
+            let imageString = photo.srcBIG
             imageService.photo(with: imageString).done(on: DispatchQueue.main) { image in
                 imageView.image = image
                 } .catch { error in
                     print(error)
             }
-//            imageView.set(imageUrl: photo.sizes[2].url)
-            
             imagesContainer.addSubview(imageView)
         }
         view.addSubview(imagesContainer)

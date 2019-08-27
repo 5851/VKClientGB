@@ -37,14 +37,15 @@ class AllGroupsCell: UITableViewCell {
     
     private var nameGroup: UILabel! = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return label
     }()
     
     private var openGroup: UILabel! = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return label
     }()
@@ -83,17 +84,17 @@ class AllGroupsCell: UITableViewCell {
             ])
         verticalStackView.distribution = .fillEqually
         verticalStackView.axis = .vertical
-        verticalStackView.spacing = 10
+        verticalStackView.spacing = 2
         groupView.addSubview(verticalStackView)
         verticalStackView.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 0))
     }
     
-    func setupCell(group: AllGroup, by imageService: ImageService) {
+    func setupCell(group: Group, by imageService: ImageService) {
         let typeGroup = group.is_closed
         if typeGroup == 0 {
-            openGroup.text = "Открытая групп"
+            openGroup.text = "Открытая группа"
         } else {
-            openGroup.text = "Закрытая групп"
+            openGroup.text = "Закрытая группа"
         }
         nameGroup.text = group.name
         let imageString = group.photo_100

@@ -58,12 +58,10 @@ extension AuthorizationController: WKNavigationDelegate {
         
         if let token = params["access_token"] {
             Session.shared.token = token
-            print(token)
         }
         
         if let userId = params["user_id"] {
             Session.shared.userId = Int(userId) ?? 0
-            print(userId)
         }
         
         decisionHandler(.cancel)

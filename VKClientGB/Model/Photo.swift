@@ -18,6 +18,10 @@ class Photo: Object, Decodable {
     let reposts = List<RepostsCount>()
     let sizes = List<SizePhoto>()
     var friends = LinkingObjects(fromType: Profile.self, property: "photos")
+
+    var srcBIG: String {
+        return getSize().url
+    }
     
     private enum CodingKeys: String, CodingKey {
         case id, owner_id, likes, reposts, sizes
@@ -37,6 +41,16 @@ class Photo: Object, Decodable {
         let repostsCount = try container.decodeIfPresent(RepostsCount.self, forKey: .reposts) ?? RepostsCount()
         reposts.append(repostsCount)
     }
+    
+    private func getSize() -> SizePhoto {
+        if let sizeX = sizes.first(where: { $0.type == "x" }) {
+            return sizeX
+        } else if let fallBackSize = sizes.last {
+            return fallBackSize
+        } else {
+            return SizePhoto(type: "wrong image", url: "wrong image", width: 0, height: 0)
+        }
+    }
 
     override static func primaryKey() -> String? {
         return "id"
@@ -46,6 +60,16 @@ class Photo: Object, Decodable {
 class SizePhoto: Object, Decodable {
     @objc dynamic var type: String = ""
     @objc dynamic var url: String = ""
+    @objc dynamic var width: Int = 0
+    @objc dynamic var height: Int = 0
+    
+    convenience init(type: String, url: String, width: Int, height: Int) {
+        self.init()
+        self.type = type
+        self.url = url
+        self.width = width
+        self.height = height
+    }
 }
 
 class LikesCount: Object, Decodable {

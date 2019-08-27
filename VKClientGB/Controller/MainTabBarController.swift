@@ -14,6 +14,7 @@ class MainTabBarController: UITabBarController {
         
         tabBar.isTranslucent = false
         tabBar.barTintColor = .white
+        view.backgroundColor = .white
         viewControllers = [
             createNavController(viewController: MyGroupsController(), title: "Мои группы", imageName: "groups", imageSelectedName: "groupsSelected"),
             createNavController(viewController: MyFriendsController(), title: "Мои друзья", imageName: "friends", imageSelectedName: "friendsSelcted"),

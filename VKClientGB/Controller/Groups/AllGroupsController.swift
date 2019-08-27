@@ -1,12 +1,11 @@
 import UIKit
 import RealmSwift
+import Alamofire
 
 class AllGroupsController: UITableViewController {
 
     // MARK: - Variables
-    var groups = [AllGroup]()
-//    var groupProtocol = [BaseGroupProtocol]()
-//    var myGroup2 = [Group]()
+    var groups = [Group]()
     let searchController = UISearchController(searchResultsController: nil)
     private var timer: Timer?
     private let imageService = ImageService()
@@ -73,9 +72,19 @@ extension AllGroupsController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
         let myGroup = groups[indexPath.row]
-        try! RealmService.save(items: [myGroup])
+        let id = ParametersVK.myGroupsByIDParameters(idGroup: myGroup.id)
+        
+        MyGroupByIDRequest.fetchUserWithRequestRouter(urlRequest: RequestRouter.getMyGroupsById(parameters: id)) { (result) in
+            
+            switch result {
+            case .success(let group):
+                try! RealmService.save(items: group.response)
+            case .failure(let error):
+                print(error)
+            }
+        }
         
         searchController.isActive = false
         navigationController?.popViewController(animated: true)

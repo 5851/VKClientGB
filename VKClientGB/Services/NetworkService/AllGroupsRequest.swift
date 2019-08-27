@@ -3,19 +3,12 @@ import Alamofire
 
 class AllGroupsRequest {
     
-    static func fetchAllGroups(searchText: String, completionHandler: @escaping (AllGroupsResponseWrapped) -> Void) {
+    static func fetchAllGroups(searchText: String, completionHandler: @escaping (GroupsResponseWrapped) -> Void) {
         
         let url = ParametersVK.vkApi + ParametersVK.vkApiAllGroups
-
-        let parameters: Parameters = [
-            "access_token": Session.shared.token,
-            "q": searchText,
-            "extended": "1",
-            "sort": "3",
-            "v": "5.95"
-        ]
+        let allGroupParameters = ParametersVK.allGroupsParameters(text: searchText)
         
-        fetchGenericJSONData(urlString: url, parameters: parameters, completion: completionHandler)
+        fetchGenericJSONData(urlString: url, parameters: allGroupParameters, completion: completionHandler)
     }
     
     // Model fetching

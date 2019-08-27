@@ -33,12 +33,6 @@ class MyFriendsController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        FriendsListRequest.fetchFriends { friends in
-//            try! RealmService.save(items: friends)
-//            self.firstLetters = self.sort(self.friendsRealm)
-//            self.tableView.reloadData()
-//        }
-        
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         FriendsListRequest.fetchFriendsWithPromiseKit()
             .done { [weak self] profiles in

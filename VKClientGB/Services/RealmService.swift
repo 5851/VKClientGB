@@ -16,6 +16,16 @@ class RealmService {
         }
     }
     
+    static func save2<T: Object>(items: T,
+                                configaration: Realm.Configuration = deleteIfMigration,
+                                update: Realm.UpdatePolicy = .modified) throws {
+        let realm = try Realm(configuration: configaration)
+        print(realm.configuration.fileURL!)
+        try realm.write {
+            realm.add(items, update: update)
+        }
+    }
+    
     static func get<T: Object>(_ type: T.Type,
                                configuaration: Realm.Configuration = deleteIfMigration) throws -> Results<T> {
         let realm = try Realm(configuration: configuaration)

@@ -6,6 +6,7 @@ enum RequestRouter: URLRequestConvertible {
     static let basicURLString = "https://api.vk.com/method/"
     
     case getMyGroups(parameters: Parameters)
+    case getMyGroupsById(parameters: Parameters)
     case getAllGroups
     case getMyFriends
     case getPhotoFriends
@@ -14,11 +15,14 @@ enum RequestRouter: URLRequestConvertible {
     case addLike(parameters: Parameters)
     case deleteLike(parameters: Parameters)
     case isLiked(parameters: Parameters)
+    case getPhotoAlbumGroup(parameters: Parameters)
+    case getPhotosInAlbum(parameters: Parameters)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
             switch self {
                 case .getMyGroups,
+                     .getMyGroupsById,
                      .getAllGroups,
                      .getMyFriends,
                      .getPhotoFriends,
@@ -26,7 +30,9 @@ enum RequestRouter: URLRequestConvertible {
                      .getUser,
                      .addLike,
                      .deleteLike,
-                     .isLiked:
+                     .isLiked,
+                     .getPhotoAlbumGroup,
+                     .getPhotosInAlbum:
                 return .get
             }
         }
@@ -36,6 +42,8 @@ enum RequestRouter: URLRequestConvertible {
             switch self {
             case .getMyGroups:
                 relativePath = "groups.get"
+            case .getMyGroupsById:
+                relativePath = "groups.getById"
             case .getAllGroups:
                 relativePath = "groups.search"
             case .getMyFriends:
@@ -52,6 +60,10 @@ enum RequestRouter: URLRequestConvertible {
                 relativePath = "likes.delete"
             case .isLiked:
                 relativePath = "likes.isLiked"
+            case .getPhotoAlbumGroup:
+                relativePath = "photos.getAlbums"
+            case .getPhotosInAlbum:
+                relativePath = "photos.get"
             }
             
             var url = URL(string: RequestRouter.basicURLString)!
@@ -64,6 +76,8 @@ enum RequestRouter: URLRequestConvertible {
         
         switch self {
         case .getMyGroups(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .getMyGroupsById(let parameters):
             request = try URLEncoding.default.encode(request, with: parameters)
         case .getAllGroups:
             request = try URLEncoding.default.encode(request, with: nil)
@@ -80,6 +94,10 @@ enum RequestRouter: URLRequestConvertible {
         case .deleteLike(let parameters):
             request = try URLEncoding.default.encode(request, with: parameters)
         case .isLiked(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .getPhotoAlbumGroup(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .getPhotosInAlbum(let parameters):
             request = try URLEncoding.default.encode(request, with: parameters)
         }
         return request

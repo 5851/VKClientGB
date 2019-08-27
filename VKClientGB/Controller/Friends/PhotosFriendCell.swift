@@ -15,7 +15,6 @@ class PhotosFriendCell: UICollectionViewCell {
     }()
     
     // First layer
-    
     var verticalStackView: UIStackView = {
         let stackView = UIStackView()
         return stackView
@@ -141,7 +140,7 @@ class PhotosFriendCell: UICollectionViewCell {
         
         likeLabel.text = "\(photos.likes[0].count)"
         repostLabel.text = "\(photos.reposts[0].count)"
-        let imageString = photos.sizes[2].url
+        let imageString = photos.srcBIG
         imageService.photo(with: imageString).done(on: DispatchQueue.main) { [weak self] image in
             guard let self = self else { return }
             self.iconPhoto.image = image

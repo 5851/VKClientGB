@@ -11,7 +11,6 @@ class MyGroupsRequest {
             switch data.result {
             case .success(_):
                 guard let data = data.data else { return }
-                print(data)
                 do {
                     let objects = try JSONDecoder().decode(GroupsResponseWrapped.self, from: data)
                     
