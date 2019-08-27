@@ -15,6 +15,8 @@ enum RequestRouter: URLRequestConvertible {
     case addLike(parameters: Parameters)
     case deleteLike(parameters: Parameters)
     case isLiked(parameters: Parameters)
+    case getPhotoAlbumGroup(parameters: Parameters)
+    case getPhotosInAlbum(parameters: Parameters)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -28,7 +30,9 @@ enum RequestRouter: URLRequestConvertible {
                      .getUser,
                      .addLike,
                      .deleteLike,
-                     .isLiked:
+                     .isLiked,
+                     .getPhotoAlbumGroup,
+                     .getPhotosInAlbum:
                 return .get
             }
         }
@@ -56,6 +60,10 @@ enum RequestRouter: URLRequestConvertible {
                 relativePath = "likes.delete"
             case .isLiked:
                 relativePath = "likes.isLiked"
+            case .getPhotoAlbumGroup:
+                relativePath = "photos.getAlbums"
+            case .getPhotosInAlbum:
+                relativePath = "photos.get"
             }
             
             var url = URL(string: RequestRouter.basicURLString)!
@@ -86,6 +94,10 @@ enum RequestRouter: URLRequestConvertible {
         case .deleteLike(let parameters):
             request = try URLEncoding.default.encode(request, with: parameters)
         case .isLiked(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .getPhotoAlbumGroup(let parameters):
+            request = try URLEncoding.default.encode(request, with: parameters)
+        case .getPhotosInAlbum(let parameters):
             request = try URLEncoding.default.encode(request, with: parameters)
         }
         return request

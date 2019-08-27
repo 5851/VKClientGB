@@ -49,7 +49,6 @@ class PhotosFriendController: UICollectionViewController {
         // Вариант с PromiseKit and RxSwift (работает)
         PhotosFriendsRequest.fetchPhotosFriendWithRxSwift(friendId: friendId)
             .subscribe(onSuccess: { [unowned self] photos in
-                print(photos)
                 RealmService.savePhotos(photos, friendId: self.friendId)
                 self.collectionView.reloadData()
             }) { error in
@@ -95,6 +94,7 @@ class PhotosFriendController: UICollectionViewController {
         
         let photo = photos[indexPath.row]
         cell.setupCell(photos: photo, by: imageService)
+        
         cell.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         cell.likeButton.setImage(#imageLiteral(resourceName: "like").withRenderingMode(.alwaysOriginal), for: .normal)
         

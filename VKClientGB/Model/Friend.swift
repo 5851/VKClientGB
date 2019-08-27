@@ -28,9 +28,6 @@ class Profile: Object, Decodable {
         self.first_name = try container.decode(String.self, forKey: .first_name)
         self.last_name = try container.decode(String.self, forKey: .last_name)
         self.photo_100 = try container.decode(String.self, forKey: .photo_100)
-
-//        let photosList = try container.decodeIfPresent([Photo].self, forKey: .photos) ?? [Photo()]
-//        photos.append(objectsIn: photosList)
     }
     
     override static func primaryKey() -> String? {

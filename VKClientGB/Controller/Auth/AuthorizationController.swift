@@ -23,7 +23,7 @@ class AuthorizationController: UIViewController {
         urlComponents.host = "oauth.vk.com"
         urlComponents.path = "/authorize"
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "7081871"),
+            URLQueryItem(name: "client_id", value: "6988292"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "scope", value: "270342"), // 262144 + 2 + 4 + 8192

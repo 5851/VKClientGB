@@ -75,6 +75,7 @@ class MyGroupsController: UIViewController {
         tableView.separatorStyle = .none
         guard let refreshedControl = refreshedControl else { return }
         tableView.addSubview(refreshedControl)
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func setupSearchBar() {
@@ -130,7 +131,10 @@ extension MyGroupsController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        let controller = GroupDetailController()
+        controller.navigationItem.title = groups[indexPath.row].name
+        controller.group = groups[indexPath.row]
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 

@@ -8,7 +8,7 @@ struct NewsFeedResponse: Decodable {
     var items: [NewsFeedModel]
     var profiles: [ProfileNews]
     var groups: [GroupNews]
-    var new_form: String?
+    var next_from: String?
 }
 
 struct NewsFeedModel: Decodable {
@@ -86,7 +86,7 @@ struct FeedViewModel {
         var height: Int
     }
     
-    let cell: [Cell]
+    var cell: [Cell]
 }
 
 protocol ProfileRepresentable {

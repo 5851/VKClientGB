@@ -6,7 +6,7 @@ import RxSwift
 class PhotosFriendsRequest {
     
     // Fetch photosFriends standart
-    static func fetchPhotosFriend(friendId: Int) {
+    static func fetchPhotosFriend(friendId: Int, idAlbum: Int, completion: @escaping (PhotoAlbumResponseWrapped) -> ()) {
         
         let url = ParametersVK.vkApi + ParametersVK.vkApiAllPhotosFriends
         let photoParameters = ParametersVK.photoParameters(ownerId: friendId)
@@ -16,9 +16,8 @@ class PhotosFriendsRequest {
             case .success(_):
                 guard let data = data.data else { return }
                 do {
-                    let objects = try JSONDecoder().decode(PhotosResponseWrapped.self, from: data).response.items
-                    
-                    RealmService.savePhotos(objects, friendId: friendId)
+                    let objects = try JSONDecoder().decode(PhotoAlbumResponseWrapped.self, from: data)
+                    completion(objects)
                 } catch let decodeErr {
                     print("Failed to decode:", decodeErr)
                 }

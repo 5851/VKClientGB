@@ -6,7 +6,7 @@ class FeedsController: UITableViewController {
     private var feedViewModel = FeedViewModel.init(cell: [])
     var cellLayoutCalculator: FeedCellLayoutCalculatorProtocol = FeedCellLayoutCalculator()
     private let imageService = ImageService()
-    var isPrefetching = false
+    var isPrefetching = true
     var nextFrom = ""
     
     private var refreshedControl: UIRefreshControl? = {
@@ -49,6 +49,7 @@ class FeedsController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .lightGray
         tableView.allowsSelection = false
+        tableView.prefetchDataSource = self
         guard let refreshedControl = refreshedControl else { return }
         tableView.addSubview(refreshedControl)
         
@@ -97,30 +98,49 @@ class FeedsController: UITableViewController {
     }
     
     fileprivate func fetchNewsFeed() {
-        NewsFeedRequest.fetchNewsFeedWithRequestRouter(urlRequest: RequestRouter.getNewsFeed(parameters: ParametersVK.newsFeedParameters)) { [weak self] (result) in
-            guard let self = self else { return }
+        
+        NewsFeedRequest.fetchNewsFeed { (nextfrom, news) in
             
-            switch result {
-            case .success(let data):
-                let cells = data.response.items.map({ feedItem in
-                    self.cellViewModel(from: feedItem,
-                                       profiles: data.response.profiles,
-                                       groups: data.response.groups)
-                })
-                self.feedViewModel = FeedViewModel.init(cell: cells)
-                
-                DispatchQueue.main.async {
-                    self.activityIndicator.stopAnimating()
-                }
-                
-            case .failure(let error):
-                print("Error: \(error)")
-            }
+            print(nextfrom)
+            self.nextFrom = nextfrom
+            
+            let cells = news.items.map({ feedItem in
+                self.cellViewModel(from: feedItem,
+                                   profiles: news.profiles,
+                                   groups: news.groups)
+            })
+            self.feedViewModel = FeedViewModel.init(cell: cells)
             DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
             }
+            
+            self.isPrefetching = false
         }
-        isPrefetching = false
+//        NewsFeedRequest.fetchNewsFeedWithRequestRouter(urlRequest: RequestRouter.getNewsFeed(parameters: ParametersVK.newsFeedParameters(startFrom: <#T##String#>))) { [weak self] (result) in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let data):
+//                let cells = data.response.items.map({ feedItem in
+//                    self.cellViewModel(from: feedItem,
+//                                       profiles: data.response.profiles,
+//                                       groups: data.response.groups)
+//                })
+//                self.feedViewModel = FeedViewModel.init(cell: cells)
+//
+//                DispatchQueue.main.async {
+//                    self.activityIndicator.stopAnimating()
+//                }
+//
+//            case .failure(let error):
+//                print("Error: \(error)")
+//            }
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
+//        isPrefetching = false
     }
     
     @objc private func  refresh() {
@@ -161,27 +181,37 @@ extension FeedsController {
         let cellViewModel = feedViewModel.cell[indexPath.row]
         return cellViewModel.sizes.totalHeight
     }
+}
+
+extension FeedsController: UITableViewDataSourcePrefetching {
     
-    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView.contentOffset.y > scrollView.contentSize.height / 1.1 {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
+        let maxSection = indexPaths
+            .map { $0.item }
+            .reduce(indexPaths[0].item, max)
+        
+        guard !isPrefetching, maxSection > (feedViewModel.cell.count - 5) else { return }
+        isPrefetching = true
+        
+        print(feedViewModel.cell.count)
+        print("🥶 Prefetching news ...")
+        NewsFeedRequest.fetchNewsFeed { [weak self] (nextfrom, news) in
+            guard let self = self else { return }
+            self.nextFrom = nextfrom
+            print(nextfrom)
+            let cells = news.items.map({ feedItem in
+                self.cellViewModel(from: feedItem,
+                                   profiles: news.profiles,
+                                   groups: news.groups)
+            })
             
-            NewsFeedRequest.fetchNewsFeed2(nextBatchFrom: "") { (feed) in
-                guard let nextFrom = feed.next_from else { return }
-                self.nextFrom = nextFrom
-                
-                let cells = feed.items.map({ feedItem in
-                    self.cellViewModel(from: feedItem,
-                                       profiles: feed.profiles,
-                                       groups: feed.groups)
-                })
-                for cell in cells {
-                     self.feedViewModel.cell.append(cell)
-                }
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+            self.feedViewModel.cell.append(contentsOf: cells)
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
+        self.isPrefetching = false
     }
 }

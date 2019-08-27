@@ -24,6 +24,15 @@
 		045B76AE22DC0BAD00C21FA9 /* AllGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B76AD22DC0BAD00C21FA9 /* AllGroupsRequest.swift */; };
 		045B76B022DC0BBD00C21FA9 /* PhotosFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B76AF22DC0BBD00C21FA9 /* PhotosFriendsRequest.swift */; };
 		0465844422E15E9B00F7494C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0465844322E15E9B00F7494C /* ImageService.swift */; };
+		04A1013D230CD1C900A4858B /* GroupDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1013C230CD1C900A4858B /* GroupDetailController.swift */; };
+		04A1013F230CD62B00A4858B /* BaseListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1013E230CD62B00A4858B /* BaseListController.swift */; };
+		04A10141230CD65100A4858B /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A10140230CD65100A4858B /* PhotoAlbum.swift */; };
+		04A10143230CD8BF00A4858B /* PhotosAlbumRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A10142230CD8BF00A4858B /* PhotosAlbumRequest.swift */; };
+		04A10145230CDE5B00A4858B /* GroupDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A10144230CDE5B00A4858B /* GroupDetailCell.swift */; };
+		04A10147230D379700A4858B /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A10146230D379700A4858B /* AlbumController.swift */; };
+		04A10149230D407C00A4858B /* BetterSnappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A10148230D407C00A4858B /* BetterSnappingLayout.swift */; };
+		04A1014B230D410F00A4858B /* AlbumControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1014A230D410F00A4858B /* AlbumControllerCell.swift */; };
+		04A1014E230DA79500A4858B /* PhotosInAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1014D230DA79500A4858B /* PhotosInAlbum.swift */; };
 		04F53A082300E33B00223DC3 /* RealmSwift+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F53A072300E33B00223DC3 /* RealmSwift+Codable.swift */; };
 		04F53A0A230162A000223DC3 /* MyGroupByIDRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F53A09230162A000223DC3 /* MyGroupByIDRequest.swift */; };
 		04F53A0C2301642A00223DC3 /* GroupByID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F53A0B2301642A00223DC3 /* GroupByID.swift */; };
@@ -84,6 +93,15 @@
 		045B76AD22DC0BAD00C21FA9 /* AllGroupsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsRequest.swift; sourceTree = "<group>"; };
 		045B76AF22DC0BBD00C21FA9 /* PhotosFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFriendsRequest.swift; sourceTree = "<group>"; };
 		0465844322E15E9B00F7494C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		04A1013C230CD1C900A4858B /* GroupDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailController.swift; sourceTree = "<group>"; };
+		04A1013E230CD62B00A4858B /* BaseListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListController.swift; sourceTree = "<group>"; };
+		04A10140230CD65100A4858B /* PhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
+		04A10142230CD8BF00A4858B /* PhotosAlbumRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosAlbumRequest.swift; sourceTree = "<group>"; };
+		04A10144230CDE5B00A4858B /* GroupDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailCell.swift; sourceTree = "<group>"; };
+		04A10146230D379700A4858B /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
+		04A10148230D407C00A4858B /* BetterSnappingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BetterSnappingLayout.swift; sourceTree = "<group>"; };
+		04A1014A230D410F00A4858B /* AlbumControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumControllerCell.swift; sourceTree = "<group>"; };
+		04A1014D230DA79500A4858B /* PhotosInAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosInAlbum.swift; sourceTree = "<group>"; };
 		04F53A072300E33B00223DC3 /* RealmSwift+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmSwift+Codable.swift"; sourceTree = "<group>"; };
 		04F53A09230162A000223DC3 /* MyGroupByIDRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupByIDRequest.swift; sourceTree = "<group>"; };
 		04F53A0B2301642A00223DC3 /* GroupByID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupByID.swift; sourceTree = "<group>"; };
@@ -166,18 +184,30 @@
 		045B76A622DA388400C21FA9 /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
-				0402FFF722EE8838006DF023 /* RequestRouter.swift */,
 				045B76A722DA38A900C21FA9 /* ParametersVK.swift */,
+				0402FFF722EE8838006DF023 /* RequestRouter.swift */,
 				045B76AB22DC0BA100C21FA9 /* MyGroupsRequest.swift */,
 				04F53A09230162A000223DC3 /* MyGroupByIDRequest.swift */,
 				045B76AD22DC0BAD00C21FA9 /* AllGroupsRequest.swift */,
 				045B76A922DC0B9200C21FA9 /* FriendsListRequest.swift */,
 				045B76AF22DC0BBD00C21FA9 /* PhotosFriendsRequest.swift */,
+				04A10142230CD8BF00A4858B /* PhotosAlbumRequest.swift */,
 				B5C26434229049B200C0AF1B /* NewsFeedRequest.swift */,
 				04F9623E22FA59090012F2F9 /* UserRequest.swift */,
 				04F9624822FBB6C30012F2F9 /* LikeRequst.swift */,
 			);
 			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		04A1013B230CD1AD00A4858B /* GroupDetail */ = {
+			isa = PBXGroup;
+			children = (
+				04A1013C230CD1C900A4858B /* GroupDetailController.swift */,
+				04A10144230CDE5B00A4858B /* GroupDetailCell.swift */,
+				04A10146230D379700A4858B /* AlbumController.swift */,
+				04A1014A230D410F00A4858B /* AlbumControllerCell.swift */,
+			);
+			path = GroupDetail;
 			sourceTree = "<group>";
 		};
 		B505D95E22824FB400446449 /* Custom */ = {
@@ -233,6 +263,8 @@
 				B5F1BBF9225821D600F2DA69 /* Friends */,
 				B5532646225055F4003CD775 /* LoginFormController.swift */,
 				B556C434225ADB6500521335 /* MainTabBarController.swift */,
+				04A10148230D407C00A4858B /* BetterSnappingLayout.swift */,
+				04A1013E230CD62B00A4858B /* BaseListController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -244,6 +276,8 @@
 				04F53A0B2301642A00223DC3 /* GroupByID.swift */,
 				B556C432225AD60700521335 /* Friend.swift */,
 				B58C1C242290EC420015E16A /* Photo.swift */,
+				04A10140230CD65100A4858B /* PhotoAlbum.swift */,
+				04A1014D230DA79500A4858B /* PhotosInAlbum.swift */,
 				B532530422BF549300E78A22 /* NewsFeed.swift */,
 				04F9624022FA5A270012F2F9 /* User.swift */,
 				04F9624A22FBB7280012F2F9 /* Likes.swift */,
@@ -335,6 +369,7 @@
 		B5F1BBFA225821E500F2DA69 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
+				04A1013B230CD1AD00A4858B /* GroupDetail */,
 				B5F1BC042258258E00F2DA69 /* AllGroupsController.swift */,
 				B5F1BC06225825AD00F2DA69 /* MyGroupsController.swift */,
 				B556C430225AC4CE00521335 /* MyGroupsCell.swift */,
@@ -481,16 +516,21 @@
 				B505D9642282589400446449 /* CustomPopAnimator.swift in Sources */,
 				B5BD31252279565F009711FB /* SwipeController.swift in Sources */,
 				B556C437225AE67300521335 /* PhotosFriendController.swift in Sources */,
+				04A1013F230CD62B00A4858B /* BaseListController.swift in Sources */,
 				B5F1BC012258229C00F2DA69 /* MyFriendsCell.swift in Sources */,
 				B50FBD672265CD8E00BD041B /* LikeControl.swift in Sources */,
+				04A10143230CD8BF00A4858B /* PhotosAlbumRequest.swift in Sources */,
 				04F9624922FBB6C30012F2F9 /* LikeRequst.swift in Sources */,
+				04A1014B230D410F00A4858B /* AlbumControllerCell.swift in Sources */,
 				B5C26435229049B200C0AF1B /* NewsFeedRequest.swift in Sources */,
 				B5F1BC07225825AD00F2DA69 /* MyGroupsController.swift in Sources */,
 				B505D9602282515C00446449 /* CustomNavigationController.swift in Sources */,
 				04400FF522D2C2C4006C8983 /* String+Height.swift in Sources */,
 				B58DC9A4229DF9AE00A78059 /* RealmService.swift in Sources */,
 				0402A42F22E67E8D00F136B0 /* Extensions+UIView.swift in Sources */,
+				04A10145230CDE5B00A4858B /* GroupDetailCell.swift in Sources */,
 				0402FFFC22EE8C69006DF023 /* BackendError.swift in Sources */,
+				04A1014E230DA79500A4858B /* PhotosInAlbum.swift in Sources */,
 				B556C435225ADB6600521335 /* MainTabBarController.swift in Sources */,
 				0440100122D6B44A006C8983 /* AsyncOperation.swift in Sources */,
 				B5532647225055F4003CD775 /* LoginFormController.swift in Sources */,
@@ -500,6 +540,7 @@
 				B505D9622282540E00446449 /* CustomPushAnimator.swift in Sources */,
 				B556C439225AE68C00521335 /* PhotosFriendCell.swift in Sources */,
 				045B76A822DA38A900C21FA9 /* ParametersVK.swift in Sources */,
+				04A10147230D379700A4858B /* AlbumController.swift in Sources */,
 				045B76AE22DC0BAD00C21FA9 /* AllGroupsRequest.swift in Sources */,
 				B556C431225AC4CE00521335 /* MyGroupsCell.swift in Sources */,
 				B5C2643A2290686C00C0AF1B /* WebImageView.swift in Sources */,
@@ -512,6 +553,8 @@
 				0402FFF822EE8838006DF023 /* RequestRouter.swift in Sources */,
 				045B76A522D9CBB400C21FA9 /* MyGroupDisplayOperation.swift in Sources */,
 				B5FDD59C2269611A00381B24 /* FeedsController.swift in Sources */,
+				04A1013D230CD1C900A4858B /* GroupDetailController.swift in Sources */,
+				04A10141230CD65100A4858B /* PhotoAlbum.swift in Sources */,
 				04400FEC22CE42A1006C8983 /* FeedsCellLayoutCalculator.swift in Sources */,
 				B556C433225AD60700521335 /* Friend.swift in Sources */,
 				045B76B022DC0BBD00C21FA9 /* PhotosFriendsRequest.swift in Sources */,
@@ -527,6 +570,7 @@
 				B54E8D502274007F00128EBE /* CustomActivityIndicator.swift in Sources */,
 				04F9623F22FA59090012F2F9 /* UserRequest.swift in Sources */,
 				B58C1C252290EC420015E16A /* Photo.swift in Sources */,
+				04A10149230D407C00A4858B /* BetterSnappingLayout.swift in Sources */,
 				045B76AC22DC0BA100C21FA9 /* MyGroupsRequest.swift in Sources */,
 				0465844422E15E9B00F7494C /* ImageService.swift in Sources */,
 			);
