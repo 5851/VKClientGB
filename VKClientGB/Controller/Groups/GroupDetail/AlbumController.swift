@@ -26,6 +26,7 @@ class AlbumController: UICollectionViewController, UICollectionViewDelegateFlowL
     
     override func viewWillAppear(_ animated: Bool) {
         fetchData()
+        navigationController?.navigationBar.isHidden = false
     }
     
     private func fetchData() {

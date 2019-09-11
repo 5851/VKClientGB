@@ -34,6 +34,7 @@ class MyGroupsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchMyGroups()
+        navigationController?.navigationBar.isHidden = false
     }
     
     // MARK: - Private fucntions

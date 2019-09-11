@@ -4,8 +4,9 @@ class BaseListController: UICollectionViewController {
     
     init() {
         let layout = BetterSnappingLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         super.init(collectionViewLayout: layout)
+        collectionView.decelerationRate = .fast
     }
     
     required init?(coder aDecoder: NSCoder) {
